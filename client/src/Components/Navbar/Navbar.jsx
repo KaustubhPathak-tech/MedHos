@@ -17,6 +17,7 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import logo from "../../Assets/Logo.png";
+import { useSelector } from "react-redux";
 const pages = ["Find Doctors", "Video Consult", "Medicines", "Lab Tests"];
 const settings = [
   "My Appointment",
@@ -41,6 +42,8 @@ const darkTheme = createTheme({
 });
 
 function ResponsiveAppBar({ change }) {
+  var User = useSelector((state) => (state.fetch_current_userReducer));
+
   var isTrueSet = localStorage.getItem("theme") === "true";
   if (isTrueSet) {
     var theme = darkTheme;
@@ -66,6 +69,7 @@ function ResponsiveAppBar({ change }) {
   };
 
   return (
+
     <AppBar position="fixed" id="navBar" sx={{ color: "black" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
@@ -154,6 +158,9 @@ function ResponsiveAppBar({ change }) {
               </Button>
             ))}
           </Box>
+          <Typography>
+            {User?.result?.name}
+          </Typography>
           <IconButton sx={{ ml: 1 }} onClick={() => change()} color="inherit">
             {theme.palette.mode === "dark" ? (
               <Brightness7Icon />

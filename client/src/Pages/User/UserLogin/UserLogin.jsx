@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import "../../../../node_modules/bootstrap/dist/css/bootstrap-grid.css";
 import {
   Card,
@@ -12,10 +14,23 @@ import {
 import login_img from "../../../Assets/login_img.webp";
 import "./UserLogin.css";
 
+import { signup,login } from "../../../actions/auth";
+
 const UserLogin = () => {
   const [Switch, setSwitch] = useState(false);
-  const handleLogin = () => {};
-  const handleRegister = () => {};
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const handleLogin = (e) => {
+    e.preventDefault();
+    dispatch(login({email,password},navigate))
+  };
+  const handleRegister = (e) => {
+    e.preventDefault();
+    dispatch(signup({ name, email, password }, navigate));
+  };
   return (
     <div style={{ width: "96%" }}>
       <div className="row">
@@ -61,36 +76,48 @@ const UserLogin = () => {
                     <br />
                     <TextField
                       label="Full Name"
+                      name="name"
                       sx={{
                         width: "100%",
                         marginBottom: (theme) => theme.spacing(2),
                       }}
                       variant="outlined"
+                      onChange={(e) => {
+                        setName(e.target.value);
+                      }}
                     />
                     <TextField
                       label="Email"
+                      name="email"
                       sx={{
                         width: "100%",
                         marginBottom: (theme) => theme.spacing(2),
                       }}
                       variant="outlined"
                       autoComplete="off"
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                      }}
                     />
                     <TextField
                       label="Password"
+                      name="password"
                       type="password"
                       sx={{
                         width: "100%",
                         marginBottom: (theme) => theme.spacing(2),
                       }}
                       variant="outlined"
+                      onChange={(e) => {
+                        setPassword(e.target.value);
+                      }}
                       autoComplete="off"
                     />
                     <div id="signuppromodiv">
                       <span>
-                          <Checkbox defaultChecked />
+                        <Checkbox defaultChecked />
                       </span>
-                      
+
                       <span id="signuppromo">
                         Receive relavant offers and promotional communication
                         from MedHos{" "}
@@ -126,6 +153,9 @@ const UserLogin = () => {
                   variant="outlined"
                   autoComplete="off"
                   sx={{ width: "95%" }}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
                 />
                 <br />
                 <br />
@@ -137,6 +167,9 @@ const UserLogin = () => {
                   variant="outlined"
                   autoComplete="off"
                   sx={{ width: "95%", height: "65px" }}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
                 />
                 <br />
                 <div>
