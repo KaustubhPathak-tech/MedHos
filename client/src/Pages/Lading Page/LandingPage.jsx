@@ -9,13 +9,13 @@ import {
   faUserDoctor,
   faUserNurse,
 } from "@fortawesome/free-solid-svg-icons";
-import { Tooltip, Typography } from "@mui/material";
+import { Tooltip ,Typography } from "@mui/material";
 
 const LandingPage = () => {
   return (
     <div className="App-header">
       <div id="header">
-        <Typography variant="h4">
+        <Typography variant="h5">
           Choose Your Role
         </Typography>
       </div>

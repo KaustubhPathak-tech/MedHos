@@ -1,13 +1,4 @@
-#userLogin{
-    /* background-color: #282c34; */
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    /* font-size: calc(10px + 2vmin); */
-    /* color: white; */
-}
+
 #userlogin{
     /* border: 1px solid red; */
     margin: auto;
@@ -21,3 +12,35 @@
       rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
       rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
+
+#loginImg{
+  /* media_fire to be inserted */
+  width: 350px;
+  padding-left: 5%;
+}
+
+#signuphead{
+  text-align: left;
+}
+
+#userForgot{
+  /* border: 1px solid red; */
+  font-size: 13px;
+  padding-left: 57%;
+  text-decoration: none;
+  color: rgb(0, 255, 255);
+}
+
+#usersignup{
+  padding-left: 20px;
+}
+ #signuppromodiv{
+    width: 80%;
+  line-height: 0%;
+ }
+
+#signuppromo{
+  text-align: left;
+  font-size: 12px;
+}
+
