@@ -2,7 +2,7 @@ import React from "react";
 import "./LandingPage.css"
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import { Tooltip ,Typography } from "@mui/material";
+import {Tooltip ,Typography } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHospital,
@@ -13,6 +13,7 @@ import {
 
 
 const LandingPage = () => {
+  
     return (
       <div className="App-header">
         <div id="header">
@@ -26,6 +27,7 @@ const LandingPage = () => {
               <Button
                 variant="outlined"
                 sx={{ width: 200, padding: 5, margin: 0 }}
+                
               href="/user/login">
                 <FontAwesomeIcon icon={faUser} beat size="6x" />
               </Button>

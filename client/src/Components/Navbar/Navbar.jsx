@@ -3,7 +3,7 @@ import { createTheme } from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
-import "./Navbar.css"
+import "./Navbar.css";
 
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -16,9 +16,18 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import logo from "../../Assets/Logo.png"
-const pages = ["Products", "Pricing", "Blog"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+import logo from "../../Assets/Logo.png";
+const pages = ["Find Doctors", "Video Consult", "Medicines", "Lab Tests"];
+const settings = [
+  "My Appointment",
+  "My Tests",
+  "My Medicine Orders",
+  "My Medical Records",
+  "My Online Consultations",
+  "View/Update Profile",
+  "Settings",
+  "Logout",
+];
 
 const lightTheme = createTheme({
   palette: {
@@ -31,9 +40,7 @@ const darkTheme = createTheme({
   },
 });
 
-
-function ResponsiveAppBar({change}) {
-  
+function ResponsiveAppBar({ change }) {
   var isTrueSet = localStorage.getItem("theme") === "true";
   if (isTrueSet) {
     var theme = darkTheme;
@@ -58,11 +65,8 @@ function ResponsiveAppBar({change}) {
     setAnchorElUser(null);
   };
 
-  
-
-  
   return (
-    <AppBar position="fixed" id="navBar" sx={{color:"black"}}>
+    <AppBar position="fixed" id="navBar" sx={{ color: "black" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
@@ -80,7 +84,7 @@ function ResponsiveAppBar({change}) {
               textDecoration: "none",
             }}
           >
-            <img src={logo} height="50px" alt="logo"/>
+            <img src={logo} height="50px" alt="logo" />
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -94,7 +98,7 @@ function ResponsiveAppBar({change}) {
             >
               <MenuIcon />
             </IconButton>
-            
+
             <Menu
               id="menu-appbar"
               anchorEl={anchorElNav}
@@ -120,7 +124,7 @@ function ResponsiveAppBar({change}) {
               ))}
             </Menu>
           </Box>
-          
+
           <Typography
             variant="h5"
             noWrap
@@ -137,29 +141,30 @@ function ResponsiveAppBar({change}) {
               textDecoration: "none",
             }}
           >
-            <img src={logo} height="50px" alt="logo"/>
+            <img src={logo} height="50px" alt="logo" />
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "#02e9fa", display: "block" }}
+                sx={{ my: 1, color: "#03618a", display: "block",fontStyle:"inherit",textTransform:"none" }}
               >
                 {page}
               </Button>
             ))}
           </Box>
-          <IconButton sx={{ ml: 1 }} onClick={()=>change()} color="inherit">
-          {theme.palette.mode === "dark" ? (
-            <Brightness7Icon />
-          ) : (
-            <Brightness4Icon />
-          )}
-        </IconButton>
+          <IconButton sx={{ ml: 1 }} onClick={() => change()} color="inherit">
+            {theme.palette.mode === "dark" ? (
+              <Brightness7Icon />
+            ) : (
+              <Brightness4Icon />
+            )}
+          </IconButton>
+
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+              <IconButton sx={{ p: 0 }} onClick={handleOpenUserMenu}>
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
               </IconButton>
             </Tooltip>
