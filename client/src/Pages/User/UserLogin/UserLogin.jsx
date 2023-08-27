@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { useNavigate,} from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
+import { useNavigate } from "react-router-dom";
 import "../../../../node_modules/bootstrap/dist/css/bootstrap-grid.css";
 import {
   Card,
@@ -15,27 +16,27 @@ import useAuth from "../../../hooks/useAuth";
 import login_img from "../../../Assets/login_img.webp";
 import "./UserLogin.css";
 
-import { signup,login } from "../../../actions/auth";
+import { signup, login } from "../../../actions/auth";
 
 const UserLogin = () => {
-  const {setAuth}=useAuth();
-  
+  const { setAuth } = useAuth();
+  const { loginWithRedirect } = useAuth0();
   const [Switch, setSwitch] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const userType="user";
+  const userType = "user";
+
   const handleLogin = (e) => {
     e.preventDefault();
-    setAuth({email,password});
-    dispatch(login({email,password,userType},navigate));
-    
+    setAuth({ email, password });
+    dispatch(login({ email, password, userType }, navigate));
   };
   const handleRegister = (e) => {
     e.preventDefault();
-    dispatch(signup({ name, email, password,userType}, navigate));
+    dispatch(signup({ name, email, password, userType }, navigate));
   };
   return (
     <div style={{ width: "96%" }}>
@@ -140,8 +141,25 @@ const UserLogin = () => {
                     >
                       Register
                     </Button>
+                    <br />
+                    <br />
+                    <span style={{ textAlign: "center" }}>or</span>
+                    <br />
+                    <br />
+                    <Button
+                      onClick={() => loginWithRedirect()}
+                      variant="contained"
+                      color="primary"
+                      sx={{
+                        width: "100%",
+                        textTransform: "none",
+                      }}
+                    >
+                      Continue with Quick Login
+                    </Button>
                   </CardContent>
                 </Card>
+                <br />
               </div>
             </>
           ) : (
@@ -190,6 +208,22 @@ const UserLogin = () => {
                   sx={{ width: "95%" }}
                 >
                   Login
+                </Button>
+                <br />
+                <br />
+                <span style={{ textAlign: "center" }}>or</span>
+                <br />
+                <br />
+                <Button
+                  onClick={() => loginWithRedirect()}
+                  variant="contained"
+                  color="primary"
+                  sx={{
+                    width: "100%",
+                    textTransform: "none",
+                  }}
+                >
+                  Continue with Quick Login
                 </Button>
               </div>
             </>

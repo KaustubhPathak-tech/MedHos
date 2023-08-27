@@ -16,20 +16,13 @@ import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
 import MenuItem from "@mui/material/MenuItem";
 import logo from "../../Assets/Logo.png";
+import { useAuth0 } from "@auth0/auth0-react";
 import { useDispatch, useSelector } from "react-redux";
 const pages = ["Find Doctors", "Video Consult", "Medicines", "Lab Tests"];
-const settings = [
-  "My Appointment",
-  "My Tests",
-  "My Medicine Orders",
-  "My Medical Records",
-  "My Online Consultations",
-  "View/Update Profile",
-  "Settings",
-  "Logout",
-];
 
 const lightTheme = createTheme({
   palette: {
@@ -43,6 +36,14 @@ const darkTheme = createTheme({
 });
 
 function ResponsiveAppBar({ change }) {
+  const [open, setOpen] = React.useState(false);
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const { logout, user } = useAuth0();
   const dispatch = useDispatch();
   var User = useSelector((state) => state.fetch_current_userReducer);
   React.useEffect(() => {
@@ -52,7 +53,7 @@ function ResponsiveAppBar({ change }) {
     const existingtoken = User?.token;
     if (existingtoken) {
       const decodedToken = decode(existingtoken);
-      if (decodedToken.exp*1000 < new Date().getTime()) {
+      if (decodedToken.exp * 1000 < new Date().getTime()) {
         dispatch(setCurrentUser(null));
       }
     }
@@ -81,6 +82,14 @@ function ResponsiveAppBar({ change }) {
     setAnchorElUser(null);
   };
 
+  const handleLogout = (e) => {
+    e.preventDefault();
+    handleOpen();
+    handleCloseUserMenu();
+    dispatch(setCurrentUser(null));
+    logout({ logoutParams: { returnTo: window.location.origin } });
+    localStorage.clear();
+  };
   return (
     <AppBar position="fixed" id="navBar" sx={{ color: "black" }}>
       <Container maxWidth="xl">
@@ -103,6 +112,13 @@ function ResponsiveAppBar({ change }) {
             <img src={logo} height="50px" alt="logo" />
           </Typography>
 
+          <Backdrop
+            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={open}
+            onClick={handleClose}
+          >
+            <CircularProgress color="inherit" />
+          </Backdrop>
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
@@ -176,7 +192,7 @@ function ResponsiveAppBar({ change }) {
               </Button>
             ))}
           </Box>
-          <Typography>{User?.result?.name}</Typography>
+          <Typography>{User?.result?.name || user?.name}</Typography>
           <IconButton sx={{ ml: 1 }} onClick={() => change()} color="inherit">
             {theme.palette.mode === "dark" ? (
               <Brightness7Icon />
@@ -207,11 +223,36 @@ function ResponsiveAppBar({ change }) {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
+              <MenuItem onClick={handleCloseUserMenu}>
+                <Typography textAlign="center">My Appointments</Typography>
+              </MenuItem>
+              <MenuItem onClick={handleCloseUserMenu}>
+                <Typography textAlign="center">My Tests</Typography>
+              </MenuItem>
+              <MenuItem onClick={handleCloseUserMenu}>
+                <Typography textAlign="center">My Medicine Orders</Typography>
+              </MenuItem>
+              <MenuItem onClick={handleCloseUserMenu}>
+                <Typography textAlign="center">My Medical Records</Typography>
+              </MenuItem>
+              <MenuItem onClick={handleCloseUserMenu}>
+                <Typography textAlign="center">
+                  My Online Consultation
+                </Typography>
+              </MenuItem>
+              <MenuItem onClick={handleCloseUserMenu}>
+                <Typography textAlign="center">My Feedback</Typography>
+              </MenuItem>
+              <MenuItem onClick={handleCloseUserMenu}>
+                <Typography textAlign="center">View/Update Profile</Typography>
+              </MenuItem>
+              <MenuItem onClick={handleCloseUserMenu}>
+                <Typography textAlign="center">Settings</Typography>
+              </MenuItem>
+              <MenuItem onClick={handleLogout}>
+                
+                <Typography textAlign="center">Logout</Typography>
+              </MenuItem>
             </Menu>
           </Box>
         </Toolbar>

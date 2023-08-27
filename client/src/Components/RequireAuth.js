@@ -4,9 +4,10 @@ import { useSelector } from "react-redux";
 
 const RequireAuth = () => {
   // const { auth } = useAuth();
+  
   const location = useLocation();
   var User = useSelector((state) => (state.fetch_current_userReducer));
-  return User?.token ? (
+  return (User?.token||User?.name)? (
     <Navigate to="/user/dash" />
   ) : (
     <Navigate to="/user/login" state={{ from: location }} replace />
