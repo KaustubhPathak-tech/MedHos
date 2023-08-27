@@ -2,6 +2,8 @@ import * as api from "../api";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {setCurrentUser} from "./currentUser"
+
+
 export const signup = (authData, navigate) => async (dispatch) => {
     try {
       const { data } = await api.signUp(authData);
@@ -14,8 +16,8 @@ export const signup = (authData, navigate) => async (dispatch) => {
   };
   export const login = (authData, navigate) => async (dispatch) => {
     try {
-      
       const { data } = await api.logIn(authData);
+      
   
       dispatch({ type: "LOGIN", data });
       dispatch(setCurrentUser(JSON.parse(localStorage.getItem("Profile"))));

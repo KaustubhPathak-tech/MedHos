@@ -4,7 +4,8 @@ import IconButton from "@mui/material/IconButton";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import "./Navbar.css";
-
+import decode from "jwt-decode";
+import { setCurrentUser } from "../../actions/currentUser";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -17,7 +18,7 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import logo from "../../Assets/Logo.png";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 const pages = ["Find Doctors", "Video Consult", "Medicines", "Lab Tests"];
 const settings = [
   "My Appointment",
@@ -42,8 +43,20 @@ const darkTheme = createTheme({
 });
 
 function ResponsiveAppBar({ change }) {
-  var User = useSelector((state) => (state.fetch_current_userReducer));
-
+  const dispatch = useDispatch();
+  var User = useSelector((state) => state.fetch_current_userReducer);
+  React.useEffect(() => {
+    dispatch(setCurrentUser(JSON.parse(localStorage.getItem("Profile"))));
+  }, [dispatch]);
+  React.useEffect(() => {
+    const existingtoken = User?.token;
+    if (existingtoken) {
+      const decodedToken = decode(existingtoken);
+      if (decodedToken.exp*1000 < new Date().getTime()) {
+        dispatch(setCurrentUser(null));
+      }
+    }
+  }, [dispatch, User]);
   var isTrueSet = localStorage.getItem("theme") === "true";
   if (isTrueSet) {
     var theme = darkTheme;
@@ -69,7 +82,6 @@ function ResponsiveAppBar({ change }) {
   };
 
   return (
-
     <AppBar position="fixed" id="navBar" sx={{ color: "black" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
@@ -152,15 +164,19 @@ function ResponsiveAppBar({ change }) {
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 1, color: "#03618a", display: "block",fontStyle:"inherit",textTransform:"none" }}
+                sx={{
+                  my: 1,
+                  color: "#03618a",
+                  display: "block",
+                  fontStyle: "inherit",
+                  textTransform: "none",
+                }}
               >
                 {page}
               </Button>
             ))}
           </Box>
-          <Typography>
-            {User?.result?.name}
-          </Typography>
+          <Typography>{User?.result?.name}</Typography>
           <IconButton sx={{ ml: 1 }} onClick={() => change()} color="inherit">
             {theme.palette.mode === "dark" ? (
               <Brightness7Icon />

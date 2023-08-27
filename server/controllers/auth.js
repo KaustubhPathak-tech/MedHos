@@ -8,7 +8,7 @@ dotenv.config();
 
 
 export const signup = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password ,userType} = req.body;
   try {
     const existinguser = await users.findOne({ email });
 
@@ -28,6 +28,7 @@ export const signup = async (req, res) => {
       email,
       password: hashedPassword,
       avatar:"https://w7.pngwing.com/pngs/754/2/png-transparent-samsung-galaxy-a8-a8-user-login-telephone-avatar-pawn-blue-angle-sphere-thumbnail.png",
+      userType
       
     });
 
@@ -49,7 +50,7 @@ export const signup = async (req, res) => {
 };
 
 export const login = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password ,userType} = req.body;
 
   try {
     const existinguser = await users.findOne({ email });

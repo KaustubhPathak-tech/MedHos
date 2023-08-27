@@ -21,11 +21,19 @@ const darkTheme = createTheme({
 });
 
 function App() {
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState(true);
   const handleTheme = () => {
-    setChecked(!checked);
-    localStorage.setItem("theme", checked);
+    try{
+      setChecked(!checked);
+      console.log("theme changed !")
+      localStorage.setItem("theme",checked);
+    }
+    catch(error){
+      alert(error);
+    }
+    
   };
+  console.log(localStorage.getItem("theme"));
   var isTrueSet = localStorage.getItem("theme") === "true";
   if (isTrueSet) {
     var theme = darkTheme;

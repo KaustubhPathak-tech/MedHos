@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,} from "react-router-dom";
 import "../../../../node_modules/bootstrap/dist/css/bootstrap-grid.css";
 import {
   Card,
@@ -11,25 +11,31 @@ import {
   Typography,
   Checkbox,
 } from "@mui/material";
+import useAuth from "../../../hooks/useAuth";
 import login_img from "../../../Assets/login_img.webp";
 import "./UserLogin.css";
 
 import { signup,login } from "../../../actions/auth";
 
 const UserLogin = () => {
+  const {setAuth}=useAuth();
+  
   const [Switch, setSwitch] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const userType="user";
   const handleLogin = (e) => {
     e.preventDefault();
-    dispatch(login({email,password},navigate))
+    setAuth({email,password});
+    dispatch(login({email,password,userType},navigate));
+    
   };
   const handleRegister = (e) => {
     e.preventDefault();
-    dispatch(signup({ name, email, password }, navigate));
+    dispatch(signup({ name, email, password,userType}, navigate));
   };
   return (
     <div style={{ width: "96%" }}>
