@@ -13,6 +13,8 @@ import {
   Checkbox,
 } from "@mui/material";
 import jwt_decode from "jwt-decode"
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
 import useAuth from "../../../hooks/useAuth";
 import login_img from "../../../Assets/login_img.webp";
 import "./UserLogin.css";
@@ -22,8 +24,15 @@ import { signup, login,glogin } from "../../../actions/auth";
 
 
 const UserLogin = () => {
+  const [open, setOpen] = React.useState(false);
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleOpen = () => {
+    setOpen(true);
+  };
   const { setAuth } = useAuth();
-  const { loginWithRedirect } = useAuth0();
+  
   const [Switch, setSwitch] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -44,6 +53,10 @@ const UserLogin = () => {
     let email = googleuser?.email;
     let pic = googleuser?.picture;
     let password = googleuser?.sub;
+    handleOpen();
+    setTimeout(() => {
+      handleClose();
+    }, 5000);
     dispatch(glogin({ name, email, pic, password }, navigate));
   }
 
@@ -69,11 +82,19 @@ const UserLogin = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
+    handleOpen();
+    setTimeout(() => {
+      handleClose();
+    }, 5000);
     setAuth({ email, password });
     dispatch(login({ email, password, userType }, navigate));
   };
   const handleRegister = (e) => {
     e.preventDefault();
+    handleOpen();
+    setTimeout(() => {
+      handleClose();
+    }, 5000);
     dispatch(signup({ name, email, password, userType }, navigate));
   };
   return (

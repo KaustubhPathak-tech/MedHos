@@ -85,10 +85,13 @@ function ResponsiveAppBar({ change }) {
   const handleLogout = (e) => {
     e.preventDefault();
     handleOpen();
+    setTimeout(() => {
+      handleClose();
+    }, 2000);
     handleCloseUserMenu();
     dispatch(setCurrentUser(null));
-    logout({ logoutParams: { returnTo: window.location.origin } });
     localStorage.clear();
+    
   };
   return (
     <AppBar position="fixed" id="navBar" sx={{ color: "black" }}>
