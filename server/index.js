@@ -15,6 +15,9 @@ app.use(express.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 app.use("/user", userRoutes);
 
+
+app.get("/",function(){"<h3>Hurray ! We did it !</h3>"})
+
 const PORT = process.env.PORT || 7000;
 const DATABASE = process.env.CONNECTION_URL;
 mongoose
