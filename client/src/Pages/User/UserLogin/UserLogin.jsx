@@ -44,7 +44,7 @@ const UserLogin = () => {
     let email = googleuser?.email;
     let pic = googleuser?.picture;
     let password = googleuser?.sub;
-
+    console.log(googleuser);
     dispatch(glogin({ name, email, pic, password }, navigate));
   }
 

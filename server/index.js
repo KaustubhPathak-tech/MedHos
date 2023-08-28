@@ -16,7 +16,9 @@ app.use(cors());
 app.use("/user", userRoutes);
 
 
-app.get("/",function(){"<h3>Hurray ! We did it !</h3>"})
+app.get("/", (req, res) => {
+  res.send("<h1>Hurray! Server is Running</h1>");
+});
 
 const PORT = process.env.PORT || 7000;
 const DATABASE = process.env.CONNECTION_URL;
