@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from "react-router-dom";
 import "../../../../node_modules/bootstrap/dist/css/bootstrap-grid.css";
 import {
@@ -12,16 +11,13 @@ import {
   Typography,
   Checkbox,
 } from "@mui/material";
-import jwt_decode from "jwt-decode"
+import jwt_decode from "jwt-decode";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import useAuth from "../../../hooks/useAuth";
 import login_img from "../../../Assets/login_img.webp";
 import "./UserLogin.css";
-import { signup, login,glogin } from "../../../actions/auth";
-
-
-
+import { signup, login, glogin } from "../../../actions/auth";
 
 const UserLogin = () => {
   const [open, setOpen] = React.useState(false);
@@ -32,7 +28,7 @@ const UserLogin = () => {
     setOpen(true);
   };
   const { setAuth } = useAuth();
-  
+
   const [Switch, setSwitch] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -45,7 +41,6 @@ const UserLogin = () => {
       navigate("/user/dash");
     }
   }, [navigate]);
-
 
   function handleCallbackResponse(res) {
     var googleuser = jwt_decode(res.credential);
@@ -60,25 +55,21 @@ const UserLogin = () => {
     dispatch(glogin({ name, email, pic, password }, navigate));
   }
 
-  
-
   useEffect(() => {
     /* global google */
-  google.accounts.id.initialize({
-    client_id:
-      "347055010781-0e81d5agrtrdgsscfcgvjqaqnjlsgvlf.apps.googleusercontent.com",
-    callback: handleCallbackResponse,
+    google.accounts.id.initialize({
+      client_id:
+        "347055010781-0e81d5agrtrdgsscfcgvjqaqnjlsgvlf.apps.googleusercontent.com",
+      callback: handleCallbackResponse,
+    });
+    google.accounts.id.renderButton(document.getElementById("GoogleLogin"), {
+      scope: "profile email",
+      width: 290,
+      height: 50,
+      longtitle: true,
+      theme: "default",
+    });
   });
-  google.accounts.id.renderButton(document.getElementById("GoogleLogin"), {
-    scope: "profile email",
-    width: 240,
-    height: 50,
-    longtitle: true,
-    theme: "default",
-  });
-    
-  }, []);
-  
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -105,6 +96,13 @@ const UserLogin = () => {
         </Typography>
       </div>
       <br />
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={open}
+        onClick={handleClose}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <div className="row">
         <div id="login/signup">
           <Button variant="outlined" onClick={() => setSwitch(false)}>
@@ -258,10 +256,7 @@ const UserLogin = () => {
                 <span style={{ textAlign: "center" }}>or</span>
                 <br />
                 <br />
-                <div id="GoogleLogin">
-
-                </div>
-                
+                <div id="GoogleLogin"></div>
               </div>
             </>
           )}

@@ -3,5 +3,5 @@ import {glogin, login, signup } from "../controllers/auth.js";
 const router = express.Router();
 router.post("/signup", signup);
 router.post("/login", login);
-router.post("/glogin", login);
+router.post("/glogin", glogin);
 export default router

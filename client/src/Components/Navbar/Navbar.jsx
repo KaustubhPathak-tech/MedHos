@@ -43,7 +43,7 @@ function ResponsiveAppBar({ change }) {
   const handleOpen = () => {
     setOpen(true);
   };
-  const { logout, user } = useAuth0();
+  const {  user } = useAuth0();
   const dispatch = useDispatch();
   var User = useSelector((state) => state.fetch_current_userReducer);
   React.useEffect(() => {
