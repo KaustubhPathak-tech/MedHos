@@ -7,7 +7,8 @@ const RequireAuth = () => {
   
   const location = useLocation();
   var User = useSelector((state) => (state.fetch_current_userReducer));
-  return (User?.token||User?.name)? (
+  console.log(User);
+  return (User?.user?.name)? (
     <Navigate to="/user/dash" />
   ) : (
     <Navigate to="/user/login" state={{ from: location }} replace />

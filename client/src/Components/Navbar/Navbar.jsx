@@ -192,7 +192,7 @@ function ResponsiveAppBar({ change }) {
               </Button>
             ))}
           </Box>
-          <Typography>{User?.result?.name || user?.name}</Typography>
+          <Typography>{User?.user?.name || user?.name}</Typography>
           <IconButton sx={{ ml: 1 }} onClick={() => change()} color="inherit">
             {theme.palette.mode === "dark" ? (
               <Brightness7Icon />

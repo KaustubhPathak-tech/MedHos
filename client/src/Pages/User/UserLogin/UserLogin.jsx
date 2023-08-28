@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -12,11 +12,14 @@ import {
   Typography,
   Checkbox,
 } from "@mui/material";
+import jwt_decode from "jwt-decode"
 import useAuth from "../../../hooks/useAuth";
 import login_img from "../../../Assets/login_img.webp";
 import "./UserLogin.css";
+import { signup, login,glogin } from "../../../actions/auth";
 
-import { signup, login } from "../../../actions/auth";
+
+
 
 const UserLogin = () => {
   const { setAuth } = useAuth();
@@ -28,6 +31,42 @@ const UserLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const userType = "user";
+  useEffect(() => {
+    if (localStorage.getItem("Profile")) {
+      navigate("/user/dash");
+    }
+  }, [navigate]);
+
+
+  function handleCallbackResponse(res) {
+    var googleuser = jwt_decode(res.credential);
+    let name = googleuser?.name;
+    let email = googleuser?.email;
+    let pic = googleuser?.picture;
+    let password = googleuser?.sub;
+
+    dispatch(glogin({ name, email, pic, password }, navigate));
+  }
+
+  
+
+  useEffect(() => {
+    /* global google */
+  google.accounts.id.initialize({
+    client_id:
+      "347055010781-0e81d5agrtrdgsscfcgvjqaqnjlsgvlf.apps.googleusercontent.com",
+    callback: handleCallbackResponse,
+  });
+  google.accounts.id.renderButton(document.getElementById("GoogleLogin"), {
+    scope: "profile email",
+    width: 240,
+    height: 50,
+    longtitle: true,
+    theme: "default",
+  });
+    
+  }, []);
+  
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -142,21 +181,6 @@ const UserLogin = () => {
                       Register
                     </Button>
                     <br />
-                    <br />
-                    <span style={{ textAlign: "center" }}>or</span>
-                    <br />
-                    <br />
-                    <Button
-                      onClick={() => loginWithRedirect()}
-                      variant="contained"
-                      color="primary"
-                      sx={{
-                        width: "100%",
-                        textTransform: "none",
-                      }}
-                    >
-                      Continue with Quick Login
-                    </Button>
                   </CardContent>
                 </Card>
                 <br />
@@ -214,17 +238,10 @@ const UserLogin = () => {
                 <span style={{ textAlign: "center" }}>or</span>
                 <br />
                 <br />
-                <Button
-                  onClick={() => loginWithRedirect()}
-                  variant="contained"
-                  color="primary"
-                  sx={{
-                    width: "100%",
-                    textTransform: "none",
-                  }}
-                >
-                  Continue with Quick Login
-                </Button>
+                <div id="GoogleLogin">
+
+                </div>
+                
               </div>
             </>
           )}

@@ -42,7 +42,7 @@ export const signup = async (req, res) => {
       );
       res
       .status(200)
-      .json({ result: newUser, time: Date.now(),token });
+      .json({ user: newUser, time: Date.now(),token });
   } catch (error) {
     console.log(error);
     res.status(500).json("Something went wrong...");
@@ -75,7 +75,68 @@ export const login = async (req, res) => {
 
     res
       .status(200)
-      .json({ result: existinguser, time: Date.now(),token });
+      .json({ user: existinguser, time: Date.now(),token });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json("Something went wrong...");
+  }
+};
+export const glogin = async (req, res) => {
+  const { name, email, pic, password } = req.body;
+  try {
+    const existinguser = await users.findOne({ email });
+   
+
+    if (!existinguser) {
+      try {
+        const hashedPassword = await bcrypt.hash(password, 12);
+
+        const newUser = await users.create({
+          name,
+          email,
+          password: hashedPassword,
+          avatar:pic,
+          
+        });
+        newUser.save().catch((err) => {
+          console.log(err);
+          res.json({
+            status: "FAILED",
+            message: "An error occured while saving account.",
+          });
+        });
+        const token = jwt.sign(
+          { email: email, id: password },
+          process.env.JWT_SECRET,
+          {
+            expiresIn: "1h",
+          }
+        );
+        return res.status(200).json({ user: newUser, token });
+      } catch (error) {
+        res.status(500).json("Something went wrong...");
+      }
+    }
+    const isPasswordCrt = await bcrypt.compare(password, existinguser.password);
+    
+    if (!isPasswordCrt) {
+      return res.status(400).send("Invalid Password ");
+    }
+    
+    const token = jwt.sign(
+      { email: existinguser.email, id: existinguser._id },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "1h",
+      }
+    );
+    {
+      /*Highlyconfidential*/
+    }
+
+    res
+      .status(200)
+      .json({ user: existinguser, time: Date.now(), token });
   } catch (error) {
     console.log(error);
     res.status(500).json("Something went wrong...");

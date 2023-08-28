@@ -27,3 +27,15 @@ export const signup = (authData, navigate) => async (dispatch) => {
       <ToastContainer />;
     }
   };
+  export const glogin = (authData, navigate) => async (dispatch) => {
+    try {
+      
+      const { data } = await api.glogIn(authData);
+      dispatch({ type: "LOGIN", data });
+      dispatch(setCurrentUser(JSON.parse(localStorage.getItem("Profile"))));
+      navigate("/");
+    } catch (error) {
+      toast.error(error.response.data, { position: "top-center" });
+      <ToastContainer />;
+    }
+  };
