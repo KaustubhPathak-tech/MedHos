@@ -82,7 +82,7 @@ export const login = async (req, res) => {
   }
 };
 export const glogin = async (req, res) => {
-  const { name, email, pic, password } = req.body;
+  const { name, email, pic, password,userType } = req.body;
   try {
     const existinguser = await users.findOne({ email });
    
@@ -96,6 +96,7 @@ export const glogin = async (req, res) => {
           email,
           password: hashedPassword,
           avatar:pic,
+          userType
           
         });
         newUser.save().catch((err) => {

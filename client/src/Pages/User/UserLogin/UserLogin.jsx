@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { message } from "antd";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import "../../../../node_modules/bootstrap/dist/css/bootstrap-grid.css";
@@ -11,14 +12,18 @@ import {
   Typography,
   Checkbox,
 } from "@mui/material";
-import jwt_decode from "jwt-decode";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import useAuth from "../../../hooks/useAuth";
 import login_img from "../../../Assets/login_img.webp";
 import "./UserLogin.css";
 import { signup, login, glogin } from "../../../actions/auth";
-
+import { LoginSocialGoogle } from "reactjs-social-login";
+import {
+  
+  GoogleLoginButton,
+  
+} from "react-social-login-buttons";
 const UserLogin = () => {
   const [open, setOpen] = React.useState(false);
   const handleClose = () => {
@@ -43,34 +48,31 @@ const UserLogin = () => {
   }, [navigate]);
 
   function handleCallbackResponse(res) {
-    var googleuser = jwt_decode(res.credential);
-    let name = googleuser?.name;
-    let email = googleuser?.email;
-    let pic = googleuser?.picture;
-    let password = googleuser?.sub;
+    // var googleuser = jwt_decode(res.credential);
+    let name = res?.name;
+    let email = res?.email;
+    let pic = res?.picture;
+    let password = res?.sub;
     handleOpen();
     setTimeout(() => {
       handleClose();
     }, 5000);
-    dispatch(glogin({ name, email, pic, password }, navigate));
+    dispatch(glogin({ name, email, pic, password, userType}, navigate));
+    message.success("Login Successfully");
   }
 
-  useEffect(() => {
-    /* global google */
-    google.accounts.id.initialize({
-      client_id:
-        "347055010781-0e81d5agrtrdgsscfcgvjqaqnjlsgvlf.apps.googleusercontent.com",
-      callback: handleCallbackResponse,
-    });
-    google.accounts.id.renderButton(document.getElementById("GoogleLogin"), {
-      scope: "profile email",
-      width: 290,
-      height: 50,
-      longtitle: true,
-      theme: "default",
-    });
-  });
-
+  // google.accounts.id.initialize({
+  //   client_id:
+  //     "347055010781-0e81d5agrtrdgsscfcgvjqaqnjlsgvlf.apps.googleusercontent.com",
+  //   callback: handleCallbackResponse,
+  // });
+  // google.accounts.id.renderButton(document.getElementById("GoogleLogin"), {
+  //   scope: "profile email",
+  //   width: 290,
+  //   height: 50,
+  //   longtitle: true,
+  //   theme: "default",
+  // });
   const handleLogin = (e) => {
     e.preventDefault();
     handleOpen();
@@ -79,6 +81,7 @@ const UserLogin = () => {
     }, 5000);
     setAuth({ email, password });
     dispatch(login({ email, password, userType }, navigate));
+    message.success("Login Successfully");
   };
   const handleRegister = (e) => {
     e.preventDefault();
@@ -87,6 +90,7 @@ const UserLogin = () => {
       handleClose();
     }, 5000);
     dispatch(signup({ name, email, password, userType }, navigate));
+    message.success("Registered Successfully");
   };
   return (
     <div style={{ width: "96%" }}>
@@ -110,7 +114,7 @@ const UserLogin = () => {
           </Button>
           &nbsp;
           <Button variant="outlined" onClick={() => setSwitch(true)}>
-            Sign up
+            Register
           </Button>
         </div>
       </div>
@@ -256,8 +260,25 @@ const UserLogin = () => {
                 <span style={{ textAlign: "center" }}>or</span>
                 <br />
                 <br />
-                <div id="GoogleLogin"></div>
+                {/* <div id="GoogleLogin"></div> */}
+                <LoginSocialGoogle
+                  // isOnlyGetToken
+                  client_id={"347055010781-0e81d5agrtrdgsscfcgvjqaqnjlsgvlf.apps.googleusercontent.com"}
+                  // onLoginStart={onLoginStart}
+                  onResolve={({ provider, data }) => {
+                    
+                    handleCallbackResponse(data);
+                  }}
+                  onReject={(err) => {
+                    console.log(err);
+                  }}
+                >
+                  <GoogleLoginButton />
+                </LoginSocialGoogle>
+                
+                
               </div>
+              
             </>
           )}
         </div>

@@ -4,14 +4,14 @@ import { useSelector } from "react-redux";
 
 const RequireAuth = () => {
   // const { auth } = useAuth();
-  
+
   const location = useLocation();
-  var User = useSelector((state) => (state.fetch_current_userReducer));
-  console.log(User);
-  return (User?.user?.name)? (
-    <Navigate to="/user/dash" />
+  var User = useSelector((state) => state.fetch_current_userReducer);
+  
+  return User?.user?.name ? (
+    <Navigate to={"/user/dash"} />
   ) : (
-    <Navigate to="/user/login" state={{ from: location }} replace />
+    <Navigate to={"/user/login"} state={{ from: location }} replace />
   );
 };
 

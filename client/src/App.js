@@ -33,7 +33,6 @@ function App() {
     }
     
   };
-  console.log(localStorage.getItem("theme"));
   var isTrueSet = localStorage.getItem("theme") === "true";
   if (isTrueSet) {
     var theme = darkTheme;
