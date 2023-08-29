@@ -1,10 +1,15 @@
+import "./DoctorLogin.css";
 import {
+  Card,
   Backdrop,
   Box,
   Button,
   CircularProgress,
   TextField,
   Typography,
+  CardContent,
+  Container,
+  Grid,FormControl,InputLabel,Select,MenuItem
 } from "@mui/material";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
@@ -17,10 +22,11 @@ import { message } from "antd";
 import { doctorlogin, doctorsignup } from "../../../actions/auth";
 
 const DoctorLogin = () => {
+  // stepper settings
   const steps = [
-    "Select campaign settings",
-    "Create an ad group",
-    "Create an ad",
+    "Personal Details",
+    "Educational Details",
+    "Professional Details",
   ];
 
   const [activeStep, setActiveStep] = React.useState(0);
@@ -72,6 +78,7 @@ const DoctorLogin = () => {
     setCompleted({});
   };
 
+  //backdrop settings
   const [open, setOpen] = React.useState(false);
   const handleClose = () => {
     setOpen(false);
@@ -79,6 +86,8 @@ const DoctorLogin = () => {
   const handleOpen = () => {
     setOpen(true);
   };
+
+  //custom settings
   const [Switch, setSwitch] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -99,8 +108,27 @@ const DoctorLogin = () => {
     dispatch(doctorlogin({ email, password, userType }, navigate));
     message.success("Login Successfully as Doctor ! ");
   };
+
+  //Doctor Registration
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    gender: "",
+    specialization: "",
+  });
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // Handle form submission here
+    console.log(formData);
+  };
   return (
-    <div style={{ width: "96%" }}>
+    <div id="doctorloginPage">
       <div className="row">
         <Typography id="modal-modal-title" variant="h7" component="h2">
           Please Login to continue
@@ -126,10 +154,10 @@ const DoctorLogin = () => {
         </div>
       </div>
       <br />
-      <div className="row">
+      <div className="row" id="doctorRegister">
         {Switch ? (
-          <>
-            <div className="usersignup" id="usersignup">
+          <div id="doctorsignup">
+            <div>
               <Box sx={{ width: "100%" }}>
                 <Stepper nonLinear activeStep={activeStep}>
                   {steps.map((label, index) => (
@@ -155,9 +183,88 @@ const DoctorLogin = () => {
                     </React.Fragment>
                   ) : (
                     <React.Fragment>
-                      <Typography sx={{ mt: 2, mb: 1, py: 1 }}>
-                        Step {activeStep + 1}
-                      </Typography>
+                      {activeStep === 0 ? (
+                        <>
+                          <Container maxWidth="md">
+                            <Typography variant="h4" gutterBottom>
+                              Doctor Registration Form
+                            </Typography>
+                            <form onSubmit={handleSubmit}>
+                              <Grid container spacing={2}>
+                                <Grid item xs={6}>
+                                  <TextField
+                                    fullWidth
+                                    label="First Name"
+                                    name="firstName"
+                                    value={formData.firstName}
+                                    onChange={handleInputChange}
+                                    required
+                                  />
+                                </Grid>
+                                <Grid item xs={6}>
+                                  <TextField
+                                    fullWidth
+                                    label="Last Name"
+                                    name="lastName"
+                                    value={formData.lastName}
+                                    onChange={handleInputChange}
+                                    required
+                                  />
+                                </Grid>
+                                <Grid item xs={12}>
+                                  <TextField
+                                    fullWidth
+                                    type="email"
+                                    label="Email"
+                                    name="email"
+                                    value={formData.email}
+                                    onChange={handleInputChange}
+                                    required
+                                  />
+                                </Grid>
+                                <Grid item xs={12}>
+                                  <FormControl fullWidth>
+                                    <InputLabel>Gender</InputLabel>
+                                    <Select
+                                      name="gender"
+                                      value={formData.gender}
+                                      onChange={handleInputChange}
+                                      required
+                                    >
+                                      <MenuItem value="male">Male</MenuItem>
+                                      <MenuItem value="female">Female</MenuItem>
+                                      <MenuItem value="other">Other</MenuItem>
+                                    </Select>
+                                  </FormControl>
+                                </Grid>
+                                <Grid item xs={12}>
+                                  <TextField
+                                    fullWidth
+                                    label="Specialization"
+                                    name="specialization"
+                                    value={formData.specialization}
+                                    onChange={handleInputChange}
+                                    required
+                                  />
+                                </Grid>
+                              </Grid>
+                              <Button
+                                type="submit"
+                                variant="contained"
+                                color="primary"
+                                sx={{ mt: 2 }}
+                              >
+                                Register
+                              </Button>
+                            </form>
+                          </Container>
+                        </>
+                      ) : (
+                        <></>
+                      )}
+                      {activeStep === 1 ? <>Step 2</> : <></>}
+                      {activeStep === 2 ? <>Step 3 </> : <></>}
+
                       <Box
                         sx={{ display: "flex", flexDirection: "row", pt: 2 }}
                       >
@@ -194,52 +301,56 @@ const DoctorLogin = () => {
                 </div>
               </Box>
             </div>
-          </>
+          </div>
         ) : (
-          <>
-            <div id="doctorlogin" style={{ textAlign: "center" }}>
-              <TextField
-                id="outlined-basic"
-                name="email"
-                type="text"
-                label="Mobile Number or Email ID"
-                variant="outlined"
-                autoComplete="off"
-                sx={{ width: "95%" }}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                }}
-              />
-              <br />
-              <br />
-              <TextField
-                id="outlined-basic-1"
-                name="password"
-                type="password"
-                label="Password"
-                variant="outlined"
-                autoComplete="off"
-                sx={{ width: "95%", height: "65px" }}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
-              />
-              <br />
-              <div>
-                <Link to="/user/forgotpassword" id="userForgot">
-                  Forgot Password ?
-                </Link>
-              </div>
-              <br />
-              <Button
-                variant="contained"
-                onClick={handleLogin}
-                sx={{ width: "95%" }}
-              >
-                Login
-              </Button>
+          <div id="doctorlogin">
+            <div style={{ textAlign: "center" }}>
+              <Card sx={{ width: "320px" }}>
+                <CardContent>
+                  <TextField
+                    id="outlined-basic"
+                    name="email"
+                    type="text"
+                    label="Mobile Number or Email ID"
+                    variant="outlined"
+                    autoComplete="off"
+                    sx={{ width: "95%" }}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                    }}
+                  />
+                  <br />
+                  <br />
+                  <TextField
+                    id="outlined-basic-1"
+                    name="password"
+                    type="password"
+                    label="Password"
+                    variant="outlined"
+                    autoComplete="off"
+                    sx={{ width: "95%", height: "65px" }}
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                    }}
+                  />
+                  <br />
+                  <div>
+                    <Link to="/user/forgotpassword" id="userForgot">
+                      Forgot Password ?
+                    </Link>
+                  </div>
+                  <br />
+                  <Button
+                    variant="contained"
+                    onClick={handleLogin}
+                    sx={{ width: "95%" }}
+                  >
+                    Login
+                  </Button>
+                </CardContent>
+              </Card>
             </div>
-          </>
+          </div>
         )}
       </div>
     </div>

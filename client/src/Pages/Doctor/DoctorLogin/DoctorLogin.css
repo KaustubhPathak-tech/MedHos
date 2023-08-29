@@ -1,0 +1,15 @@
+#doctorloginPage{
+    width: 96%;
+    margin-top: 60px;
+}
+
+#doctorlogin{
+    /* border: 1px solid red; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    text-align: center;
+    width: 100%;
+    /* max-width: fit-content */
+}

@@ -1,4 +1,7 @@
-
+#userloginPage{
+  width: 96%;
+  margin-top: 60px;
+}
 #userlogin{
     /* border: 1px solid red; */
     margin: auto;

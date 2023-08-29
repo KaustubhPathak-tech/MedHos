@@ -1,5 +1,15 @@
 import * as React from "react";
 import { createTheme } from "@mui/material/styles";
+
+//drawer imports
+import Drawer from "@mui/material/Drawer";
+import List from "@mui/material/List";
+import Divider from "@mui/material/Divider";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+
 import IconButton from "@mui/material/IconButton";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
@@ -36,6 +46,77 @@ const darkTheme = createTheme({
 });
 
 function ResponsiveAppBar({ change }) {
+  //drawer settings
+  const [state, setState] = React.useState({
+    top: false,
+    left: false,
+    bottom: false,
+    right: false,
+  });
+
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setState({ ...state, [anchor]: open });
+  };
+
+  const list = (anchor) => (
+    <Box
+      sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
+      role="presentation"
+      onClick={toggleDrawer(anchor, false)}
+      onKeyDown={toggleDrawer(anchor, false)}
+    >
+      <List>
+        <ListItem disablePadding>
+          <ListItemButton>Find Doctors</ListItemButton>
+         
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton>Video Consult</ListItemButton>
+         
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton>Medicines</ListItemButton>
+         
+        </ListItem><ListItem disablePadding>
+          <ListItemButton>Lab Tests</ListItemButton>
+         
+        </ListItem>
+
+        {/* {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
+          <ListItem key={text} disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItemButton>
+          </ListItem>
+        ))} */}
+      </List>
+      {/* <Divider />
+      <List>
+        {["All mail", "Trash", "Spam"].map((text, index) => (
+          <ListItem key={text} disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List> */}
+    </Box>
+  );
+
+  //backdrop settings
   const [open, setOpen] = React.useState(false);
   const handleClose = () => {
     setOpen(false);
@@ -43,6 +124,7 @@ function ResponsiveAppBar({ change }) {
   const handleOpen = () => {
     setOpen(true);
   };
+
   const { user } = useAuth0();
   const dispatch = useDispatch();
   var User = useSelector((state) => state.fetch_current_userReducer);
@@ -121,18 +203,30 @@ function ResponsiveAppBar({ change }) {
           >
             <CircularProgress color="inherit" />
           </Backdrop>
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+
+          <React.Fragment>
             <IconButton
               size="large"
               aria-label="account of current user"
               aria-controls="menu-appbar"
               aria-haspopup="true"
-              onClick={handleOpenNavMenu}
+              onClick={toggleDrawer("left", true)}
               color="inherit"
+              sx={{ display: { xs: "flex", md: "none" } }}
             >
               <MenuIcon />
             </IconButton>
 
+            <Drawer
+              anchor="left"
+              open={state["left"]}
+              onClose={toggleDrawer("left", false)}
+            >
+              {list("left")}
+            </Drawer>
+          </React.Fragment>
+
+          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <Menu
               id="menu-appbar"
               anchorEl={anchorElNav}
@@ -194,6 +288,7 @@ function ResponsiveAppBar({ change }) {
               </Button>
             ))}
           </Box>
+
           <Typography>{User?.user?.name || user?.name}</Typography>
           <IconButton sx={{ ml: 1 }} onClick={() => change()} color="inherit">
             {theme.palette.mode === "dark" ? (

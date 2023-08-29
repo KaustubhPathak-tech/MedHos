@@ -19,11 +19,7 @@ import login_img from "../../../Assets/login_img.webp";
 import "./UserLogin.css";
 import { signup, login, glogin } from "../../../actions/auth";
 import { LoginSocialGoogle } from "reactjs-social-login";
-import {
-  
-  GoogleLoginButton,
-  
-} from "react-social-login-buttons";
+import { GoogleLoginButton } from "react-social-login-buttons";
 const UserLogin = () => {
   const [open, setOpen] = React.useState(false);
   const handleClose = () => {
@@ -57,7 +53,7 @@ const UserLogin = () => {
     setTimeout(() => {
       handleClose();
     }, 5000);
-    dispatch(glogin({ name, email, pic, password, userType}, navigate));
+    dispatch(glogin({ name, email, pic, password, userType }, navigate));
     message.success("Login Successfully");
   }
 
@@ -93,7 +89,7 @@ const UserLogin = () => {
     message.success("Registered Successfully");
   };
   return (
-    <div style={{ width: "96%" }}>
+    <div id="userloginPage">
       <div className="row">
         <Typography id="modal-modal-title" variant="h7" component="h2">
           Please Login to continue
@@ -215,6 +211,24 @@ const UserLogin = () => {
                 id="userlogin"
                 style={{ textAlign: "center" }}
               >
+                <LoginSocialGoogle
+                  // isOnlyGetToken
+                  client_id={
+                    "347055010781-0e81d5agrtrdgsscfcgvjqaqnjlsgvlf.apps.googleusercontent.com"
+                  }
+                  // onLoginStart={onLoginStart}
+                  onResolve={({ provider, data }) => {
+                    handleCallbackResponse(data);
+                  }}
+                  onReject={(err) => {
+                    console.log(err);
+                  }}
+                >
+                  <GoogleLoginButton />
+                </LoginSocialGoogle>
+                <br />
+                <div>Or</div>
+                <br />
                 <TextField
                   id="outlined-basic"
                   name="email"
@@ -255,30 +269,8 @@ const UserLogin = () => {
                 >
                   Login
                 </Button>
-                <br />
-                <br />
-                <span style={{ textAlign: "center" }}>or</span>
-                <br />
-                <br />
-                {/* <div id="GoogleLogin"></div> */}
-                <LoginSocialGoogle
-                  // isOnlyGetToken
-                  client_id={"347055010781-0e81d5agrtrdgsscfcgvjqaqnjlsgvlf.apps.googleusercontent.com"}
-                  // onLoginStart={onLoginStart}
-                  onResolve={({ provider, data }) => {
-                    
-                    handleCallbackResponse(data);
-                  }}
-                  onReject={(err) => {
-                    console.log(err);
-                  }}
-                >
-                  <GoogleLoginButton />
-                </LoginSocialGoogle>
-                
-                
               </div>
-              
+              <br />
             </>
           )}
         </div>
