@@ -6,14 +6,17 @@ import dotenv from "dotenv"
 import mongoose from "mongoose";
 
 import userRoutes from "./routes/users.js";
-
+import doctorRoutes from "./routes/doctors.js"
 const app = express();
 dotenv.config();
 
 app.use(express.json({ limit: "30mb", extended: true }));
 app.use(express.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
+
+
 app.use("/user", userRoutes);
+app.use("/doctor",doctorRoutes);
 
 
 app.get("/", (req, res) => {

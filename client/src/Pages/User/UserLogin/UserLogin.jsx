@@ -4,6 +4,8 @@ import { message } from "antd";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import "../../../../node_modules/bootstrap/dist/css/bootstrap-grid.css";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import {
   Card,
   CardContent,
@@ -11,6 +13,11 @@ import {
   TextField,
   Typography,
   Checkbox,
+  FormControl,
+  InputLabel,
+  OutlinedInput,
+  InputAdornment,
+  IconButton,
 } from "@mui/material";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -36,6 +43,11 @@ const UserLogin = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = React.useState(false);
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
   const userType = "user";
   useEffect(() => {
     if (localStorage.getItem("Profile")) {
@@ -163,20 +175,41 @@ const UserLogin = () => {
                         setEmail(e.target.value);
                       }}
                     />
-                    <TextField
-                      label="Password"
-                      name="password"
-                      type="password"
-                      sx={{
-                        width: "100%",
-                        marginBottom: (theme) => theme.spacing(2),
-                      }}
+
+                    <FormControl
+                      sx={{ m: 1, width: "36ch" }}
                       variant="outlined"
-                      onChange={(e) => {
-                        setPassword(e.target.value);
-                      }}
-                      autoComplete="off"
-                    />
+                    >
+                      <InputLabel htmlFor="outlined-adornment-password">
+                        Password
+                      </InputLabel>
+                      <OutlinedInput
+                        id="outlined-adornment-password"
+                        type={showPassword ? "text" : "password"}
+                        sx={{ width: "100%" }}
+                        onChange={(e) => {
+                          setPassword(e.target.value);
+                        }}
+                        endAdornment={
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={handleClickShowPassword}
+                              onMouseDown={handleMouseDownPassword}
+                              edge="end"
+                            >
+                              {showPassword ? (
+                                <VisibilityOff />
+                              ) : (
+                                <Visibility />
+                              )}
+                            </IconButton>
+                          </InputAdornment>
+                        }
+                        label="Password"
+                      />
+                    </FormControl>
+
                     <div id="signuppromodiv">
                       <span>
                         <Checkbox defaultChecked />
@@ -243,18 +276,32 @@ const UserLogin = () => {
                 />
                 <br />
                 <br />
-                <TextField
-                  id="outlined-basic-1"
-                  name="password"
-                  type="password"
-                  label="Password"
-                  variant="outlined"
-                  autoComplete="off"
-                  sx={{ width: "95%", height: "65px" }}
-                  onChange={(e) => {
-                    setPassword(e.target.value);
-                  }}
-                />
+                <FormControl sx={{ m: 1, width: "30ch" }} variant="outlined">
+                  <InputLabel htmlFor="outlined-adornment-password">
+                    Password
+                  </InputLabel>
+                  <OutlinedInput
+                    id="outlined-adornment-password"
+                    type={showPassword ? "text" : "password"}
+                    sx={{ width: "100%" }}
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                    }}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                    label="Password"
+                  />
+                </FormControl>
                 <br />
                 <div>
                   <Link to="/user/forgotpassword" id="userForgot">

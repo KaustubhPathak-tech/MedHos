@@ -15,6 +15,20 @@ export const signup = (authData, navigate) => async (dispatch) => {
       toast.error(error.response.data, { position: "top-center" });
     }
   };
+
+  export const doctorsignup = (authData, navigate) => async (dispatch) => {
+    try {
+      // console.log(authData);
+      const { data } = await api.doctorsignUp(authData);
+      
+      dispatch({ type: "SIGNUP", data });
+      dispatch(setCurrentUser(JSON.parse(localStorage.getItem("Profile"))));
+      message.success("Congratulations, Registered as Doctor Successfully !");
+      navigate("/doctor/dash");
+    } catch (error) {
+      toast.error(error.response.data, { position: "top-center" });
+    }
+  };
   export const login = (authData, navigate) => async (dispatch) => {
     try {
       const { data } = await api.logIn(authData);
@@ -46,9 +60,7 @@ export const signup = (authData, navigate) => async (dispatch) => {
 
   export const doctorlogin = (authData, navigate) => async (dispatch) => {
     try {
-      const { data } = await api.logIn(authData);
-      
-  
+      const { data } = await api.dlogIn(authData);
       dispatch({ type: "LOGIN", data });
       dispatch(setCurrentUser(JSON.parse(localStorage.getItem("Profile"))));
       message.success("Login as Doctor Successfully !");

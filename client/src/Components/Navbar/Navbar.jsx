@@ -4,11 +4,8 @@ import { createTheme } from "@mui/material/styles";
 //drawer imports
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
-import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
 
 import IconButton from "@mui/material/IconButton";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
@@ -149,9 +146,7 @@ function ResponsiveAppBar({ change }) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
+ 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -174,6 +169,13 @@ function ResponsiveAppBar({ change }) {
     dispatch(setCurrentUser(null));
     localStorage.clear();
   };
+  var redirect="";
+  if(User){
+    redirect=`/${User?.user?.userType}/dash`;
+  }
+  else{
+    redirect="/";
+  }
   return (
     <AppBar position="fixed" id="navBar" sx={{ color: "black" }}>
       <Container maxWidth="xl">
@@ -182,7 +184,7 @@ function ResponsiveAppBar({ change }) {
             variant="h6"
             noWrap
             component="a"
-            href="/"
+            href={redirect}
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -257,7 +259,7 @@ function ResponsiveAppBar({ change }) {
             variant="h5"
             noWrap
             component="a"
-            href="/"
+            href={redirect}
             sx={{
               mr: 2,
               display: { xs: "flex", md: "none" },
