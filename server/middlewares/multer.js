@@ -18,14 +18,14 @@ const fileFilter = (req, file, cb) => {
   ) {
     cb(null, true);
   } else {
-    cb(null, true);
+    cb(null, false);
   }
 };
 
 export const upload = multer({
   storage: storage,
   limits: {
-    fileSize: 10000024 * 1000000024 * 50000000,
+    fileSize: 1024 * 1024 * 50,
   },
   fileFilter: fileFilter,
 });
