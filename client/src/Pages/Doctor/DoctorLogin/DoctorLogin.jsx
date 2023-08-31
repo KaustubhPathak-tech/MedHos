@@ -63,9 +63,7 @@ const DoctorLogin = () => {
       message.error(error);
     }
   };
-
   //google-map-api-settings
-
   const [location, setLocation] = useState(null);
   const [weather, setWeather] = useState(null);
 
@@ -718,8 +716,8 @@ const DoctorLogin = () => {
                                 <Card>
                                   <br />
                                   <div className="row">
-                                    <div className="col-lg-4"></div>
-                                    <div className="col-lg-8">
+                                    <div className="col-lg-3"></div>
+                                    <div className="col-lg-6">
                                       <div
                                         class="input-group mb-3 shadow-none"
                                         id="inputFile"
@@ -731,8 +729,8 @@ const DoctorLogin = () => {
                                           required
                                         />
                                         <label
-                                          class="input-group-text"
-                                          for="inputGroupFile02"
+                                          className="input-group-text"
+                                          htmlForfor="inputGroupFile02"
                                           style={{cursor:"pointer"}}
                                         >
                                           <FontAwesomeIcon
