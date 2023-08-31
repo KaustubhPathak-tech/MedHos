@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import { Provider } from "react-redux";
-import { AuthProvider } from "./context/AuthContext";
 import { Auth0Provider } from "@auth0/auth0-react";
 import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
@@ -22,9 +21,7 @@ root.render(
           redirect_uri: window.location.origin,
         }}
       >
-        <AuthProvider>
           <App />
-        </AuthProvider>
       </Auth0Provider>
     </React.StrictMode>
   </Provider>

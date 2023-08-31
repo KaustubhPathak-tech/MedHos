@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from "react";
+
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
 import { message } from "antd";
 import { useDispatch } from "react-redux";
@@ -21,7 +24,6 @@ import {
 } from "@mui/material";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
-import useAuth from "../../../hooks/useAuth";
 import login_img from "../../../Assets/login_img.webp";
 import "./UserLogin.css";
 import { signup, login, glogin } from "../../../actions/auth";
@@ -35,7 +37,6 @@ const UserLogin = () => {
   const handleOpen = () => {
     setOpen(true);
   };
-  const { setAuth } = useAuth();
 
   const [Switch, setSwitch] = useState(false);
   const dispatch = useDispatch();
@@ -87,9 +88,8 @@ const UserLogin = () => {
     setTimeout(() => {
       handleClose();
     }, 5000);
-    setAuth({ email, password });
     dispatch(login({ email, password, userType }, navigate));
-    message.success("Login Successfully");
+   
   };
   const handleRegister = (e) => {
     e.preventDefault();
@@ -98,7 +98,7 @@ const UserLogin = () => {
       handleClose();
     }, 5000);
     dispatch(signup({ name, email, password, userType }, navigate));
-    message.success("Registered Successfully");
+    // message.success("Registered Successfully");
   };
   return (
     <div id="userloginPage">
@@ -126,6 +126,7 @@ const UserLogin = () => {
           </Button>
         </div>
       </div>
+
       <br />
       <div className="row">
         <div className="col-lg-6">
@@ -322,6 +323,7 @@ const UserLogin = () => {
           )}
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

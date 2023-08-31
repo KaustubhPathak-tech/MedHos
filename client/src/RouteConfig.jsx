@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import UserAuth from "./Components/Protected/UserAuth";
+import RequireAuth from "./Components/Protected/UserAuth";
 import DoctorAuth from "./Components/Protected/DoctorAuth";
 import LandingPage from "./Pages/Landing Page/LandingPage";
 import UserLogin from "./Pages/User/UserLogin/UserLogin";
@@ -12,12 +12,12 @@ const RouteConfig = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<LandingPage />}></Route>
+        <Route exact path="/" element={<LandingPage />} />
 
         <Route path="/user/login" element={<UserLogin />} />
         <Route path="/doctor/login" element={<DoctorLogin />} />
 
-        <Route element={<UserAuth />}>
+        <Route element={<RequireAuth />}>
           <Route path="/user/dash" element={<UserDash />} />
         </Route>
 

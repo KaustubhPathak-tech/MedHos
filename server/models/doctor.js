@@ -11,7 +11,7 @@ const doctorSchema = mongoose.Schema({
     type: String,
   },
   userType:{type:String,},
-  
+  file:{type:String,}
   
   
 });

@@ -7,6 +7,7 @@ import mongoose from "mongoose";
 
 import userRoutes from "./routes/users.js";
 import doctorRoutes from "./routes/doctors.js"
+import itemRoutes from "./routes/item.js"
 const app = express();
 dotenv.config();
 
@@ -17,7 +18,7 @@ app.use(cors());
 
 app.use("/user", userRoutes);
 app.use("/doctor",doctorRoutes);
-
+app.use("/item",itemRoutes);
 
 app.get("/", (req, res) => {
   res.send("<h1>Hurray! Server is Running</h1>");

@@ -1,16 +1,18 @@
 import "./DoctorLogin.css";
 //time-picker imports
 import dayjs from "dayjs";
+import {message} from "antd"
+import "../../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
-
-import { MuiFileInput } from "mui-file-input";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLocation } from "@fortawesome/free-solid-svg-icons";
+import { faLocation, faUpload } from "@fortawesome/free-solid-svg-icons";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-
+import axios from "axios";
 import {
   Card,
   Backdrop,
@@ -40,15 +42,27 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepButton from "@mui/material/StepButton";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { message } from "antd";
-
 import { doctorlogin, doctorsignup } from "../../../actions/auth";
-
 const DoctorLogin = () => {
-  //map
+  //file upload
+
+  const fileInputRef = useRef(null);
+  const handleUpload = async (e) => {
+    // e.preventDefault();
+    try {
+      const formData = new FormData();
+      formData.append("file", fileInputRef.current.files[0]);
+      const res = await axios.post("http://localhost:7000/item", formData);
+      console.log(res.data);
+      message.success(res.data);
+    } catch (error) {
+      console.log(error);
+      message.error(error);
+    }
+  };
 
   //google-map-api-settings
 
@@ -140,6 +154,8 @@ const DoctorLogin = () => {
     newCompleted[activeStep] = true;
     setCompleted(newCompleted);
     handleNext();
+    
+    
   };
 
   const handleReset = () => {
@@ -181,16 +197,14 @@ const DoctorLogin = () => {
       handleClose();
     }, 5000);
     dispatch(doctorlogin({ email, password, userType }, navigate));
-    message.success("Login Successfully as Doctor ! ");
   };
   const [selectedDate, handleDateChange] = useState(new Date());
-
   //Doctor Registration
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     email: "",
-    password:"",
+    password: "",
     gender: "",
     specialization: "",
     contact: "",
@@ -213,7 +227,8 @@ const DoctorLogin = () => {
   var city = "";
   weather ? (city = weather.name) : <></>;
 
-  const [file, setFile] = React.useState(null);
+  console.log(city);
+  console.log(selectedDate);
 
   var days = [];
   Monday ? <>{days.push(Monday)}</> : <></>;
@@ -223,12 +238,17 @@ const DoctorLogin = () => {
   Friday ? <>{days.push(Friday)}</> : <></>;
   Saturday ? <>{days.push(Saturday)}</> : <></>;
   Sunday ? <>{days.push(Sunday)}</> : <></>;
-
   //sessions
   const [docSes1s, setDocSes1s] = React.useState(dayjs("2022-04-17T15:30"));
   const [docSes1e, setDocSes1e] = React.useState(dayjs("2022-04-17T15:30"));
   const [docSes2s, setDocSes2s] = React.useState(dayjs("2022-04-17T15:30"));
   const [docSes2e, setDocSes2e] = React.useState(dayjs("2022-04-17T15:30"));
+
+  console.log(docSes1s);
+  console.log(docSes1e);
+  console.log(docSes2s);
+  console.log(docSes2e);
+  console.log(days);
 
   const handleInputChange = (event, weather) => {
     const { name, value } = event.target;
@@ -242,10 +262,6 @@ const DoctorLogin = () => {
     setInterval(() => {
       handleClose();
     }, 5000);
-  };
-
-  const handleChange = (newFile) => {
-    setFile(newFile);
   };
 
   // var mapboxgl = require("mapbox-gl/dist/mapbox-gl.js");
@@ -500,7 +516,6 @@ const DoctorLogin = () => {
                                     {weather ? <div></div> : null}
                                   </div>
                                 </Grid>
-
                                 <Grid id="headings">
                                   <Typography fontWeight="600">
                                     Medical Registration
@@ -702,11 +717,42 @@ const DoctorLogin = () => {
                               <Grid item xs={12}>
                                 <Card>
                                   <br />
-                                  <MuiFileInput
-                                    value={file}
-                                    onChange={handleChange}
+                                  <div className="row">
+                                    <div className="col-lg-4"></div>
+                                    <div className="col-lg-8">
+                                      <div
+                                        class="input-group mb-3 shadow-none"
+                                        id="inputFile"
+                                      >
+                                        <input
+                                          type="file"
+                                          class="form-control shadow-none"
+                                          ref={fileInputRef}
+                                          required
+                                        />
+                                        <label
+                                          class="input-group-text"
+                                          for="inputGroupFile02"
+                                          style={{cursor:"pointer"}}
+                                        >
+                                          <FontAwesomeIcon
+                                            icon={faUpload}
+                                            size="2x"
+                                            onClick={handleUpload}
+                                          />
+                                        </label>
+                                      </div>
+                                    </div>
+                                    <div className="col-lg-2"></div>
+                                  </div>
+
+                                  {/* <input
+                                    type="file" id="fileInput"
+                                    ref={fileInputRef}
+                                    placeholder="Upload file"
                                     label="Choose a file"
                                   />
+                                  <Button onClick={handleUpload}>Upload</Button> */}
                                   <br />
                                   <br />
                                   <Typography fontSize="10" id="plane_content">
@@ -1097,6 +1143,7 @@ const DoctorLogin = () => {
           </div>
         )}
       </div>
+      <ToastContainer />
     </div>
   );
 };

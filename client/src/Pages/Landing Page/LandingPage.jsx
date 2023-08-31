@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./LandingPage.css"
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -10,10 +10,18 @@ import {
   faUserDoctor,
   faUserNurse,
 } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 
 const LandingPage = () => {
-  
+  const navigate=useNavigate();
+  var User = useSelector((state) => state.fetch_current_userReducer);
+  useEffect(() => {
+    if (localStorage.getItem("Profile")) {
+      navigate(`/${User?.user?.userType}/dash`);
+    }
+  }, [navigate,User]);
     return (
       <div className="App-header">
         <div id="header">

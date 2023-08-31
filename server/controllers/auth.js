@@ -3,6 +3,8 @@ import bcrypt from "bcryptjs";
 import users from "../models/auth1.js";
 import doctors from "../models/doctor.js";
 import dotenv from "dotenv";
+import asyncWrapper from "../middlewares/asyncWrapper.js";
+import path from "path";
 
 dotenv.config();
 
@@ -17,7 +19,7 @@ export const signup = async (req, res) => {
       return;
     }
     if (existinguser) {
-      res.status(408).send("User with this Email already exists");
+      res.status(408).send("Account already exists");
       return;
     }
 
@@ -42,12 +44,13 @@ export const signup = async (req, res) => {
     );
     res.status(200).json({ user: newUser, time: Date.now(), token });
   } catch (error) {
-    console.log(error);
+    
     res.status(500).json("Something went wrong...");
   }
 };
 
-export const doctorsignup = async (req, res) => {
+
+export const doctorsignup =async (req, res) => {
   const {
     firstName,
     lastName,
@@ -58,7 +61,7 @@ export const doctorsignup = async (req, res) => {
     doc_experience,
     password,
   } = req.body.formData;
-  const{ formData,userType}=req.body;
+  const{ formData,file,userType}=req.body;
   try {
     
     const existinguser = await doctors.findOne({ email });
@@ -68,7 +71,7 @@ export const doctorsignup = async (req, res) => {
       return;
     }
     if (existinguser) {
-      res.status(408).send("User with this Email already exists");
+      res.status(408).send("Account already exists ");
       return;
     }
 
@@ -85,6 +88,7 @@ export const doctorsignup = async (req, res) => {
       avatar:
         "https://w7.pngwing.com/pngs/754/2/png-transparent-samsung-galaxy-a8-a8-user-login-telephone-avatar-pawn-blue-angle-sphere-thumbnail.png",
       userType,
+      file:file
     });
 
     newDoctor.save();
@@ -109,7 +113,7 @@ export const login = async (req, res) => {
     const existinguser = await users.findOne({ email });
 
     if (!existinguser) {
-      return res.status(404).send("User does not exists, Sign up first");
+      return res.status(404).send("Account not found ");
     }
     const isPasswordCrt = await bcrypt.compare(password, existinguser.password);
 
@@ -139,7 +143,7 @@ export const doctorlogin = async (req, res) => {
     const existinguser = await doctors.findOne({ email });
 
     if (!existinguser) {
-      return res.status(404).send("User does not exists, Sign up first");
+      return res.status(404).send("Account not found ");
     }
     const isPasswordCrt = await bcrypt.compare(password, existinguser.password);
 
