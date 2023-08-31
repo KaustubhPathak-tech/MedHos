@@ -55,7 +55,7 @@ const DoctorLogin = () => {
     try {
       const formData = new FormData();
       formData.append("file", fileInputRef.current.files[0]);
-      const res = await axios.post("http://localhost:7000/item", formData);
+      const res = await axios.post("https://medhosserver.vercel.app/item", formData);
       console.log(res.data);
       message.success(res.data);
     } catch (error) {

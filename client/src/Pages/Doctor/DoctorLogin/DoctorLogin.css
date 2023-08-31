@@ -83,7 +83,7 @@ html {
   -ms-flex-pack: justify;
   justify-content: space-between; 
   padding: 0.4rem 0.8rem;
-  width: 40%;
+  width: fit-content;
 }
 
 .rating-text p {
