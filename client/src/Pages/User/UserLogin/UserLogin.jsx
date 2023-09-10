@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-
+import jwt_decode from "jwt-decode";
+import { GoogleLogin } from "@react-oauth/google";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
 import { message } from "antd";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import "../../../../node_modules/bootstrap/dist/css/bootstrap-grid.css";
 import Visibility from "@mui/icons-material/Visibility";
@@ -27,8 +28,6 @@ import CircularProgress from "@mui/material/CircularProgress";
 import login_img from "../../../Assets/login_img.webp";
 import "./UserLogin.css";
 import { signup, login, glogin } from "../../../actions/auth";
-import { LoginSocialGoogle } from "reactjs-social-login";
-import { GoogleLoginButton } from "react-social-login-buttons";
 const UserLogin = () => {
   const [open, setOpen] = React.useState(false);
   const handleClose = () => {
@@ -40,7 +39,6 @@ const UserLogin = () => {
 
   const [Switch, setSwitch] = useState(false);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -49,19 +47,21 @@ const UserLogin = () => {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-  const userType = "user";
+  const userType="user";
+  var User = useSelector((state) => state.fetch_current_userReducer);
+  const navigate = useNavigate();
   useEffect(() => {
-    if (localStorage.getItem("Profile")) {
+    if (Date.now()<User?.time+3.6e+6) {
       navigate("/user/dash");
     }
-  }, [navigate]);
+  }, [navigate,User]);
 
   function handleCallbackResponse(res) {
-    // var googleuser = jwt_decode(res.credential);
-    let name = res?.name;
-    let email = res?.email;
-    let pic = res?.picture;
-    let password = res?.sub;
+    var googleUser = jwt_decode(res.credential);
+    let name = googleUser?.name;
+    let email = googleUser?.email;
+    let pic = googleUser?.picture;
+    let password = googleUser?.sub;
     handleOpen();
     setTimeout(() => {
       handleClose();
@@ -70,18 +70,6 @@ const UserLogin = () => {
     message.success("Login Successfully");
   }
 
-  // google.accounts.id.initialize({
-  //   client_id:
-  //     "347055010781-0e81d5agrtrdgsscfcgvjqaqnjlsgvlf.apps.googleusercontent.com",
-  //   callback: handleCallbackResponse,
-  // });
-  // google.accounts.id.renderButton(document.getElementById("GoogleLogin"), {
-  //   scope: "profile email",
-  //   width: 290,
-  //   height: 50,
-  //   longtitle: true,
-  //   theme: "default",
-  // });
   const handleLogin = (e) => {
     e.preventDefault();
     handleOpen();
@@ -89,7 +77,6 @@ const UserLogin = () => {
       handleClose();
     }, 5000);
     dispatch(login({ email, password, userType }, navigate));
-   
   };
   const handleRegister = (e) => {
     e.preventDefault();
@@ -245,21 +232,22 @@ const UserLogin = () => {
                 id="userlogin"
                 style={{ textAlign: "center" }}
               >
-                <LoginSocialGoogle
-                  // isOnlyGetToken
-                  client_id={
-                    "347055010781-0e81d5agrtrdgsscfcgvjqaqnjlsgvlf.apps.googleusercontent.com"
-                  }
-                  // onLoginStart={onLoginStart}
-                  onResolve={({ provider, data }) => {
-                    handleCallbackResponse(data);
-                  }}
-                  onReject={(err) => {
-                    console.log(err);
-                  }}
-                >
-                  <GoogleLoginButton />
-                </LoginSocialGoogle>
+                <div id="googleloginbutton">
+                  <GoogleLogin
+                    onSuccess={(credentialResponse) => {
+                      handleCallbackResponse(credentialResponse);
+                    }}
+                    onError={() => {
+                      console.log("Login Failed");
+                    }}
+                    
+                    text="continue_with"
+                    width="290px"
+                    locale="hindi"
+                    logo_alignment="center"
+                  />
+                </div>
+                ;
                 <br />
                 <div>Or</div>
                 <br />

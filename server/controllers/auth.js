@@ -11,7 +11,6 @@ dotenv.config();
 export const signup = async (req, res) => {
   const { name, email, password, userType } = req.body;
   try {
-      
     const existinguser = await users.findOne({ email });
 
     if (password.length < 8) {
@@ -44,13 +43,11 @@ export const signup = async (req, res) => {
     );
     res.status(200).json({ user: newUser, time: Date.now(), token });
   } catch (error) {
-    
     res.status(500).json("Something went wrong...");
   }
 };
 
-
-export const doctorsignup =async (req, res) => {
+export const doctorsignup = async (req, res) => {
   const {
     firstName,
     lastName,
@@ -59,11 +56,11 @@ export const doctorsignup =async (req, res) => {
     specialization,
     doc_fee,
     doc_experience,
+    selectedFile,
     password,
   } = req.body.formData;
-  const{ formData,file,userType}=req.body;
+  const { formData, userType } = req.body;
   try {
-    
     const existinguser = await doctors.findOne({ email });
 
     if (password.length < 8) {
@@ -88,7 +85,7 @@ export const doctorsignup =async (req, res) => {
       avatar:
         "https://w7.pngwing.com/pngs/754/2/png-transparent-samsung-galaxy-a8-a8-user-login-telephone-avatar-pawn-blue-angle-sphere-thumbnail.png",
       userType,
-      file:file
+      file: selectedFile,
     });
 
     newDoctor.save();
@@ -190,10 +187,10 @@ export const glogin = async (req, res) => {
           });
         });
         const token = jwt.sign(
-          { email: email, id: password },
+          { email: email, id: password, },
           process.env.JWT_SECRET,
           {
-            expiresIn: "1h",
+            expiresIn:"1h",
           }
         );
         return res.status(200).json({ user: newUser, token });

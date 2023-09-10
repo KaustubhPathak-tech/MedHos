@@ -18,7 +18,7 @@ const LandingPage = () => {
   const navigate=useNavigate();
   var User = useSelector((state) => state.fetch_current_userReducer);
   useEffect(() => {
-    if (localStorage.getItem("Profile")) {
+    if (Date.now()<User?.time+3.6e+6) {
       navigate(`/${User?.user?.userType}/dash`);
     }
   }, [navigate,User]);

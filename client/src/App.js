@@ -5,9 +5,8 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 
 import ResponsiveAppBar from "./Components/Navbar/Navbar"
-
 import RouteConfig from "./RouteConfig.jsx";
-
+import MyFooter from './Components/Footer/MyFooter.jsx'
 
 const lightTheme = createTheme({
   palette: {
@@ -46,6 +45,7 @@ function App() {
         <ResponsiveAppBar change={handleTheme} />
         <br />
         <RouteConfig />
+        <MyFooter />
       </div>
     </ThemeProvider>
   );

@@ -1,7 +1,7 @@
 import "./DoctorLogin.css";
 //time-picker imports
 import dayjs from "dayjs";
-import {message} from "antd"
+import { message } from "antd";
 import "../../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import { ToastContainer } from "react-toastify";
@@ -36,7 +36,7 @@ import {
   InputAdornment,
   IconButton,
 } from "@mui/material";
-
+import FileBase from "react-file-base64";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Stepper from "@mui/material/Stepper";
@@ -55,7 +55,10 @@ const DoctorLogin = () => {
     try {
       const formData = new FormData();
       formData.append("file", fileInputRef.current.files[0]);
-      const res = await axios.post("https://medhosserver.vercel.app/item", formData);
+      const res = await axios.post(
+        "https://medhosserver.vercel.app/item",
+        formData
+      );
       console.log(res.data);
       message.success(res.data);
     } catch (error) {
@@ -152,8 +155,6 @@ const DoctorLogin = () => {
     newCompleted[activeStep] = true;
     setCompleted(newCompleted);
     handleNext();
-    
-    
   };
 
   const handleReset = () => {
@@ -215,6 +216,7 @@ const DoctorLogin = () => {
     doc_experience: "",
     est_name: "",
     est_city: "",
+    selectedFile: "",
     docSes1_start: "",
     docSes1_end: "",
     docSes2_start: "",
@@ -486,7 +488,7 @@ const DoctorLogin = () => {
                                     }
                                     disabled={weather !== null}
                                     required={weather === null}
-                                    name="city"
+                                    name="local_city"
                                     value={formData.local_city}
                                     onChange={handleInputChange}
                                   ></TextField>
@@ -664,7 +666,7 @@ const DoctorLogin = () => {
                                     }
                                     disabled={weather !== null}
                                     required={weather === null}
-                                    name="city"
+                                    name="est_city"
                                     onChange={handleInputChange}
                                   ></TextField>
                                 </Grid>
@@ -718,28 +720,17 @@ const DoctorLogin = () => {
                                   <div className="row">
                                     <div className="col-lg-3"></div>
                                     <div className="col-lg-6">
-                                      <div
-                                        class="input-group mb-3 shadow-none"
-                                        id="inputFile"
-                                      >
-                                        <input
-                                          type="file"
-                                          class="form-control shadow-none"
-                                          ref={fileInputRef}
-                                          required
-                                        />
-                                        <label
-                                          className="input-group-text"
-                                          htmlForfor="inputGroupFile02"
-                                          style={{cursor:"pointer"}}
-                                        >
-                                          <FontAwesomeIcon
-                                            icon={faUpload}
-                                            size="2x"
-                                            onClick={handleUpload}
-                                          />
-                                        </label>
-                                      </div>
+                                      <FileBase
+                                        type="file"
+                                        multiple={false}
+                                        onDone={({ base64 }) =>
+                                          setFormData({
+                                            ...formData,
+                                            selectedFile: base64,
+                                          })
+                                        }
+                                        required
+                                      />
                                     </div>
                                     <div className="col-lg-2"></div>
                                   </div>

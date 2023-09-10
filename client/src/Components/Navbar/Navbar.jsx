@@ -1,6 +1,5 @@
 import * as React from "react";
 import { createTheme } from "@mui/material/styles";
-
 //drawer imports
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
@@ -29,6 +28,9 @@ import MenuItem from "@mui/material/MenuItem";
 import logo from "../../Assets/Logo.png";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useDispatch, useSelector } from "react-redux";
+
+import { logout } from "../../actions/auth";
+
 const pages = ["Find Doctors", "Video Consult", "Medicines", "Lab Tests"];
 
 const lightTheme = createTheme({
@@ -44,6 +46,7 @@ const darkTheme = createTheme({
 
 function ResponsiveAppBar({ change }) {
   //drawer settings
+
   const [state, setState] = React.useState({
     top: false,
     left: false,
@@ -72,18 +75,15 @@ function ResponsiveAppBar({ change }) {
       <List>
         <ListItem disablePadding>
           <ListItemButton>Find Doctors</ListItemButton>
-         
         </ListItem>
         <ListItem disablePadding>
           <ListItemButton>Video Consult</ListItemButton>
-         
         </ListItem>
         <ListItem disablePadding>
           <ListItemButton>Medicines</ListItemButton>
-         
-        </ListItem><ListItem disablePadding>
+        </ListItem>
+        <ListItem disablePadding>
           <ListItemButton>Lab Tests</ListItemButton>
-         
         </ListItem>
 
         {/* {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
@@ -146,7 +146,6 @@ function ResponsiveAppBar({ change }) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
- 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -166,15 +165,14 @@ function ResponsiveAppBar({ change }) {
       handleClose();
     }, 2000);
     handleCloseUserMenu();
-    dispatch(setCurrentUser(null));
-    localStorage.clear();
+    dispatch(logout());
   };
-  var redirect="";
-  if(User){
-    redirect=`/${User?.user?.userType}/dash`;
-  }
-  else{
-    redirect="/";
+
+  var redirect = "";
+  if (User) {
+    redirect = `/${User?.user?.userType}/dash`;
+  } else {
+    redirect = "/";
   }
   return (
     <AppBar position="fixed" id="navBar" sx={{ color: "black" }}>
@@ -294,9 +292,13 @@ function ResponsiveAppBar({ change }) {
           <Typography>{User?.user?.name || user?.name}</Typography>
           <IconButton sx={{ ml: 1 }} onClick={() => change()} color="inherit">
             {theme.palette.mode === "dark" ? (
-              <Brightness7Icon />
+              <>
+                <Brightness7Icon />
+              </>
             ) : (
-              <Brightness4Icon />
+              <>
+                <Brightness4Icon />
+              </>
             )}
           </IconButton>
           {User === null ? (
