@@ -67,7 +67,7 @@ const UserLogin = () => {
       handleClose();
     }, 5000);
     dispatch(glogin({ name, email, pic, password, userType }, navigate));
-    message.success("Login Successfully");
+    message.success("Login Succesfully")
   }
 
   const handleLogin = (e) => {
@@ -77,6 +77,8 @@ const UserLogin = () => {
       handleClose();
     }, 5000);
     dispatch(login({ email, password, userType }, navigate));
+    message.success("Login Succesfully")
+
   };
   const handleRegister = (e) => {
     e.preventDefault();
@@ -85,7 +87,7 @@ const UserLogin = () => {
       handleClose();
     }, 5000);
     dispatch(signup({ name, email, password, userType }, navigate));
-    // message.success("Registered Successfully");
+    message.success("Registered Successfully");
   };
   return (
     <div id="userloginPage">

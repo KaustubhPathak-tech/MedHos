@@ -1,18 +1,26 @@
-import "./DoctorLogin.css";
+import axios from "axios";
+import React, { useEffect, useState, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import FileBase from "react-file-base64";   
+import { doctorlogin, doctorsignup } from "../../../actions/auth";
+
 //time-picker imports
 import dayjs from "dayjs";
-import { message } from "antd";
-import "../../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
-import { TimePicker } from "@mui/x-date-pickers/TimePicker";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLocation, faUpload } from "@fortawesome/free-solid-svg-icons";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import axios from "axios";
+import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+
+//css
+import "./DoctorLogin.css";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { message } from "antd";
+import "../../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import { faLocation, faUpload } from "@fortawesome/free-solid-svg-icons";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import {
   Card,
   Backdrop,
@@ -36,16 +44,14 @@ import {
   InputAdornment,
   IconButton,
 } from "@mui/material";
-import FileBase from "react-file-base64";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepButton from "@mui/material/StepButton";
-import React, { useEffect, useState, useRef } from "react";
-import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { doctorlogin, doctorsignup } from "../../../actions/auth";
+
+
+
 const DoctorLogin = () => {
   //file upload
 
@@ -66,6 +72,7 @@ const DoctorLogin = () => {
       message.error(error);
     }
   };
+
   //google-map-api-settings
   const [location, setLocation] = useState(null);
   const [weather, setWeather] = useState(null);
@@ -97,14 +104,7 @@ const DoctorLogin = () => {
     console.log("Unable to retrieve your location");
   }
 
-  //day input
-  const [Monday, setMonday] = useState("");
-  const [Tuesday, setTuesday] = useState("");
-  const [Wednesday, setWednesday] = useState("");
-  const [Thursday, setThursday] = useState("");
-  const [Friday, setFriday] = useState("");
-  const [Saturday, setSaturday] = useState("");
-  const [Sunday, setSunday] = useState("");
+  
 
   // stepper settings
   const steps = [
@@ -162,6 +162,7 @@ const DoctorLogin = () => {
     setCompleted({});
   };
 
+
   //backdrop settings
   const [open, setOpen] = React.useState(false);
   const handleClose = () => {
@@ -171,64 +172,17 @@ const DoctorLogin = () => {
     setOpen(true);
   };
 
-  //custom settings
-  const [Switch, setSwitch] = useState(false);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = React.useState(false);
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
-  const userType = "doctor";
-  useEffect(() => {
-    if (localStorage.getItem("Profile")) {
-      navigate("/doctor/dash");
-    }
-  }, [navigate]);
-
-  const handleLogin = (e) => {
-    e.preventDefault();
-    handleOpen();
-    setTimeout(() => {
-      handleClose();
-    }, 5000);
-    dispatch(doctorlogin({ email, password, userType }, navigate));
-  };
-  const [selectedDate, handleDateChange] = useState(new Date());
-  //Doctor Registration
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    gender: "",
-    specialization: "",
-    contact: "",
-    local_city: "",
-    doc_reg_no: "",
-    doc_reg_council: "",
-    doc_reg_year: selectedDate,
-    doc_degree: "",
-    doc_institute: "",
-    doc_experience: "",
-    est_name: "",
-    est_city: "",
-    selectedFile: "",
-    docSes1_start: "",
-    docSes1_end: "",
-    docSes2_start: "",
-    docSes2_end: "",
-    doc_fee: "",
-  });
-
+  
+  //day input
+  const [Monday, setMonday] = useState("");
+  const [Tuesday, setTuesday] = useState("");
+  const [Wednesday, setWednesday] = useState("");
+  const [Thursday, setThursday] = useState("");
+  const [Friday, setFriday] = useState("");
+  const [Saturday, setSaturday] = useState("");
+  const [Sunday, setSunday] = useState("");
   var city = "";
   weather ? (city = weather.name) : <></>;
-
-  console.log(city);
-  console.log(selectedDate);
 
   var days = [];
   Monday ? <>{days.push(Monday)}</> : <></>;
@@ -244,33 +198,81 @@ const DoctorLogin = () => {
   const [docSes2s, setDocSes2s] = React.useState(dayjs("2022-04-17T15:30"));
   const [docSes2e, setDocSes2e] = React.useState(dayjs("2022-04-17T15:30"));
 
-  console.log(docSes1s);
-  console.log(docSes1e);
-  console.log(docSes2s);
-  console.log(docSes2e);
-  console.log(days);
 
+  //custom settings
+  
+
+  const [Switch, setSwitch] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = React.useState(false);
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+  const userType = "doctor";
+  var User = useSelector((state) => state.fetch_current_userReducer);
+  useEffect(() => {
+    if (Date.now()<User?.time+3.6e+6) {
+      navigate("/doctor/dash");
+    }
+  }, [User,navigate]);
+  const [doc_reg_year, setDoc_reg_year] = useState(null);
+  const handleYearChange = (newDate) => {
+    setDoc_reg_year(newDate);  
+  };
+
+  
+  //Doctor Registration
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    gender: "",
+    specialization: "",
+    contact: "",
+    doc_reg_no: "",
+    doc_reg_council: "",
+    doc_degree: "",
+    doc_institute: "",
+    doc_experience: "",
+    est_name: "",
+    selectedFile: "",
+    docSes1_start: "",
+    docSes1_end: "",
+    docSes2_start: "",
+    docSes2_end: "",
+    doc_fee: "",
+  });
+  
   const handleInputChange = (event, weather) => {
     const { name, value } = event.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    handleOpen();
+    setTimeout(() => {
+      handleClose();
+    }, 5000);
+    message.success("Login Successfully");
+    dispatch(doctorlogin({ email, password, userType }, navigate));
+  };
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(doctorsignup({ formData, userType }, navigate));
+    dispatch(doctorsignup({ formData,userType,city,doc_reg_year,days,docSes1s,docSes1e,docSes2s,docSes2e}, navigate));
     handleOpen();
     setInterval(() => {
       handleClose();
     }, 5000);
+    message.success('Registered Successfully');
   };
 
-  // var mapboxgl = require("mapbox-gl/dist/mapbox-gl.js");
-
-  // mapboxgl.accessToken = "pk.eyJ1Ijoidm95YWdlci0wMSIsImEiOiJjbGx2ZzJva3gxZDZ1M2ZvaG05MTkxMTZ1In0.NJscjCKIOq0Kdc6uRaG97g"
-  // var map = new mapboxgl.Map({
-  //   container: 'mapBox',
-  //   style: "mapbox://styles/mapbox/streets-v11",
-  // });
 
   return (
     <div id="doctorloginPage">
@@ -567,8 +569,9 @@ const DoctorLogin = () => {
                                         views={["year"]}
                                         label="Registration Year"
                                         name="doc_reg_year"
-                                        // value={formData.doc_reg_year}
-                                        onChange={handleDateChange}
+                                        value={doc_reg_year}
+                                        onChange={handleYearChange}
+                                        renderInput={(params) => <TextField {...params} label="Select Year" variant="outlined" />}
                                         animateYearScrolling
                                       />
                                     </DemoContainer>

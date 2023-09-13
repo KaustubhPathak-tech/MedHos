@@ -3,8 +3,7 @@ import bcrypt from "bcryptjs";
 import users from "../models/auth1.js";
 import doctors from "../models/doctor.js";
 import dotenv from "dotenv";
-import asyncWrapper from "../middlewares/asyncWrapper.js";
-import path from "path";
+
 
 dotenv.config();
 
@@ -52,14 +51,32 @@ export const doctorsignup = async (req, res) => {
     firstName,
     lastName,
     email,
+    password,
     contact,
     specialization,
-    doc_fee,
+    gender,
+    doc_reg_no,
+    doc_reg_council,
+    doc_degree,
+    doc_institute,
     doc_experience,
+    est_name,
+    doc_fee,
     selectedFile,
-    password,
   } = req.body.formData;
-  const { formData, userType } = req.body;
+  const {
+    formData,
+    userType,
+    city,
+    doc_reg_year,
+    days,
+    docSes1s,
+    docSes1e,
+    docSes2s,
+    docSes2e,
+  } = req.body;
+
+  
   try {
     const existinguser = await doctors.findOne({ email });
 
@@ -79,13 +96,27 @@ export const doctorsignup = async (req, res) => {
       email,
       contact,
       specialization,
-      doc_fee,
+      gender,
+      local_city: city,
+      doc_reg_no,
+      doc_reg_council,
+      doc_reg_year,
+      doc_degree,
+      doc_institute,
       doc_experience,
+      est_name,
+      est_city: city,
+      file: selectedFile,
+      days: days,
+      docSes1_start:docSes1s,
+      docSes1_end:docSes1e,
+      docSes2_start:docSes2s,
+      docSes2_end:docSes2e,
+      doc_fee,
       password: hashedPassword,
       avatar:
         "https://w7.pngwing.com/pngs/754/2/png-transparent-samsung-galaxy-a8-a8-user-login-telephone-avatar-pawn-blue-angle-sphere-thumbnail.png",
       userType,
-      file: selectedFile,
     });
 
     newDoctor.save();
@@ -187,10 +218,10 @@ export const glogin = async (req, res) => {
           });
         });
         const token = jwt.sign(
-          { email: email, id: password, },
+          { email: email, id: password },
           process.env.JWT_SECRET,
           {
-            expiresIn:"1h",
+            expiresIn: "1h",
           }
         );
         return res.status(200).json({ user: newUser, token });
