@@ -1,5 +1,5 @@
 import axios from "axios"
-const API = axios.create({ baseURL: "http://localhost:7000" });//https://medhosserver.vercel.app
+const API = axios.create({ baseURL: "https://medhosserver.vercel.app" });//https://medhosserver.vercel.app
 
 export const logIn = (authData) => API.post("/user/login", authData);
 export const dlogIn = (authData) => API.post("/doctor/login", authData);
