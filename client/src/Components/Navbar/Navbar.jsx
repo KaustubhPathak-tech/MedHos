@@ -289,7 +289,7 @@ function ResponsiveAppBar({ change }) {
             ))}
           </Box>
 
-          <Typography>{User?.user?.name || user?.name}</Typography>
+          {/* <Typography>{User?.user?.name || user?.name}</Typography> */}
           <IconButton sx={{ ml: 1 }} onClick={() => change()} color="inherit">
             {theme.palette.mode === "dark" ? (
               <>
@@ -309,8 +309,8 @@ function ResponsiveAppBar({ change }) {
                 <Tooltip title="Open settings">
                   <IconButton sx={{ p: 0 }} onClick={handleOpenUserMenu}>
                     <Avatar
-                      alt="Remy Sharp"
-                      src="/static/images/avatar/2.jpg"
+                      alt={`${User?.user?.name}`}
+                      src="../../Assets/1694272456019.jpg"
                     />
                   </IconButton>
                 </Tooltip>

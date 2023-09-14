@@ -7,6 +7,7 @@ import UserDash from "./Pages/User/UserDash/UserDash";
 import DoctorLogin from "./Pages/Doctor/DoctorLogin/DoctorLogin";
 import DoctorDash from "./Pages/Doctor/DoctorDash/DoctorDash";
 import Missing from "./Pages/Missing/Missing"
+import Payment from "./Pages/Payment";
 
 const RouteConfig = () => {
   return (
@@ -20,6 +21,7 @@ const RouteConfig = () => {
         <Route path="/doctor/login" element={<DoctorLogin />} />
 
         <Route path="/doctor/dash" element={<DoctorDash />} />
+        <Route path="/payment" element={<Payment />} />
         <Route path="*" element={<Missing />}/>
       </Routes>
     </BrowserRouter>

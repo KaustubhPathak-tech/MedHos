@@ -1,5 +1,5 @@
 //eslint version:6
-
+import stripe from 'stripe';
 import express from "express";
 import cors from 'cors'
 import dotenv from "dotenv"
@@ -21,6 +21,34 @@ app.use("/doctor",doctorRoutes);
 app.get("/", (req, res) => {
   res.send("<h1>Hurray! Server is Running</h1>");
 });
+
+//stripe integration
+const stripeInstance = stripe(process.env.Stripe_secret);
+const YOUR_DOMAIN = 'http://localhost:3000';
+app.post('/create-checkout-session', async (req, res) => {
+  const session = await stripeInstance.checkout.sessions.create({
+    line_items: [
+      {
+        // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
+        price_data:{
+          currency:"inr",
+          product_data:{
+            name:"Dakshina"
+          },
+          unit_amount:200
+        },
+        quantity:1,
+        
+      },
+    ],
+    mode: 'payment',
+    success_url: `${YOUR_DOMAIN}/`,
+    cancel_url: `${YOUR_DOMAIN}/Payment`,
+  });
+  console.log("fuction_called");
+  res.json({id:session.id});
+});
+
 
 const PORT = process.env.PORT || 7000;
 const DATABASE = process.env.CONNECTION_URL;

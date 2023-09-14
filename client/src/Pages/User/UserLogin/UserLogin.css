@@ -49,3 +49,13 @@
   font-size: 12px;
 }
 
+
+#phone_code{
+  margin-top: 3px;
+  margin-right:12px;
+  padding:5px 20px 5px 5px;
+  width: 30%;
+  height: 50px;
+  display: inline-block;
+
+}

@@ -20,6 +20,36 @@ export const signup = (authData, navigate) => async (dispatch) => {
   }
 };
 
+export const sendOTP=(authData)=>async()=>{
+  try {
+    const { data } = await api.sendOTP(authData);
+    toast.success("OTP sent Successfully ");
+  } catch (error) {
+    toast.error(error.response.data);
+    <ToastContainer />;
+  }
+}
+export const makePayment=()=>async()=>{
+  try {
+    const { data } = await api.makePayment();
+    toast.success("Payment Done ");
+  } catch (error) {
+    toast.error(error.response.data);
+    <ToastContainer />;
+  }
+}
+export const verifyOTP=(authData,setOtpverified)=>async()=>{
+  try {
+    const { data } = await api.verifyOTP(authData);
+    localStorage.setItem("OTPVerified",data);
+    setOtpverified(true);
+    toast.success("Email verified Successfully ");
+  } catch (error) {
+    toast.error(error.response.data);
+    <ToastContainer />;
+  }
+}
+
 export const doctorsignup = (authData, navigate) => async (dispatch) => {
   try {
     const { data } = await api.doctorsignUp(authData);
