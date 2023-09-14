@@ -12,7 +12,7 @@ export default function Payment() {
     );
 
     const response = await axios.post(
-      "http://localhost:7000/create-checkout-session"
+      "https://medhosserver.vercel.app/create-checkout-session"
     );
     
     
