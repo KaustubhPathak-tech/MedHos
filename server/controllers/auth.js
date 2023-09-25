@@ -195,60 +195,60 @@ export const sendVerificationEmail = async (req, res) => {
     res.status(500).send("Enter valid Email");
   }
 };
-export const sendVerificationSMS = async (req, res) => {
-  const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
-  const { phone_code, phone } = req.body;
-  const apiKey = process.env.D7SMS;
-  const message = {
-    messages: [
-      {
-        channel: "sms",
-        originator: "Kaustubh",
-        recipients: [`+${phone_code + phone}`],
-        content: ` ${otp} is the OTP to verify your Mobile No. valid for 1 hour.Please Do not Share it with anyone. \n-MedHos`,
-        data_coding: "text",
-      },
-    ],
-  };
+// export const sendVerificationSMS = async (req, res) => {
+//   const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
+//   const { phone_code, phone } = req.body;
+//   const apiKey = process.env.D7SMS;
+//   const message = {
+//     messages: [
+//       {
+//         channel: "sms",
+//         originator: "Kaustubh",
+//         recipients: [`+${phone_code + phone}`],
+//         content: ` ${otp} is the OTP to verify your Mobile No. valid for 1 hour.Please Do not Share it with anyone. \n-MedHos`,
+//         data_coding: "text",
+//       },
+//     ],
+//   };
 
-  try {
-    const response = await axios.post(
-      "https://d7sms.p.rapidapi.com/messages/v1/send",
-      message,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Token:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJhdXRoLWJhY2tlbmQ6YXBwIiwic3ViIjoiMmRhMGUyNTgtMzQwMi00NzgzLWEwMzAtOWU3ODJjYWRlYWYzIn0.xjc_sV4-s03tHEOg4o70snKoiz2sLf9in_iia6gwT1o",
-          "X-RapidAPI-Key":
-            "4ed5922f47msh7f03366838e7631p16a99bjsn9ee29cca8d10",
-          "X-RapidAPI-Host": "d7sms.p.rapidapi.com",
-        },
-      }
-    );
-    const Salt = 12;
-    const hashedOTP = await bcrypt.hash(`${otp}`, Salt);
-    // await transporter.sendMail(mailoptions);
-    const newOTPVerification = await UserOTPVerification.create({
-      userEmail: phone_code + phone,
-      otp: hashedOTP,
-      createdAt: Date.now(),
-      expireAt: Date.now() + 3600000,
-    });
-    await newOTPVerification.save();
-    res.json({
-      status: "PENDING",
-      message: "Verification otp SMS sent",
-      data: { phone },
-    });
-  } catch (error) {
-    console.error(
-      "Error sending message:",
-      error.response ? error.response.data : error.message
-    );
-    res.status(500).send("Enter valid Phone Number");
-  }
-};
+//   try {
+//     const response = await axios.post(
+//       "https://d7sms.p.rapidapi.com/messages/v1/send",
+//       message,
+//       {
+//         headers: {
+//           "Content-Type": "application/json",
+//           Token:
+//             "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJhdXRoLWJhY2tlbmQ6YXBwIiwic3ViIjoiMmRhMGUyNTgtMzQwMi00NzgzLWEwMzAtOWU3ODJjYWRlYWYzIn0.xjc_sV4-s03tHEOg4o70snKoiz2sLf9in_iia6gwT1o",
+//           "X-RapidAPI-Key":
+//             "4ed5922f47msh7f03366838e7631p16a99bjsn9ee29cca8d10",
+//           "X-RapidAPI-Host": "d7sms.p.rapidapi.com",
+//         },
+//       }
+//     );
+//     const Salt = 12;
+//     const hashedOTP = await bcrypt.hash(`${otp}`, Salt);
+//     // await transporter.sendMail(mailoptions);
+//     const newOTPVerification = await UserOTPVerification.create({
+//       userEmail: phone_code + phone,
+//       otp: hashedOTP,
+//       createdAt: Date.now(),
+//       expireAt: Date.now() + 3600000,
+//     });
+//     await newOTPVerification.save();
+//     res.json({
+//       status: "PENDING",
+//       message: "Verification otp SMS sent",
+//       data: { phone },
+//     });
+//   } catch (error) {
+//     console.error(
+//       "Error sending message:",
+//       error.response ? error.response.data : error.message
+//     );
+//     res.status(500).send("Enter valid Phone Number");
+//   }
+// };
 
 export const verifyOTP = async (req, res) => {
   const { email, otp } = req.body;
