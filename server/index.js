@@ -21,6 +21,9 @@ app.use("/doctor",doctorRoutes);
 app.get("/", (req, res) => {
   res.send("<h1>Hurray! Server is Running</h1>");
 });
+app.get("/favicon.ico",function(req,res){
+  res.send("<h1>Hurray! Server is Running</h1>");
+})
 
 //stripe integration
 const stripeInstance = stripe(process.env.Stripe_secret);
