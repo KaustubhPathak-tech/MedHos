@@ -1,4 +1,4 @@
-//eslint version:6
+//jshint esversion: 6
 import stripe from 'stripe';
 import express from "express";
 import cors from 'cors'
