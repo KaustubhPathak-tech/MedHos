@@ -12,7 +12,7 @@ export default function Payment() {
     );
 
     const response = await axios.post(
-      "http://localhost:7000/create-checkout-session"
+      "https://fine-puce-hen-wig.cyclic.cloud/create-checkout-session"
     );
     
     
