@@ -24,7 +24,7 @@ app.get("/", (req, res) => {
 
 //stripe integration
 const stripeInstance = stripe(process.env.Stripe_secret);
-const YOUR_DOMAIN = 'http://localhost:3000';
+const YOUR_DOMAIN = 'https://medhos.vercel.app';
 app.post('/create-checkout-session', async (req, res) => {
   const session = await stripeInstance.checkout.sessions.create({
     line_items: [
