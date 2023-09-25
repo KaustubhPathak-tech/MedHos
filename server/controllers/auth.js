@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import axios from "axios";
 import bcrypt from "bcryptjs";
 import users from "../models/auth1.js";
 import doctors from "../models/doctor.js";
@@ -8,6 +9,7 @@ import { google } from "googleapis";
 import UserOTPVerification from "../models/OTP.js";
 
 dotenv.config();
+
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 const REDIRECT_URI = "https://developers.google.com/oauthplayground";
@@ -34,7 +36,7 @@ const transporter = nodemailer.createTransport({
 });
 
 export const signup = async (req, res) => {
-  const { name, email,phone_code,phone, password, userType } = req.body;
+  const { name, email, phone_code, phone, password, userType } = req.body;
   try {
     const existinguser = await users.findOne({ email });
 
@@ -52,7 +54,7 @@ export const signup = async (req, res) => {
     const newUser = await users.create({
       name,
       email,
-      phone:`+${phone_code}-${phone}`,
+      phone: `+${phone_code}-${phone}`,
       password: hashedPassword,
       avatar:
         "https://w7.pngwing.com/pngs/754/2/png-transparent-samsung-galaxy-a8-a8-user-login-telephone-avatar-pawn-blue-angle-sphere-thumbnail.png",
@@ -161,7 +163,7 @@ export const doctorsignup = async (req, res) => {
 };
 
 export const sendVerificationEmail = async (req, res) => {
-  const {email} = req.body;
+  const { email } = req.body;
   try {
     const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
 
@@ -193,6 +195,60 @@ export const sendVerificationEmail = async (req, res) => {
     res.status(500).send("Enter valid Email");
   }
 };
+export const sendVerificationSMS = async (req, res) => {
+  const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
+  const { phone_code, phone } = req.body;
+  const apiKey = process.env.D7SMS;
+  const message = {
+    messages: [
+      {
+        channel: "sms",
+        originator: "Kaustubh",
+        recipients: [`+${phone_code + phone}`],
+        content: ` ${otp} is the OTP to verify your Mobile No. valid for 1 hour.Please Do not Share it with anyone. \n-MedHos`,
+        data_coding: "text",
+      },
+    ],
+  };
+
+  try {
+    const response = await axios.post(
+      "https://d7sms.p.rapidapi.com/messages/v1/send",
+      message,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Token:
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJhdXRoLWJhY2tlbmQ6YXBwIiwic3ViIjoiMmRhMGUyNTgtMzQwMi00NzgzLWEwMzAtOWU3ODJjYWRlYWYzIn0.xjc_sV4-s03tHEOg4o70snKoiz2sLf9in_iia6gwT1o",
+          "X-RapidAPI-Key":
+            "4ed5922f47msh7f03366838e7631p16a99bjsn9ee29cca8d10",
+          "X-RapidAPI-Host": "d7sms.p.rapidapi.com",
+        },
+      }
+    );
+    const Salt = 12;
+    const hashedOTP = await bcrypt.hash(`${otp}`, Salt);
+    // await transporter.sendMail(mailoptions);
+    const newOTPVerification = await UserOTPVerification.create({
+      userEmail: phone_code + phone,
+      otp: hashedOTP,
+      createdAt: Date.now(),
+      expireAt: Date.now() + 3600000,
+    });
+    await newOTPVerification.save();
+    res.json({
+      status: "PENDING",
+      message: "Verification otp SMS sent",
+      data: { phone },
+    });
+  } catch (error) {
+    console.error(
+      "Error sending message:",
+      error.response ? error.response.data : error.message
+    );
+    res.status(500).send("Enter valid Phone Number");
+  }
+};
 
 export const verifyOTP = async (req, res) => {
   const { email, otp } = req.body;
@@ -204,15 +260,15 @@ export const verifyOTP = async (req, res) => {
       return res.status(400).send("Please enter OTP ");
     } else {
       const UserOTPVerificationRecords = await UserOTPVerification.find({
-        _id:otpId,
+        _id: otpId,
       });
       if (UserOTPVerificationRecords.length <= 0) {
         return res.status(404).send("Account record doesn't exists");
       } else {
         const { expireAt } = UserOTPVerificationRecords[0];
-                const hashedOTP = UserOTPVerificationRecords[0].otp;
+        const hashedOTP = UserOTPVerificationRecords[0].otp;
         if (expireAt < Date.now()) {
-          await UserOTPVerification.deleteMany({ _id:otpId });
+          await UserOTPVerification.deleteMany({ _id: otpId });
           return res
             .status(406)
             .send("Code has expired. Please request again !");
@@ -221,7 +277,7 @@ export const verifyOTP = async (req, res) => {
           if (!validOTP) {
             return res.status(409).send("Invalid OTP , Check your Inbox");
           } else {
-            await UserOTPVerification.deleteMany({ _id:otpId });
+            await UserOTPVerification.deleteMany({ _id: otpId });
             return res
               .status(200)
               .json({ result: existingOTP, verified: true });
@@ -297,13 +353,13 @@ export const doctorlogin = async (req, res) => {
 
 export const glogin = async (req, res) => {
   const { name, email, pic, password, userType } = req.body;
+
   try {
     const existinguser = await users.findOne({ email });
 
     if (!existinguser) {
       try {
         const hashedPassword = await bcrypt.hash(password, 12);
-
         const newUser = await users.create({
           name,
           email,
@@ -327,27 +383,31 @@ export const glogin = async (req, res) => {
         );
         return res.status(200).json({ user: newUser, token });
       } catch (error) {
-        res.status(500).json("Something went wrong...");
+        res.status(500).json("Something went wrong!");
       }
-    }
-    const isPasswordCrt = await bcrypt.compare(password, existinguser.password);
+    } else {
+      const isPasswordCrt = await bcrypt.compare(
+        password,
+        existinguser.password
+      );
 
-    if (!isPasswordCrt) {
-      return res.status(400).send("Invalid Password ");
-    }
+      if (!isPasswordCrt) {
+        return res.status(400).send("Invalid Password ");
+      }
 
-    const token = jwt.sign(
-      { email: existinguser.email, id: existinguser._id },
-      process.env.JWT_SECRET,
+      const token = jwt.sign(
+        { email: existinguser.email, id: existinguser._id },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: "1h",
+        }
+      );
       {
-        expiresIn: "1h",
+        /*Highlyconfidential*/
       }
-    );
-    {
-      /*Highlyconfidential*/
-    }
 
-    res.status(200).json({ user: existinguser, time: Date.now(), token });
+      res.status(200).json({ user: existinguser, time: Date.now(), token });
+    }
   } catch (error) {
     console.log(error);
     res.status(500).json("Something went wrong...");

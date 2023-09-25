@@ -5,7 +5,7 @@ import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
-
+import styled from "@emotion/styled";
 import IconButton from "@mui/material/IconButton";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
@@ -32,7 +32,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../actions/auth";
 
 const pages = ["Find Doctors", "Video Consult", "Medicines", "Lab Tests"];
+const StyledHeader = styled(AppBar)`
 
+`;
 const lightTheme = createTheme({
   palette: {
     mode: "light",
@@ -125,6 +127,7 @@ function ResponsiveAppBar({ change }) {
   const { user } = useAuth0();
   const dispatch = useDispatch();
   var User = useSelector((state) => state.fetch_current_userReducer);
+  console.log(User);
   React.useEffect(() => {
     dispatch(setCurrentUser(JSON.parse(localStorage.getItem("Profile"))));
   }, [dispatch]);
@@ -175,7 +178,7 @@ function ResponsiveAppBar({ change }) {
     redirect = "/";
   }
   return (
-    <AppBar position="fixed" id="navBar" sx={{ color: "black" }}>
+    <StyledHeader position="fixed" id="navBar" sx={{ color: "black" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
@@ -193,7 +196,7 @@ function ResponsiveAppBar({ change }) {
               textDecoration: "none",
             }}
           >
-            <img src={logo} height="50px" alt="logo" />
+            <img src={logo} height="40px" alt="logo" />
           </Typography>
 
           <Backdrop
@@ -371,7 +374,7 @@ function ResponsiveAppBar({ change }) {
           )}
         </Toolbar>
       </Container>
-    </AppBar>
+    </StyledHeader>
   );
 }
 export default ResponsiveAppBar;

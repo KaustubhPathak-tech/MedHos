@@ -98,6 +98,7 @@ const UserLogin = () => {
   };
   const userType = "user";
   var User = useSelector((state) => state.fetch_current_userReducer);
+  console.log(User);
   const navigate = useNavigate();
   useEffect(() => {
     if (Date.now() < User?.time + 3.6e6) {
