@@ -11,7 +11,7 @@ import doctorRoutes from "./routes/doctors.js";
 const app = express();
 dotenv.config();
 
-const io = new Server(8000, { cors: true });
+const io = new Server(process.env.ioPORT||8001, { cors: true });
 
 const etoSockets = new Map();
 const socketToEts = new Map();
