@@ -32,9 +32,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../actions/auth";
 
 const pages = ["Find Doctors", "Video Consult", "Medicines", "Lab Tests"];
-const StyledHeader = styled(AppBar)`
-
-`;
+const StyledHeader = styled(AppBar)``;
 const lightTheme = createTheme({
   palette: {
     mode: "light",
@@ -79,7 +77,7 @@ function ResponsiveAppBar({ change }) {
           <ListItemButton>Find Doctors</ListItemButton>
         </ListItem>
         <ListItem disablePadding>
-          <ListItemButton>Video Consult</ListItemButton>
+          <ListItemButton href="/consult">Video Consult</ListItemButton>
         </ListItem>
         <ListItem disablePadding>
           <ListItemButton>Medicines</ListItemButton>
@@ -127,7 +125,6 @@ function ResponsiveAppBar({ change }) {
   const { user } = useAuth0();
   const dispatch = useDispatch();
   var User = useSelector((state) => state.fetch_current_userReducer);
-  console.log(User);
   React.useEffect(() => {
     dispatch(setCurrentUser(JSON.parse(localStorage.getItem("Profile"))));
   }, [dispatch]);
@@ -275,21 +272,20 @@ function ResponsiveAppBar({ change }) {
             <img src={logo} height="50px" alt="logo" />
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{
-                  my: 1,
-                  color: "#03618a",
-                  display: "block",
-                  fontStyle: "inherit",
-                  textTransform: "none",
-                }}
-              >
-                {page}
-              </Button>
-            ))}
+            <Button
+              onClick={handleCloseNavMenu}
+              sx={{
+                my: 1,
+                color: "#03618a",
+                display: "block",
+                fontStyle: "inherit",
+                textTransform: "none",
+              }}
+              href="
+              /consult"
+            >
+              Video Consult
+            </Button>
           </Box>
 
           {/* <Typography>{User?.user?.name || user?.name}</Typography> */}
@@ -309,7 +305,7 @@ function ResponsiveAppBar({ change }) {
           ) : (
             <>
               <Box sx={{ flexGrow: 0 }}>
-                <Tooltip title="Open settings">
+                <Tooltip>
                   <IconButton sx={{ p: 0 }} onClick={handleOpenUserMenu}>
                     <Avatar
                       alt={`${User?.user?.name}`}

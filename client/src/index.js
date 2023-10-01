@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import { Provider } from "react-redux";
+import { SocketProvider } from "./Components/Context/SocketProvider";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
@@ -15,9 +16,11 @@ root.render(
   //
   <Provider store={store}>
     <React.StrictMode>
+      <SocketProvider>
       <GoogleOAuthProvider clientId="347055010781-0e81d5agrtrdgsscfcgvjqaqnjlsgvlf.apps.googleusercontent.com">
         <App />
       </GoogleOAuthProvider>
+      </SocketProvider>
     </React.StrictMode>
   </Provider>
 );

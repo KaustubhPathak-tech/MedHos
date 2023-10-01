@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import FileBase from "react-file-base64";   
+import FileBase from "react-file-base64";
 import { doctorlogin, doctorsignup } from "../../../actions/auth";
 
 //time-picker imports
@@ -49,8 +49,6 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepButton from "@mui/material/StepButton";
-
-
 
 const DoctorLogin = () => {
   //file upload
@@ -103,8 +101,6 @@ const DoctorLogin = () => {
   function error() {
     console.log("Unable to retrieve your location");
   }
-
-  
 
   // stepper settings
   const steps = [
@@ -162,7 +158,6 @@ const DoctorLogin = () => {
     setCompleted({});
   };
 
-
   //backdrop settings
   const [open, setOpen] = React.useState(false);
   const handleClose = () => {
@@ -172,7 +167,6 @@ const DoctorLogin = () => {
     setOpen(true);
   };
 
-  
   //day input
   const [Monday, setMonday] = useState("");
   const [Tuesday, setTuesday] = useState("");
@@ -198,9 +192,7 @@ const DoctorLogin = () => {
   const [docSes2s, setDocSes2s] = React.useState(dayjs("2022-04-17T15:30"));
   const [docSes2e, setDocSes2e] = React.useState(dayjs("2022-04-17T15:30"));
 
-
   //custom settings
-  
 
   const [Switch, setSwitch] = useState(false);
   const dispatch = useDispatch();
@@ -215,16 +207,15 @@ const DoctorLogin = () => {
   const userType = "doctor";
   var User = useSelector((state) => state.fetch_current_userReducer);
   useEffect(() => {
-    if (Date.now()<User?.time+3.6e+6) {
+    if (Date.now() < User?.time + 3.6e6) {
       navigate("/doctor/dash");
     }
-  }, [User,navigate]);
+  }, [User, navigate]);
   const [doc_reg_year, setDoc_reg_year] = useState(null);
   const handleYearChange = (newDate) => {
-    setDoc_reg_year(newDate);  
+    setDoc_reg_year(newDate);
   };
 
-  
   //Doctor Registration
   const [formData, setFormData] = useState({
     firstName: "",
@@ -247,12 +238,11 @@ const DoctorLogin = () => {
     docSes2_end: "",
     doc_fee: "",
   });
-  
+
   const handleInputChange = (event, weather) => {
     const { name, value } = event.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
-
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -265,14 +255,28 @@ const DoctorLogin = () => {
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(doctorsignup({ formData,userType,city,doc_reg_year,days,docSes1s,docSes1e,docSes2s,docSes2e}, navigate));
+    dispatch(
+      doctorsignup(
+        {
+          formData,
+          userType,
+          city,
+          doc_reg_year,
+          days,
+          docSes1s,
+          docSes1e,
+          docSes2s,
+          docSes2e,
+        },
+        navigate
+      )
+    );
     handleOpen();
     setInterval(() => {
       handleClose();
     }, 5000);
-    message.success('Registered Successfully');
+    message.success("Registered Successfully");
   };
-
 
   return (
     <div id="doctorloginPage">
@@ -306,8 +310,8 @@ const DoctorLogin = () => {
         {Switch ? (
           <div id="doctorsignup">
             <div>
-              <Box sx={{ width: "100%" }}>
-                <Stepper nonLinear activeStep={activeStep}>
+              <Box>
+                <Stepper nonLinear activeStep={activeStep} id="myStepper">
                   {steps.map((label, index) => (
                     <Step key={label} completed={completed[index]}>
                       <StepButton color="inherit" onClick={handleStep(index)}>
@@ -372,7 +376,8 @@ const DoctorLogin = () => {
                     <React.Fragment>
                       {activeStep === 0 ? (
                         <>
-                          <Container maxWidth="md">
+                          <Container maxWidth="md" id="basicDetails">
+                            <Card id="form1Doctor">                          
                             <form>
                               <Grid container spacing={2}>
                                 <Grid item xs={6}>
@@ -571,7 +576,13 @@ const DoctorLogin = () => {
                                         name="doc_reg_year"
                                         value={doc_reg_year}
                                         onChange={handleYearChange}
-                                        renderInput={(params) => <TextField {...params} label="Select Year" variant="outlined" />}
+                                        renderInput={(params) => (
+                                          <TextField
+                                            {...params}
+                                            label="Select Year"
+                                            variant="outlined"
+                                          />
+                                        )}
                                         animateYearScrolling
                                       />
                                     </DemoContainer>
@@ -698,6 +709,7 @@ const DoctorLogin = () => {
                                 </Grid>
                               </Grid>
                             </form>
+                            </Card> 
                           </Container>
                         </>
                       ) : (
@@ -706,7 +718,7 @@ const DoctorLogin = () => {
                       {activeStep === 1 ? (
                         <>
                           <Container>
-                            <form>
+                            <form id="form2Doctor">
                               <Grid
                                 item
                                 sx={{ textAlign: "left" }}
@@ -771,6 +783,7 @@ const DoctorLogin = () => {
                       {activeStep === 2 ? (
                         <>
                           <Container>
+                            <Card id="form3Doctor">
                             <form>
                               <Grid spacing={2}>
                                 <Grid
@@ -1024,6 +1037,7 @@ const DoctorLogin = () => {
                                 </Grid>
                               </Grid>
                             </form>
+                            </Card>
                           </Container>{" "}
                         </>
                       ) : (

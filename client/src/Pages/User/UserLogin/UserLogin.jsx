@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import ReCAPTCHA from "react-google-recaptcha";
 import jwt_decode from "jwt-decode";
 import { GoogleLogin } from "@react-oauth/google";
 import { ToastContainer, toast } from "react-toastify";
@@ -76,6 +77,24 @@ function FacebookCircularProgress(props) {
 }
 
 const UserLogin = () => {
+
+  const [captched, setCaptched] = useState(false);
+  const onChange = async (value) => {
+    // await axios
+    //   .post("https://www.google.com/recaptcha/api/siteverify", {
+    //     secret: "6LdObVUoAAAAACKzMJXVTKo27HqNKnkKAeNHNafK",
+    //     response: value,
+    //   })
+    //   .then(() => {
+        
+    //   });
+     if(value!==null){
+      setCaptched(true);
+     }
+     else{
+      setCaptched(false);
+     }
+  };
   const [open, setOpen] = React.useState(false);
   const handleClose = () => {
     setOpen(false);
@@ -135,7 +154,9 @@ const UserLogin = () => {
     setTimeout(() => {
       handleClose();
     }, 5000);
-    dispatch(signup({ name, email,phone_code, phone, password, userType }, navigate));
+    dispatch(
+      signup({ name, email, phone_code, phone, password, userType }, navigate)
+    );
     message.success("Registered Successfully");
   };
 
@@ -315,7 +336,6 @@ const UserLogin = () => {
                         <>Verify</>
                       )}
                     </Button>
-
                     <form action="/" onSubmit={handlePhoneVerify}>
                       <select
                         disabled={phoneValidated}
@@ -701,7 +721,6 @@ const UserLogin = () => {
                         label="Password"
                       />
                     </FormControl>
-
                     <div id="signuppromodiv">
                       <span>
                         <Checkbox defaultChecked />
@@ -713,7 +732,14 @@ const UserLogin = () => {
                       </span>
                     </div>
                     <br />
+                    <ReCAPTCHA
+                      sitekey="6LdObVUoAAAAAHYn9BYhbKcy1ggsqnOS6jsesWx1"
+                      onChange={onChange}
+                      
+                    />
+
                     <Button
+                      disabled={!captched}
                       variant="contained"
                       color="primary"
                       sx={{

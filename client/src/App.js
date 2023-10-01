@@ -24,7 +24,6 @@ function App() {
   const handleTheme = () => {
     try{
       setChecked(!checked);
-      console.log("theme changed !")
       localStorage.setItem("theme",checked);
     }
     catch(error){
@@ -44,7 +43,7 @@ function App() {
       <div className="App">
         <ResponsiveAppBar change={handleTheme} />
         <br />
-        <RouteConfig />
+        <RouteConfig/>
         <MyFooter />
       </div>
     </ThemeProvider>

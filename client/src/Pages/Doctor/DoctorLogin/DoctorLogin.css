@@ -3,8 +3,30 @@
     margin-top: 60px;
 }
 
+#doctorsignup{
+  margin: 2% 0% 0% 8%;
+  width: 90%;
+}
+
+#basicDetails{
+  margin-top: 5%;
+}
+
+#form2Doctor{
+  padding: 5%;
+  margin-bottom: 5%;
+}
+
+#form1Doctor{
+  padding: 5%;
+  margin-bottom: 5%;
+}
+
+#form3Doctor{
+  padding: 5%;
+  margin: 5% 0% 5% 0%;
+}
 #doctorlogin{
-    /* border: 1px solid red; */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -49,23 +71,14 @@ html {
   margin: 0;
 }
 .card {
-    /* display: -webkit-box;
-    display: -ms-flexbox;
-    text-align: left;
-    align-items: flex-start;
-    justify-content: left;
-    display: flex;
-    margin: auto;
-    background-color: rgb(255, 255, 255); */
   padding: 0.8rem;
- 
-  width: fit-content;
+  /* width: fit-content; */
   -webkit-box-shadow: 0 0.5rem 1rem rgba(0, 0, 16, 0.19), 0 0.3rem 0.3rem rgba(0, 0, 16, 0.23);
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 16, 0.19), 0 0.3rem 0.3rem rgba(0, 0, 16, 0.23);
 }
 
 .rating-container {
-  /* border: 1px solid red; */
+  
   display: flex;
     
   display: -webkit-box;
@@ -75,7 +88,7 @@ html {
   -ms-flex-pack: justify;
   justify-content: space-between; 
   padding: 0.4rem 0.8rem;
-  width: fit-content;
+  /* width: fit-content; */
 }
 
 .rating-text p {
