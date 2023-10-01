@@ -49,7 +49,7 @@ const Room = () => {
     //     Peer.peer.addTrack(track, mystream);
     //   }
     },
-    [sendStream,mystream]
+    []
   );
   const handleNegotiationNeeded = useCallback(async () => {
     console.log("negotiation needed");
@@ -85,7 +85,7 @@ const Room = () => {
     async ({ ans }) => {
       await Peer.setLocalDescription(ans);
     },
-    [mystream]
+    []
   );
   useEffect(() => {
     socket.on("user:joined", handleJoin);
@@ -100,7 +100,7 @@ const Room = () => {
       socket.off("peer:nego:needed", handleNegotiationIncoming);
       socket.off("peer:nego:final", handleNegoFinal);
     };
-  }, [socket, handleJoin, handleIncomingCall]);
+  }, [socket, handleJoin, handleIncomingCall,handleCallAccepted,handleNegotiationIncoming,handleNegoFinal]);
 
   const handleCallUser = useCallback(async () => {
     const stream = await navigator.mediaDevices.getUserMedia({
