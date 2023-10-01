@@ -1,17 +1,22 @@
 import express from "express";
 
 import { Server } from "socket.io";
-const app = express();
+import http from 'http';
 
-const io = new Server(8001, { cors: true });
+const PORT=8001;
+
+const app=express();
+const server=http.createServer(app);
+
+const io = new Server(server,{cors:true});
+
+app.get("/", (req, res) => {res.send(`<h1>Socket 10 Start on Port : ${PORT}</h1>`);});
 
 const etoSockets = new Map();
 const socketToEts = new Map();
-io.listen(8003);
-app.get("/", (req, res) => {
-  res.send("hello");
-});
-app.listen(8002, () => console.log("server started"));
+
+
+
 io.on("connection", (socket) => {
   console.log("socket connected", socket.id);
   socket.on("room:join", ({ Email, Room }) => {
@@ -41,3 +46,7 @@ io.on("connection", (socket) => {
     io.to(to).emit("peer:nego:final", { from: socket.id, ans });
   });
 });
+server.listen(PORT, () => {
+    console.log(`listening on *:${PORT}`);
+  });
+
