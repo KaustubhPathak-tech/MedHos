@@ -1,6 +1,8 @@
 import axios from "axios"
 const API = axios.create({ baseURL: "https://fine-puce-hen-wig.cyclic.cloud" });// https://medhosserver.onrender.com/ https://fine-puce-hen-wig.cyclic.cloud
 
+
+
 export const logIn = (authData) => API.post("/user/login", authData);
 export const dlogIn = (authData) => API.post("/doctor/login", authData);
 export const glogIn = (authData) => API.post("/user/glogin", authData);

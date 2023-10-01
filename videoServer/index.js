@@ -1,13 +1,16 @@
+import express from "express";
 import dotenv from "dotenv";
 import { Server } from "socket.io";
-
+const app=express();
 dotenv.config();
 
 const io = new Server(process.env.ioPORT||8001, { cors: true });
 
 const etoSockets = new Map();
 const socketToEts = new Map();
-
+io.listen(8003);
+app.get("/",(req,res)=>{res.send("hello")});
+app.listen(process.env.PORT||8002,()=>console.log("server started"));
 io.on("connection", (socket) => {
     console.log("socket connected", socket.id);
     socket.on("room:join", ({ Email, Room }) => {
