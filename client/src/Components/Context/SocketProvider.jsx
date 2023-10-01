@@ -10,7 +10,7 @@ export const useSocket = () =>{
 
 
 export const SocketProvider = ({ children }) => {
-  const socket = useMemo(()=> io("http://localhost:8001"), []);
+  const socket = useMemo(()=> io("43.204.26.213:8001"), []);
   return (
     <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>
   );
