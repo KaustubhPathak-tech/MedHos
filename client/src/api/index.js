@@ -1,5 +1,5 @@
 import axios from "axios"
-const API = axios.create({ baseURL: "https://fine-puce-hen-wig.cyclic.cloud" });// https://medhosserver.onrender.com/ https://fine-puce-hen-wig.cyclic.cloud
+const API = axios.create({ baseURL: "https://otivaindustries.in" });// https://medhosserver.onrender.com/ https://fine-puce-hen-wig.cyclic.cloud
 
 
 
