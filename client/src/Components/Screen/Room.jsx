@@ -396,8 +396,8 @@ const Room = () => {
 
   const [audioEnabled, setAudioEnabled] = useState(true);
   const audioToggle = () => {
-    if (remoteStream) {
-      const audioTrack = remoteStream.getAudioTracks()[0];
+    if (mystream) {
+      const audioTrack = mystream.getAudioTracks()[0];
       if (audioTrack) {
         audioTrack.enabled = !audioTrack.enabled; // Toggle audio track state
         setAudioEnabled(!audioTrack.enabled); // Update the state variable
@@ -407,6 +407,7 @@ const Room = () => {
 
   //video
   const [getlight, setGetlight] = useState(false);
+  remoteStream?(<>{setGetlight(false)}</>):(<>{setGetlight(true)}</>)
   const [videoEnabled, setVideoEnabled] = useState(true);
   const videoToggle = () => {
     if (mystream) {
