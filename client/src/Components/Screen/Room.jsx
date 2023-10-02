@@ -415,13 +415,14 @@ const Room = () => {
       if (videoTrack) {
         videoTrack.enabled = !videoTrack.enabled; // Toggle video track state
         setVideoEnabled(!videoTrack.enabled); // Update the state variable
+        setGetlight(!true);
       }
     }
   };
 
   return (
     <div id="room">
-      {remoteStream ? <>{setGetlight(false)}</> : <>{setGetlight(true)}</>}
+      
       {isIncomingAudioPlaying && (
         <audio
           src={outgoing}
