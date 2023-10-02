@@ -478,7 +478,7 @@ const Room = () => {
                   playing
                   
                   url={mystream}
-                  controls={true}
+                  
                   height="200px"
                   width="100px"
                 /> */}
@@ -499,7 +499,7 @@ const Room = () => {
                 }}
                 url={remoteStream}
                 height="60vh"
-                width="50%"
+                width="60%"
                 light={getlight}
                 playIcon={<img src={staticImage} height="60vh" />}
                 style={{

@@ -79,7 +79,7 @@ function ResponsiveAppBar({ change }) {
           <ListItemButton>Find Doctors</ListItemButton>
         </ListItem>
         <ListItem disablePadding>
-          <ListItemButton href="/consult">Video Consult</ListItemButton>
+          <ListItemButton href={`/consult-room/${User?.user?.email}`}>Video Consult</ListItemButton>
         </ListItem>
         <ListItem disablePadding>
           <ListItemButton>Medicines</ListItemButton>
