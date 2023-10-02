@@ -12,7 +12,9 @@ const UserDash = () => {
   }, [navigate, User]);
   return (
     <div>
+      
       <h1>User's Dashboard</h1>
+      <h3>{`${User?.user?.name}`}</h3>
     </div>
   );
 };

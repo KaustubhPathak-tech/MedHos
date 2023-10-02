@@ -7,6 +7,8 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import styled from "@emotion/styled";
 import IconButton from "@mui/material/IconButton";
+
+
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import "./Navbar.css";
@@ -26,7 +28,7 @@ import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import MenuItem from "@mui/material/MenuItem";
 import logo from "../../Assets/Logo.png";
-import { useAuth0 } from "@auth0/auth0-react";
+// import { useAuth0 } from "@auth0/auth0-react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { logout } from "../../actions/auth";
@@ -122,7 +124,7 @@ function ResponsiveAppBar({ change }) {
     setOpen(true);
   };
 
-  const { user } = useAuth0();
+  // const { user } = useAuth0();
   const dispatch = useDispatch();
   var User = useSelector((state) => state.fetch_current_userReducer);
   React.useEffect(() => {
@@ -166,6 +168,12 @@ function ResponsiveAppBar({ change }) {
     }, 2000);
     handleCloseUserMenu();
     dispatch(logout());
+  };
+
+ 
+  const handleGotoConsult = () => {
+    // handleCloseNavMenu();
+    window.location.href=`/consult-room/${User?.user?.email}`;
   };
 
   var redirect = "";
@@ -273,7 +281,7 @@ function ResponsiveAppBar({ change }) {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             <Button
-              onClick={handleCloseNavMenu}
+              onClick={()=>{handleCloseNavMenu();handleGotoConsult()}}
               sx={{
                 my: 1,
                 color: "#03618a",
@@ -281,8 +289,7 @@ function ResponsiveAppBar({ change }) {
                 fontStyle: "inherit",
                 textTransform: "none",
               }}
-              href="
-              /consult"
+              
             >
               Video Consult
             </Button>

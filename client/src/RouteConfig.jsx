@@ -8,7 +8,7 @@ import DoctorLogin from "./Pages/Doctor/DoctorLogin/DoctorLogin";
 import DoctorDash from "./Pages/Doctor/DoctorDash/DoctorDash";
 import Missing from "./Pages/Missing/Missing";
 import Payment from "./Pages/Payment";
-import Consult from "./Pages/Consult/Consult";
+
 import Room from "./Components/Screen/Room";
 
 const RouteConfig = () => {
@@ -24,7 +24,7 @@ const RouteConfig = () => {
 
         <Route path="/doctor/dash" element={<DoctorDash />} />
         <Route path="/payment" element={<Payment />} />
-        <Route path="/consult" element={<Consult />} />
+        
 
         <Route path="/consult-room/:roomid" element={<Room />} />
 
