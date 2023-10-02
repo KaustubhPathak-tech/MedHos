@@ -38,18 +38,18 @@ const Room = () => {
     for (const track of mystream.getTracks()) {
       Peer.peer.addTrack(track, mystream);
     }
-  },[mystream]);
-
+  }, [mystream]);
 
   const handleCallAccepted = useCallback(
-    ({ from, ans }) => {
-      Peer.setLocalDescription(ans);
+   async ({ from, ans }) => {
+     await Peer.setLocalDescription(ans);
       console.log("call accepted");
-    //   for (const track of mystream.getTracks()) {
-    //     Peer.peer.addTrack(track, mystream);
-    //   }
+      // for (const track of mystream.getTracks()) {
+      //   Peer.peer.addTrack(track, mystream);
+      // }
+      sendStream();
     },
-    []
+    [mystream]
   );
   const handleNegotiationNeeded = useCallback(async () => {
     console.log("negotiation needed");
@@ -81,12 +81,9 @@ const Room = () => {
     [socket]
   );
 
-  const handleNegoFinal = useCallback(
-    async ({ ans }) => {
-      await Peer.setLocalDescription(ans);
-    },
-    []
-  );
+  const handleNegoFinal = useCallback(async ({ ans }) => {
+    await Peer.setLocalDescription(ans);
+  }, []);
   useEffect(() => {
     socket.on("user:joined", handleJoin);
     socket.on("incoming:call", handleIncomingCall);
@@ -100,7 +97,14 @@ const Room = () => {
       socket.off("peer:nego:needed", handleNegotiationIncoming);
       socket.off("peer:nego:final", handleNegoFinal);
     };
-  }, [socket, handleJoin, handleIncomingCall,handleCallAccepted,handleNegotiationIncoming,handleNegoFinal]);
+  }, [
+    socket,
+    handleJoin,
+    handleIncomingCall,
+    handleCallAccepted,
+    handleNegotiationIncoming,
+    handleNegoFinal,
+  ]);
 
   const handleCallUser = useCallback(async () => {
     const stream = await navigator.mediaDevices.getUserMedia({
@@ -122,10 +126,10 @@ const Room = () => {
           </Button>
           {mystream && (
             <>
-              <Button variant="contained" color="success" onClick={sendStream}>
+              {/* <Button variant="contained" color="success" onClick={sendStream}>
                 Send Stream
-              </Button>
-              <h4>My Stream</h4>
+              </Button> */}
+              {/* <h4>My Stream</h4>
               <ReactPlayer
                 playing
                 muted
@@ -133,7 +137,7 @@ const Room = () => {
                 controls={true}
                 height="200px"
                 width="100px"
-              />
+              /> */}
             </>
           )}
           <br />
@@ -142,7 +146,7 @@ const Room = () => {
               <h4>Remote Stream</h4>
               <ReactPlayer
                 playing
-                muted
+                // muted
                 url={remoteStream}
                 controls={true}
                 height="200px"

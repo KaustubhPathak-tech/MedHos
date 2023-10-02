@@ -26,7 +26,7 @@ const RouteConfig = () => {
         <Route path="/payment" element={<Payment />} />
         <Route path="/consult" element={<Consult />} />
 
-        <Route path="/room/:roomid" element={<Room />} />
+        <Route path="/consult-room/:roomid" element={<Room />} />
 
         <Route path="*" element={<Missing />} />
       </Routes>

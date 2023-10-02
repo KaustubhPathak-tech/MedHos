@@ -25,14 +25,13 @@ const Consult = () => {
   const handleJoinRoom = useCallback(
     ({ Email, Room }) => {
       console.log("room:join", { Email, Room });
-      navigate(`/room/${Room}`);
+      navigate(`/consult-room/${Room}`);
     },
     [navigate]
   );
 
   useEffect(() => {
     socket.on("room:join", ({ Email, Room }) => {
-      // console.log("room:join", { Email, Room });
       handleJoinRoom({ Email, Room });
     });
 
