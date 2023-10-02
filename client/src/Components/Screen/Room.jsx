@@ -392,29 +392,8 @@ const Room = () => {
     setIsIncomingAudioPlaying(true);
   }, [setMytream, remoteSocket, socket]);
 
-  //audio
-  // const [localStream, setLocalStream] = useState(null);
-  // useEffect(() => {
-  //   // Function to initialize and get the user's media stream
-  //   const getUserMedia = async () => {
-  //     try {
-  //       const stream = await navigator.mediaDevices.getUserMedia({
-  //         audio: true,
-  //       });
-  //       setLocalStream(stream);
-  //     } catch (error) {
-  //       console.error("Error accessing user media:", error);
-  //     }
-  //   };
+  
 
-  //   getUserMedia();
-
-  //   return () => {
-  //     if (localStream) {
-  //       localStream.getTracks().forEach((track) => track.stop());
-  //     }
-  //   };
-  // }, []);
   const [audioEnabled, setAudioEnabled] = useState(true);
   const audioToggle = () => {
     if (remoteStream) {
@@ -430,8 +409,8 @@ const Room = () => {
   const [getlight, setGetlight] = useState(false);
   const [videoEnabled, setVideoEnabled] = useState(true);
   const videoToggle = () => {
-    if (remoteStream) {
-      const videoTrack = remoteStream.getVideoTracks()[0];
+    if (mystream) {
+      const videoTrack = mystream.getVideoTracks()[0];
       if (videoTrack) {
         videoTrack.enabled = !videoTrack.enabled; // Toggle video track state
         setVideoEnabled(!videoTrack.enabled); // Update the state variable
