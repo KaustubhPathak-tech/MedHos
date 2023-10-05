@@ -145,6 +145,7 @@ export const doctorsignup = async (req, res) => {
       avatar:
         "https://w7.pngwing.com/pngs/754/2/png-transparent-samsung-galaxy-a8-a8-user-login-telephone-avatar-pawn-blue-angle-sphere-thumbnail.png",
       userType,
+      status: "pending",
     });
 
     newDoctor.save();
@@ -350,6 +351,7 @@ export const doctorlogin = async (req, res) => {
     res.status(500).json("Something went wrong...");
   }
 };
+
 
 export const glogin = async (req, res) => {
   const { name, email, pic, password, userType } = req.body;

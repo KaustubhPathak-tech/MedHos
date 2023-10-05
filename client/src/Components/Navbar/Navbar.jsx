@@ -1,4 +1,5 @@
 import * as React from "react";
+import { NavLink } from "react-router-dom";
 import { createTheme } from "@mui/material/styles";
 //drawer imports
 import Drawer from "@mui/material/Drawer";
@@ -7,7 +8,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import styled from "@emotion/styled";
 import IconButton from "@mui/material/IconButton";
-
+import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
 
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
@@ -28,6 +29,10 @@ import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import MenuItem from "@mui/material/MenuItem";
 import logo from "../../Assets/Logo.png";
+//badges
+import Badge from "@mui/material/Badge";
+import Stack from "@mui/material/Stack";
+
 // import { useAuth0 } from "@auth0/auth0-react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -74,31 +79,47 @@ function ResponsiveAppBar({ change }) {
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
-      <List>
-        <ListItem disablePadding>
-          <ListItemButton>Find Doctors</ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton href={`/consult-room/${User?.user?.email}`}>Video Consult</ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton>Medicines</ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton>Lab Tests</ListItemButton>
-        </ListItem>
-
-        {/* {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))} */}
-      </List>
+      {User?.user?.userType === "user" && (
+        <>
+          <List>
+            <ListItem disablePadding>
+              <ListItemButton>Find Doctors</ListItemButton>
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton>
+                <NavLink to={`/consult-room/${User?.user?.email}`}>
+                  Video Consult
+                </NavLink>
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton>Medicines</ListItemButton>
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton>Lab Tests</ListItemButton>
+            </ListItem>
+          </List>
+        </>
+      )}
+      {User?.user?.userType === "doctor" && (
+        <>
+          <List>
+            <ListItem disablePadding>
+              <ListItemButton>Patients</ListItemButton>
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton>
+                <NavLink to={`/consult-room/${User?.user?.email}`}>
+                  Video Consult
+                </NavLink>
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton>Appointments</ListItemButton>
+            </ListItem>
+          </List>
+        </>
+      )}
       {/* <Divider />
       <List>
         {["All mail", "Trash", "Spam"].map((text, index) => (
@@ -139,6 +160,7 @@ function ResponsiveAppBar({ change }) {
       }
     }
   }, [dispatch, User]);
+
   var isTrueSet = localStorage.getItem("theme") === "true";
   if (isTrueSet) {
     var theme = darkTheme;
@@ -165,15 +187,14 @@ function ResponsiveAppBar({ change }) {
     handleOpen();
     setTimeout(() => {
       handleClose();
-    }, 2000);
+    }, 1000);
     handleCloseUserMenu();
     dispatch(logout());
   };
 
- 
   const handleGotoConsult = () => {
     // handleCloseNavMenu();
-    window.location.href=`/consult-room/${User?.user?.email}`;
+    window.location.href = `/consult-room/${User?.user?.email}`;
   };
 
   var redirect = "";
@@ -182,27 +203,29 @@ function ResponsiveAppBar({ change }) {
   } else {
     redirect = "/";
   }
+  const notification = JSON.parse(localStorage.getItem("Notification"));
   return (
     <StyledHeader position="fixed" id="navBar" sx={{ color: "black" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href={redirect}
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            <img src={logo} height="40px" alt="logo" />
-          </Typography>
+          <NavLink to={redirect} id="logo">
+            <Typography
+              variant="h6"
+              noWrap
+              component="a"
+              sx={{
+                mr: 2,
+                display: { xs: "none", md: "flex" },
+                fontFamily: "monospace",
+                fontWeight: 700,
+                letterSpacing: ".3rem",
+                color: "inherit",
+                textDecoration: "none",
+              }}
+            >
+              <img src={logo} height="40px" alt="logo" />
+            </Typography>
+          </NavLink>
 
           <Backdrop
             sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
@@ -280,8 +303,10 @@ function ResponsiveAppBar({ change }) {
             <img src={logo} height="50px" alt="logo" />
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            <Button
-              onClick={()=>{handleCloseNavMenu();handleGotoConsult()}}
+            {/* <Button
+              onClick={() => {
+                handleCloseNavMenu();
+              }}
               sx={{
                 my: 1,
                 color: "#03618a",
@@ -289,13 +314,42 @@ function ResponsiveAppBar({ change }) {
                 fontStyle: "inherit",
                 textTransform: "none",
               }}
-              
             >
+              <NavLink to={`/consult-room/${User?.user?.email}`}>
+                Video Consult
+              </NavLink>
+            </Button> */}
+            <NavLink to="/user/doctor">Find Doctors</NavLink>
+            <NavLink to={`/consult-room/${User?.user?.email}`}>
               Video Consult
-            </Button>
+            </NavLink>
+            <NavLink to={`/consult-room/${User?.user?.email}`}>
+              Medicines
+            </NavLink>
+            <NavLink to={`/consult-room/${User?.user?.email}`}>
+              Lab Tests
+            </NavLink>
           </Box>
 
           {/* <Typography>{User?.user?.name || user?.name}</Typography> */}
+          <Stack spacing={2} direction="row">
+            <IconButton
+              onClick={() => {
+                setTimeout(() => {
+                  window.location.reload();
+                }, 2000);
+              }}
+            >
+              <Badge
+                badgeContent={notification?.notification?.length}
+                color="primary"
+              >
+                <NavLink to={`${User?.user?.userType}/notifications`}>
+                  <NotificationsActiveIcon />
+                </NavLink>
+              </Badge>
+            </IconButton>
+          </Stack>
           <IconButton sx={{ ml: 1 }} onClick={() => change()} color="inherit">
             {theme.palette.mode === "dark" ? (
               <>
@@ -307,16 +361,17 @@ function ResponsiveAppBar({ change }) {
               </>
             )}
           </IconButton>
+
           {User === null ? (
             <></>
           ) : (
             <>
-              <Box sx={{ flexGrow: 0 }}>
+              <Box sx={{ flexGrow: 0, marginLeft: "10px" }}>
                 <Tooltip>
                   <IconButton sx={{ p: 0 }} onClick={handleOpenUserMenu}>
                     <Avatar
                       alt={`${User?.user?.name}`}
-                      src="../../Assets/1694272456019.jpg"
+                      src={`${User?.user?.avatar}`}
                     />
                   </IconButton>
                 </Tooltip>
@@ -337,7 +392,11 @@ function ResponsiveAppBar({ change }) {
                   onClose={handleCloseUserMenu}
                 >
                   <MenuItem onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">My Appointments</Typography>
+                    <Typography textAlign="center">
+                      <NavLink to={`/${User?.user?.userType}/appointments`}>
+                        My Appointments
+                      </NavLink>
+                    </Typography>
                   </MenuItem>
                   <MenuItem onClick={handleCloseUserMenu}>
                     <Typography textAlign="center">My Tests</Typography>

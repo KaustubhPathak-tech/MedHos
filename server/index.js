@@ -7,6 +7,8 @@ import dotenv from "dotenv";
 
 import userRoutes from "./routes/users.js";
 import doctorRoutes from "./routes/doctors.js";
+import adminRoutes from "./routes/admin.js"
+import deleteOldAppointments from "./deleteAppointment.js";
 const app = express();
 dotenv.config();
 
@@ -16,7 +18,7 @@ app.use(cors());
 
 app.use("/user", userRoutes);
 app.use("/doctor", doctorRoutes);
-
+app.use("/admin",adminRoutes);
 app.get("/", (req, res) => {
   res.send("<h1>Hurray! Server is Running</h1>");
 });

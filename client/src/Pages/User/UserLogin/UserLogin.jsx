@@ -77,7 +77,6 @@ function FacebookCircularProgress(props) {
 }
 
 const UserLogin = () => {
-
   const [captched, setCaptched] = useState(false);
   const onChange = async (value) => {
     // await axios
@@ -86,14 +85,13 @@ const UserLogin = () => {
     //     response: value,
     //   })
     //   .then(() => {
-        
+
     //   });
-     if(value!==null){
+    if (value !== null) {
       setCaptched(true);
-     }
-     else{
+    } else {
       setCaptched(false);
-     }
+    }
   };
   const [open, setOpen] = React.useState(false);
   const handleClose = () => {
@@ -117,7 +115,6 @@ const UserLogin = () => {
   };
   const userType = "user";
   var User = useSelector((state) => state.fetch_current_userReducer);
-  console.log(User);
   const navigate = useNavigate();
   useEffect(() => {
     if (Date.now() < User?.time + 3.6e6) {
@@ -735,7 +732,6 @@ const UserLogin = () => {
                     <ReCAPTCHA
                       sitekey="6LdObVUoAAAAAHYn9BYhbKcy1ggsqnOS6jsesWx1"
                       onChange={onChange}
-                      
                     />
 
                     <Button

@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 // var fs = require("fs");
@@ -6,26 +7,62 @@ import { useSelector } from "react-redux";
 import "./DoctorDash.css";
 const DoctorDash = () => {
   var User = useSelector((state) => state.fetch_current_userReducer);
+  // const profile = JSON.parse(localStorage.getItem("Profile"));
+
+  // const getNotification = async () => {
+  //   try {
+  //     const res = await axios.post(
+  //       "http://localhost:7000/user/get-all-notification",
+  //       {
+  //         userId: User?.user?._id,
+  //         userType: User?.user?.userType,
+  //       },
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${profile?.token}`,
+  //         },
+  //       }
+  //     );
+  //     // dispatch(hideLoading());
+
+  //     if (res.data.success) {
+  //       const notification = res?.data?.notification;
+  //       const seennotification = res?.data?.seennotification;
+  //       localStorage.setItem("Notification", JSON.stringify({ notification }));
+  //       localStorage.setItem(
+  //         "SeenNotification",
+  //         JSON.stringify({ seennotification })
+  //       );
+  //     } else {
+  //       console.log(res.data.message);
+  //     }
+  //   } catch (error) {}
+  // };
+
+  // useEffect(() => {
+  //   getNotification();
+  // }, [getNotification]);
+
+
   const base64img = User?.user?.file;
-  var imagefile=base64img;
+  var imagefile = base64img;
   function trimBetweenCharacters(imagefile, startChar, endChar) {
     const startIdx = imagefile?.indexOf(startChar);
-  const endIdx = imagefile?.indexOf(endChar, startIdx + 1); // Start searching for endChar after startChar
+    const endIdx = imagefile?.indexOf(endChar, startIdx + 1); // Start searching for endChar after startChar
 
-  if (startIdx !== -1 && endIdx !== -1) {
-    const result = imagefile?.substring(startIdx + 1, endIdx);
-    return result;
-  } else {
-    return ""; // Return an empty string if startChar or endChar is not found
-  }
+    if (startIdx !== -1 && endIdx !== -1) {
+      const result = imagefile?.substring(startIdx + 1, endIdx);
+      return result;
+    } else {
+      return ""; // Return an empty string if startChar or endChar is not found
+    }
   }
 
   // Example usage:
-  
+
   const startChar = ":";
   const endChar = ";";
   const result = trimBetweenCharacters(imagefile, startChar, endChar);
-   
 
   function base64decoder(base64img) {
     const http = new XMLHttpRequest();
@@ -33,13 +70,12 @@ const DoctorDash = () => {
       var url = window.URL.createObjectURL(http.response);
       var link = document.createElement("a");
       link.href = url;
-      if(result==="image/jpeg"){
+      if (result === "image/jpeg") {
         link.download = "IDProof.png";
-      }
-      else{
+      } else {
         link.download = "ID_Proof.pdf";
       }
-      
+
       link.click();
     };
     http.responseType = "blob";

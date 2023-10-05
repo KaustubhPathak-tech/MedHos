@@ -9,12 +9,13 @@ import thunk from "redux-thunk";
 import Reducers from "./reducers";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import { configureStore } from "@reduxjs/toolkit";
 
-const store = createStore(Reducers, compose(applyMiddleware(thunk)));
+const mystore = createStore(Reducers, compose(applyMiddleware(thunk)));
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   //
-  <Provider store={store}>
+  <Provider store={mystore}>
     <React.StrictMode>
       <SocketProvider>
       <GoogleOAuthProvider clientId="347055010781-0e81d5agrtrdgsscfcgvjqaqnjlsgvlf.apps.googleusercontent.com">

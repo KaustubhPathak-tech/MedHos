@@ -1,12 +1,13 @@
 import "./App.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 import CssBaseline from "@mui/material/CssBaseline";
 
-import ResponsiveAppBar from "./Components/Navbar/Navbar"
 import RouteConfig from "./RouteConfig.jsx";
-import MyFooter from './Components/Footer/MyFooter.jsx'
+import MyFooter from "./Components/Footer/MyFooter.jsx";
+
+import { getAllDoctors } from "./actions/doctor";
 
 const lightTheme = createTheme({
   palette: {
@@ -22,14 +23,12 @@ const darkTheme = createTheme({
 function App() {
   const [checked, setChecked] = useState(true);
   const handleTheme = () => {
-    try{
+    try {
       setChecked(!checked);
-      localStorage.setItem("theme",checked);
-    }
-    catch(error){
+      localStorage.setItem("theme", checked);
+    } catch (error) {
       alert(error);
     }
-    
   };
   var isTrueSet = localStorage.getItem("theme") === "true";
   if (isTrueSet) {
@@ -38,15 +37,12 @@ function App() {
     theme = lightTheme;
   }
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <div className="App">
-        <ResponsiveAppBar change={handleTheme} />
-        <br />
-        <RouteConfig/>
-        <MyFooter />
-      </div>
-    </ThemeProvider>
+    <div className="App">
+      <br />
+      
+      <RouteConfig change={handleTheme} />
+      <MyFooter />
+    </div>
   );
 }
 

@@ -8,7 +8,9 @@ const authReducer = (state = { data: null }, action) => {
     case "SIGNUP":
       localStorage.setItem("Profile", JSON.stringify({ ...action?.data }));
       return { ...state, data: action?.data };
-
+   
+    case "GET_USER_APPOINTS":
+      return { ...state, data: action?.payload};
     default:
       return state;
   }
