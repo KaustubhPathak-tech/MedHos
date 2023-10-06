@@ -33,7 +33,15 @@ const userSchema = mongoose.Schema({
     type: Array,
     default: [],
   },
+  cart: {
+    type: Array,
+    default: [],
+  },
+  orders:{
+    type: Array,
+    default: [],
+  }
 });
 
-const userModel= mongoose.model("User", userSchema);
+const userModel = mongoose.model("User", userSchema);
 export default userModel;

@@ -16,9 +16,9 @@ import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import "./DoctorLogin.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { message } from "antd";
 import "../../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocation, faUpload } from "@fortawesome/free-solid-svg-icons";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import {

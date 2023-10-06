@@ -7,23 +7,29 @@ import { Row } from "antd";
 
 import DoctorList from "../Components/DoctorList";
 import { getAllDoctors } from "../actions/doctor";
+import { getMedicines } from "../actions/medicines";
 import { useSelector } from "react-redux";
 import { getUserAppointments } from "../actions/auth";
 import { useNavigate } from "react-router-dom";
-
 
 const HomePage = () => {
   var User = useSelector((state) => state.fetch_current_userReducer);
   const navigate = useNavigate();
   useEffect(() => {
-    if(User?.user?.isAdmin){
+    if (User?.user?.isAdmin) {
       navigate("/admin/dashboard");
     }
   }, [User]);
-
-
+  
   useEffect(() => {
-    if (!localStorage.getItem("Profile") || Date.now() > User?.time + 3.6e6||User?.user?.userType===undefined) {
+    getMedicines();
+  }, [getMedicines]);
+  useEffect(() => {
+    if (
+      !localStorage.getItem("Profile") ||
+      Date.now() > User?.time + 3.6e6 ||
+      User?.user?.userType === undefined
+    ) {
       navigate("/");
     }
   }, [navigate, User]);
@@ -31,7 +37,7 @@ const HomePage = () => {
   useEffect(() => {
     dispatch(getAllDoctors());
     dispatch(getUserAppointments());
-  }, [getAllDoctors,getUserAppointments]);
+  }, [getAllDoctors, getUserAppointments]);
 
   // login user data
 
@@ -40,7 +46,10 @@ const HomePage = () => {
     <Layout>
       {/* <h1 className="text-center">Home Page</h1> */}
       <Row>
-        {doctors && doctors?.data?.data.map((doctor) => <DoctorList key={DoctorList} doctor={doctor} />)}
+        {doctors &&
+          doctors?.data?.data.map((doctor) => (
+            <DoctorList key={DoctorList} doctor={doctor} />
+          ))}
       </Row>
     </Layout>
   );

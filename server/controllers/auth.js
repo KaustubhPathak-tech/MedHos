@@ -315,7 +315,14 @@ export const login = async (req, res) => {
       }
     );
 
-    res.status(200).json({ user: existinguser, time: Date.now(), token });
+    res
+      .status(200)
+      .json({
+        user: existinguser,
+        time: Date.now(),
+        token,
+        cart: existinguser.cart,
+      });
   } catch (error) {
     console.log(error);
     res.status(500).json("Something went wrong...");
@@ -351,7 +358,6 @@ export const doctorlogin = async (req, res) => {
     res.status(500).json("Something went wrong...");
   }
 };
-
 
 export const glogin = async (req, res) => {
   const { name, email, pic, password, userType } = req.body;
@@ -408,7 +414,14 @@ export const glogin = async (req, res) => {
         /*Highlyconfidential*/
       }
 
-      res.status(200).json({ user: existinguser, time: Date.now(), token });
+      res
+        .status(200)
+        .json({
+          user: existinguser,
+          time: Date.now(),
+          token,
+          cart: existinguser.cart,
+        });
     }
   } catch (error) {
     console.log(error);

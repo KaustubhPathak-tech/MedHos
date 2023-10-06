@@ -9,7 +9,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import styled from "@emotion/styled";
 import IconButton from "@mui/material/IconButton";
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
-
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import "./Navbar.css";
@@ -38,7 +38,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { logout } from "../../actions/auth";
 
-const pages = ["Find Doctors", "Video Consult", "Medicines", "Lab Tests"];
+const pages = ["Find Doctors", "Video Consult", "Medicines"];
 const StyledHeader = styled(AppBar)``;
 const lightTheme = createTheme({
   palette: {
@@ -93,10 +93,7 @@ function ResponsiveAppBar({ change }) {
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding>
-              <ListItemButton>Medicines</ListItemButton>
-            </ListItem>
-            <ListItem disablePadding>
-              <ListItemButton>Lab Tests</ListItemButton>
+              <NavLink to="/medicines">Medicines</NavLink>
             </ListItem>
           </List>
         </>
@@ -204,6 +201,10 @@ function ResponsiveAppBar({ change }) {
     redirect = "/";
   }
   const notification = JSON.parse(localStorage.getItem("Notification"));
+  var cart = JSON.parse(localStorage.getItem("cart"));
+  React.useEffect(() => {
+    cart=JSON.parse(localStorage.getItem("cart"));
+  }, []);
   return (
     <StyledHeader position="fixed" id="navBar" sx={{ color: "black" }}>
       <Container maxWidth="xl">
@@ -323,16 +324,18 @@ function ResponsiveAppBar({ change }) {
             <NavLink to={`/consult-room/${User?.user?.email}`}>
               Video Consult
             </NavLink>
-            <NavLink to={`/consult-room/${User?.user?.email}`}>
-              Medicines
-            </NavLink>
-            <NavLink to={`/consult-room/${User?.user?.email}`}>
-              Lab Tests
-            </NavLink>
+            <NavLink to={`/medicines`}>Medicines</NavLink>
           </Box>
 
           {/* <Typography>{User?.user?.name || user?.name}</Typography> */}
           <Stack spacing={2} direction="row">
+            <IconButton>
+              <Badge badgeContent={cart?.length} color="primary">
+                <NavLink to={`${User?.user?.userType}/cart`}>
+                  <ShoppingCartIcon />
+                </NavLink>
+              </Badge>
+            </IconButton>
             <IconButton
               onClick={() => {
                 setTimeout(() => {

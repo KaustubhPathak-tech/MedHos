@@ -1,5 +1,5 @@
 import axios from "axios";
-const API = axios.create({ baseURL: "http://localhost:7000" }); // https://medhosserver.onrender.com/ https://fine-puce-hen-wig.cyclic.cloud https://otivaindustries.in
+const API = axios.create({ baseURL: "https://fine-puce-hen-wig.cyclic.cloud" }); // https://medhosserver.onrender.com/  https://otivaindustries.in
 API.interceptors.request.use((req) => {
   if (localStorage.getItem("Profile")) {
     req.headers.authorization = `Bearer ${
@@ -23,3 +23,10 @@ export const getAllDoctors = () => API.get("/user/getAllDoctors" );
 
 export const getUserData = () => API.post("/user/getAllDoctors");
 export const getUserAppointments = () =>API.get("/user/user-appointments");
+export const addMedicine = (medicines) =>API.post("/medicines/add",medicines);
+export const getMedicines = () =>API.get("/medicines/getMedicines");
+export const addtoCart = (medicine) =>API.post("/medicines/addtoCart",medicine);  
+export const remove = (medicine) =>API.post("/medicines/remove",medicine);  
+export const increaseQty = (medicine) =>API.patch("/medicines/increseQty",medicine);  
+export const decreaseQty = (medicine) =>API.patch("/medicines/decreaseQty",medicine);  
+

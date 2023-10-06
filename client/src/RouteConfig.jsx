@@ -27,6 +27,9 @@ import { CssBaseline } from "@mui/material";
 import { useSelector } from "react-redux";
 import Home from "./Pages/admin/Home";
 import Navbartest from "./Components/Navbartest";
+import Medicines from "./Pages/Medicines/Medicines";
+import Medicine from "./Pages/Medicines/Medicine";
+import Cart from "./Pages/Cart/Cart";
 const lightTheme = createTheme({
   palette: {
     mode: "light",
@@ -188,7 +191,31 @@ const RouteConfig = ({ change }) => {
               </ProtectedRoute>
             }
           />
-          <Route path="/test" element={<Navbartest />}/>
+          <Route
+            path="/medicines"
+            element={
+              <ProtectedRoute>
+                <Medicines />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/medicines/:medicineid"
+            element={
+              <ProtectedRoute>
+                <Medicine />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/user/cart"
+            element={
+              <ProtectedRoute>
+                <Cart />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/test" element={<Navbartest />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>

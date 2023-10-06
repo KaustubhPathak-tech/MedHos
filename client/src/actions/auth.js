@@ -67,6 +67,11 @@ export const login = (authData, navigate) => async (dispatch) => {
 
     dispatch({ type: "LOGIN", data });
     dispatch(setCurrentUser(JSON.parse(localStorage.getItem("Profile"))));
+    console.log(JSON.parse(localStorage.getItem("Profile"))?.cart);
+    localStorage.setItem(
+      "cart",
+      JSON.stringify(JSON.parse(localStorage.getItem("Profile"))?.cart)
+    );
     navigate("/user/dash");
     setTimeout(() => {}, 2000);
     message.success("Login Successful", { position: "top-center" });
@@ -111,6 +116,11 @@ export const glogin = (authData, navigate) => async (dispatch) => {
     const { data } = await api.glogIn(authData);
     dispatch({ type: "LOGIN", data });
     dispatch(setCurrentUser(JSON.parse(localStorage.getItem("Profile"))));
+    console.log(JSON.parse(localStorage.getItem("Profile"))?.cart);
+    localStorage.setItem(
+      "cart",
+      JSON.stringify(JSON.parse(localStorage.getItem("Profile"))?.cart)
+    );
     navigate("/user/dash");
     setTimeout(() => {}, 2000);
     message.success("Login Successful", { position: "top-center" });
