@@ -41,15 +41,15 @@ app.post("/create-checkout-session", async (req, res) => {
     ProductContainer.push({medicine,qnty});
   }
   console.log(ProductContainer);
-  const lineItems = ProductContainer.map((product) => ({
+  const lineItems = ProductContainer.map((med) => ({
     price_data: {
       currency: "inr",
       product_data: {
-        name: product.medicine.name,
+        name: med?.medicine?.name,
       },
-      unit_amount: product.medicine.price,
+      unit_amount: Number(med?.medicine?.price),
     },
-    quantity: product.qnty,
+    quantity: med.qnty,
   }));
   const session = await stripeInstance.checkout.sessions.create({
     line_items: lineItems,
