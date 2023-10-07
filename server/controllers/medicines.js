@@ -65,7 +65,6 @@ export const removeController = async (req, res) => {
 };
 
 export const increaseQty = async (req, res) => {
-  console.log(req.body);
   const { medicineId, userId } = req.body;
   try {
     // Find the user document by its ID
@@ -103,7 +102,6 @@ export const increaseQty = async (req, res) => {
   }
 };
 export const decreaseQty = async (req, res) => {
-  console.log(req.body);
   const { medicineId, userId } = req.body;
   try {
     // Find the user document by its ID
@@ -112,16 +110,13 @@ export const decreaseQty = async (req, res) => {
     // Find the index of the medicine item in the user's cart
     const index = user.cart.findIndex((item) => item.medicineId === medicineId);
     if (user.cart[index].qty === 1) {
-      return res
-        .status(201)
-        .send({
-          success: true,
-          message: "Medicine quantity increased successfully",
-          data: user.cart,
-        });
+      return res.status(201).send({
+        success: true,
+        message: "Medicine quantity increased successfully",
+        data: user.cart,
+      });
     }
 
-    
     var newQtyValue = user.cart[index].qty - 1;
     if (index > -1) {
       // Increment the quantity of the medicine item

@@ -4,11 +4,11 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
-
+import medicineModel from "./models/medicines.js";
 import userRoutes from "./routes/users.js";
 import doctorRoutes from "./routes/doctors.js";
 import medicineRoutes from "./routes/medicines.js";
-import adminRoutes from "./routes/admin.js"
+import adminRoutes from "./routes/admin.js";
 import deleteOldAppointments from "./deleteAppointment.js";
 const app = express();
 dotenv.config();
@@ -19,8 +19,8 @@ app.use(cors());
 
 app.use("/user", userRoutes);
 app.use("/doctor", doctorRoutes);
-app.use("/medicines",medicineRoutes);
-app.use("/admin",adminRoutes);
+app.use("/medicines", medicineRoutes);
+app.use("/admin", adminRoutes);
 app.get("/", (req, res) => {
   res.send("<h1>Hurray! Server is Running</h1>");
 });
@@ -32,23 +32,30 @@ app.get("/favicon.ico", function (req, res) {
 const stripeInstance = stripe(process.env.Stripe_secret);
 const YOUR_DOMAIN = "https://medhos.vercel.app";
 app.post("/create-checkout-session", async (req, res) => {
-  const session = await stripeInstance.checkout.sessions.create({
-    line_items: [
-      {
-        // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-        price_data: {
-          currency: "inr",
-          product_data: {
-            name: "Dakshina",
-          },
-          unit_amount: 200,
-        },
-        quantity: 1,
+  // console.log(req.body);
+  const { product } = req.body;
+  const ProductContainer=[];
+  for(var i=0;i<product.length;i++){
+    var medicine = await medicineModel.findById(product[i].medicineId);
+    var qnty = product[i].qty;
+    ProductContainer.push({medicine,qnty});
+  }
+  console.log(ProductContainer);
+  const lineItems = ProductContainer.map((product) => ({
+    price_data: {
+      currency: "inr",
+      product_data: {
+        name: product.medicine.name,
       },
-    ],
+      unit_amount: product.medicine.price,
+    },
+    quantity: product.qnty,
+  }));
+  const session = await stripeInstance.checkout.sessions.create({
+    line_items: lineItems,
     mode: "payment",
-    success_url: `${YOUR_DOMAIN}/`,
-    cancel_url: `${YOUR_DOMAIN}/Payment`,
+    success_url: `${YOUR_DOMAIN}/user/orders`,
+    cancel_url: `${YOUR_DOMAIN}/cart`,
   });
   res.json({ id: session.id });
 });

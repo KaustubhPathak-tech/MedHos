@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { loadStripe } from "@stripe/stripe-js";
 import "./Cart.css";
 import {
   Box,
@@ -8,7 +11,7 @@ import {
   Button,
   ButtonGroup,
 } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Stack from "@mui/material/Stack";
 
@@ -84,6 +87,55 @@ const Cart = () => {
   const user = useSelector((state) => state.authReducer);
   console.log(medicine);
   const dispatch = useDispatch();
+  const handlePayment = async (e) => {
+    e.preventDefault();
+    const stripe = await loadStripe(
+      "pk_live_51MpOpKSDYoz6IJUAZQcoxCR50ognDEzbS6swgVU59253gVyWQXJcG4fe31g2D8N5pmt9LxvlZ6YjoFflpwyP8P0j001KZoXrDs"
+    );
+    const body = {
+      product: cartItems,
+    };
+    const headers = {
+      "Content-Type": "application/json",
+    };
+    const response = await fetch(
+      "http://localhost:7000/create-checkout-session",
+      {
+        method: "POST",
+        headers: headers,
+        body: JSON.stringify(body),
+      }
+    );
+    console.log(response?.data?.id);
+    const session = await response.json();
+    const result = stripe.redirectToCheckout({ sessionId: response?.data?.id });
+    if (result.error) {
+      console.log(result.error);
+    }
+    // e.preventDefault();
+    // const stripe = await loadStripe(
+    //   "pk_live_51MpOpKSDYoz6IJUAZQcoxCR50ognDEzbS6swgVU59253gVyWQXJcG4fe31g2D8N5pmt9LxvlZ6YjoFflpwyP8P0j001KZoXrDs"
+    // );
+
+    // const response = await axios.post(
+    //   "https://fine-puce-hen-wig.cyclic.cloud/create-checkout-session"
+    // );
+
+    // const result = stripe.redirectToCheckout({ sessionId: response?.data?.id });
+    // if(result.error){
+    //   console.log(result.error);
+    // }
+    // await axios
+    //   .post("http://localhost:7000/create-checkout-session", {})
+    //   .then((res) => {
+    //     if (res.data.url) {
+    //       window.location.href = res.data.url;
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+  };
   const cartItemsDisplay = cartItems.map((cartItem) => {
     const med = medicine?.data.find(
       (item) => item._id === cartItem?.medicineId
@@ -102,10 +154,7 @@ const Cart = () => {
           boxShadow="0 6px 10px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.1)"
         >
           <script>
-            {(subtotal =
-              subtotal + Number(med.price) * Number(cartItem.qty)
-              
-            )}
+            {(subtotal = subtotal + Number(med.price) * Number(cartItem.qty))}
             {(totalPrice = subtotal + totalPrice)}
             {(totalqty = totalqty + Number(cartItem.qty))}
           </script>
@@ -197,7 +246,7 @@ const Cart = () => {
                       Price &nbsp;&nbsp;&nbsp;&nbsp; ₹ {subtotal}
                     </Button>
                   </div>
-                  <script>{(subtotal=0)}</script>
+                  <script>{(subtotal = 0)}</script>
                 </div>
               </div>
             </div>
@@ -240,7 +289,11 @@ const Cart = () => {
 
                   {/* Calculate and display the total price */}
                 </Box>
-                <Button variant="contained" color="primary">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handlePayment}
+                >
                   Checkout
                 </Button>
                 <br />
