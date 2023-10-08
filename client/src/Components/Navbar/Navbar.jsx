@@ -331,7 +331,7 @@ function ResponsiveAppBar({ change }) {
           <Stack spacing={2} direction="row">
             <IconButton>
               <Badge badgeContent={cart?.length} color="primary">
-                <NavLink to={`${User?.user?.userType}/cart`}>
+                <NavLink to={`/user/cart`}>
                   <ShoppingCartIcon />
                 </NavLink>
               </Badge>
