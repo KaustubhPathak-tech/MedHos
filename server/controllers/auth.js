@@ -428,3 +428,10 @@ export const glogin = async (req, res) => {
     res.status(500).json("Something went wrong...");
   }
 };
+
+export const fetchCity=async(req,res)=>{
+  try {
+  } catch (error) {
+    
+  }
+};
