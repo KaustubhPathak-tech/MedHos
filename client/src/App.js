@@ -33,21 +33,23 @@ const darkTheme = createTheme({
   },
 });
 
-getCity().then((res) => {
-  localStorage.setItem("Citi", JSON.stringify(res?.data));
-});
 // console.log(typeof JSON.parse(localStorage.getItem("Citi"))[0].geonames);
 
 function App() {
   useEffect(() => {
     getAllDoctors();
-    localStorage.setItem(
-      "FinalCities",
-      JSON.stringify(JSON.parse(localStorage.getItem("Citi"))[0].geonames)
-    );
-    const data = JSON.parse(localStorage.getItem("FinalCities"));
-    const cities = data.map((city) => city.name);
-    localStorage.setItem("Cities", JSON.stringify(cities));
+    getCity().then((res) => {
+      localStorage.setItem("Citi", JSON.stringify(res?.data));
+    });
+    setTimeout(() => {
+      localStorage.setItem(
+        "FinalCities",
+        JSON.stringify(JSON.parse(localStorage.getItem("Citi"))[0].geonames)
+      );
+      const data = JSON.parse(localStorage.getItem("FinalCities"));
+      const cities = data.map((city) => city.name);
+      localStorage.setItem("Cities", JSON.stringify(cities));
+    }, 2000);
   }, [getAllDoctors]);
   const [checked, setChecked] = useState(true);
   const handleTheme = () => {
