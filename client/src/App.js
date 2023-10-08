@@ -9,7 +9,7 @@ import { getAllDoctors } from "./actions/doctor";
 const apiKey = "kaustubh9";
 const countryCode = "IN";
 
-const apiUrl = "http://api.geonames.org/searchJSON?country=IN&maxRows=1000&username=kaustubh9";
+const apiUrl = "https://api.geonames.org/searchJSON?country=IN&maxRows=1000&username=kaustubh9";
 
 fetch(apiUrl)
   .then((response) => response.json())
