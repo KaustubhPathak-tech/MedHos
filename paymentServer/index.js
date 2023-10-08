@@ -1,4 +1,4 @@
-import express from "express";
+import express, { response } from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 
@@ -41,6 +41,8 @@ app.post(
         return response.sendStatus(400);
       }
     }
+
+
     switch (event.type) {
       case "payment_intent.succeeded":
         console.log("PaymentIntent was successful!");
@@ -99,7 +101,12 @@ app.post(
       default:
         console.log(`Unhandled event type ${event.type}`);
     }
+
+    response.send(200).json({ received: true }).end();
   }
+
+  // Return a response to acknowledge receipt of the event
+  
 );
 
 //stripe webhook end
