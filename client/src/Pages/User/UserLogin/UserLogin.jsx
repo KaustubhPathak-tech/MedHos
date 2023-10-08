@@ -39,6 +39,7 @@ import {
   glogin,
   sendOTP,
   verifyOTP,
+  getOrder,
 } from "../../../actions/auth";
 
 function FacebookCircularProgress(props) {
@@ -133,6 +134,13 @@ const UserLogin = () => {
       handleClose();
     }, 5000);
     dispatch(glogin({ name, email, pic, password, userType }, navigate));
+    setTimeout(() => {
+      dispatch(getOrder({ userId: User?.user?._id }));
+    }, 2000);
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
+
     message.success("Login Succesfully");
   }
 
@@ -143,6 +151,12 @@ const UserLogin = () => {
       handleClose();
     }, 5000);
     dispatch(login({ email, password, userType }, navigate));
+    setTimeout(() => {
+      dispatch(getOrder({ userId: User?.user?._id }));
+    }, 2000);
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
     message.success("Login Succesfully");
   };
   const handleRegister = (e) => {

@@ -10,7 +10,9 @@ const authReducer = (state = { data: null }, action) => {
 
     case "GET_USER_APPOINTS":
       return { ...state, data: action?.payload };
-
+    case "GET_ORDER":
+      localStorage.setItem("orders", JSON.stringify({ ...action?.payload }));
+      return { ...state, data: action?.payload };
     default:
       return state;
   }

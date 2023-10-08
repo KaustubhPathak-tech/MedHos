@@ -79,7 +79,6 @@ export const increaseQty = async (req, res) => {
       await user.cart.push({ medicineId, qty: newQtyValue });
       await user.save();
 
-      console.log(user.cart);
 
       res.status(201).send({
         success: true,
@@ -124,7 +123,6 @@ export const decreaseQty = async (req, res) => {
       await user.cart.push({ medicineId, qty: newQtyValue });
       await user.save();
 
-      console.log(user.cart);
 
       res.status(201).send({
         success: true,

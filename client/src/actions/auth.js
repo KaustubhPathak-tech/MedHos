@@ -3,12 +3,17 @@ import { message } from "antd";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { setCurrentUser } from "./currentUser";
+import { json } from "react-router-dom";
 
 export const signup = (authData, navigate) => async (dispatch) => {
   try {
     const { data } = await api.signUp(authData);
     dispatch({ type: "SIGNUP", data });
     dispatch(setCurrentUser(JSON.parse(localStorage.getItem("Profile"))));
+    localStorage.setItem(
+      "cart",
+      JSON.stringify(JSON.parse(localStorage.getItem("Profile"))?.cart)
+    );
     navigate("/user/dash");
     setTimeout(() => {}, 2000);
     message.success("Registered Successfully ", { position: "top-center" });
@@ -140,3 +145,37 @@ export const getUserAppointments = () => async (dispatch) => {
     <ToastContainer />;
   }
 };
+export const saveOrder = (authData) => async (dispatch) => {
+  try {
+    const {data}=await api.saveOrder(authData);
+    dispatch({ type: "ADD_TO_CART", data });
+    localStorage.setItem(
+      "cart",
+      JSON.stringify(JSON.parse(localStorage.getItem("updateUser"))?.data)
+    );
+  } catch (error) {
+    toast.error(error.response.data);
+    <ToastContainer />;
+  }
+};
+export const getOrder = (authData) => async (dispatch) => {
+  try {
+    const {data}=await api.getOrder(authData);
+    console.log(data);
+    dispatch({ type: "GET_ORDER", payload: data });
+  } catch (error) {
+    toast.error(error.response.data);
+    <ToastContainer />;
+  }
+};
+export const updateOrderStatus = (authData) => async () => {
+  try {
+    const {data}=await api.updateOrderStatus(authData);
+    console.log(data);
+    // dispatch({ type: "GET_ORDER", payload: data });
+  } catch (error) {
+    toast.error(error.response.data);
+    <ToastContainer />;
+  }
+};
+

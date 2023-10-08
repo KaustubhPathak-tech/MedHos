@@ -9,8 +9,10 @@ import {
   bookAppointmentController,
   bookingAvailabilityController,
   userAppointmentsController,
+  updateOrderStatus,
 } from "../controllers/user.js";
 
+import { getOrder, saveOrder,verifyPayment } from "../controllers/order.js";
 import mid from "../middlewares/authMiddleware.js";
 const router = express.Router();
 router.post("/signup", signup);
@@ -37,5 +39,8 @@ router.post("/booking-availbility", mid, bookingAvailabilityController);
 
 //Appointments List
 router.get("/user-appointments", mid, userAppointmentsController);
-
+router.post("/saveOrder", saveOrder);
+router.post("/getOrder",mid, getOrder);
+router.post("/updateOrderStatus",mid, updateOrderStatus);
+router.post("/verifyPayment",mid, verifyPayment);
 export default router;

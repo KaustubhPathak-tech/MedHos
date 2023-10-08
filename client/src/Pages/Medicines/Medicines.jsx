@@ -200,6 +200,9 @@ const Medicines = () => {
                         <Text style={{ color: "#212121", opacity: ".6" }}>
                           {medicine?.description}
                         </Text>
+                        <Text style={{ color: "green",fontSize:"18px" }}>
+                        ₹ &nbsp;  {medicine?.price}
+                        </Text>
                       </Box>
                     </Link>
                   ))}
@@ -258,6 +261,9 @@ const Medicines = () => {
                           <Text style={{ color: "#212121", opacity: ".6" }}>
                             {medicine?.description}
                           </Text>
+                          <Text style={{ color: "red"}}>
+                          ₹  { medicine?.price}
+                        </Text>
                         </Box>
                       </Link>
                     ))}

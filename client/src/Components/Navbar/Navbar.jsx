@@ -203,7 +203,7 @@ function ResponsiveAppBar({ change }) {
   const notification = JSON.parse(localStorage.getItem("Notification"));
   var cart = JSON.parse(localStorage.getItem("cart"));
   React.useEffect(() => {
-    cart=JSON.parse(localStorage.getItem("cart"));
+    cart = JSON.parse(localStorage.getItem("cart"));
   }, []);
   return (
     <StyledHeader position="fixed" id="navBar" sx={{ color: "black" }}>
@@ -404,9 +404,15 @@ function ResponsiveAppBar({ change }) {
                   <MenuItem onClick={handleCloseUserMenu}>
                     <Typography textAlign="center">My Tests</Typography>
                   </MenuItem>
-                  <MenuItem onClick={handleCloseUserMenu}>
+                  <MenuItem
+                    onClick={() => {
+                      handleCloseUserMenu();
+                    }}
+                  >
                     <Typography textAlign="center">
-                      My Medicine Orders
+                      <NavLink to={`/${User?.user?.userType}/orders`}>
+                        Your Orders
+                      </NavLink>
                     </Typography>
                   </MenuItem>
                   <MenuItem onClick={handleCloseUserMenu}>

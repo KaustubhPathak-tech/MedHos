@@ -21,43 +21,71 @@ app.use("/user", userRoutes);
 app.use("/doctor", doctorRoutes);
 app.use("/medicines", medicineRoutes);
 app.use("/admin", adminRoutes);
+
 app.get("/", (req, res) => {
   res.send("<h1>Hurray! Server is Running</h1>");
 });
 app.get("/favicon.ico", function (req, res) {
   res.send("<h1>Hurray! Server is Running</h1>");
 });
-
+var paymentRequest;
 //stripe integration
 const stripeInstance = stripe(process.env.Stripe_secret);
 const YOUR_DOMAIN = "https://medhos.vercel.app";
 app.post("/create-checkout-session", async (req, res) => {
-  // console.log(req.body);
-  const { product } = req.body;
-  const ProductContainer=[];
-  for(var i=0;i<product.length;i++){
-    var medicine = await medicineModel.findById(product[i].medicineId);
-    var qnty = product[i].qty;
-    ProductContainer.push({medicine,qnty});
-  }
-  console.log(ProductContainer);
-  const lineItems = ProductContainer.map((med) => ({
-    price_data: {
-      currency: "inr",
-      product_data: {
-        name: med?.medicine?.name,
+  console.log(req.body)
+  try {
+    const { product, userId,orderId } = req.body;
+    paymentRequest = req.body;
+    const ProductContainer = [];
+    for (var i = 0; i < product.length; i++) {
+      var medicine = await medicineModel.findById(product[i].medicineId);
+      var qnty = product[i].qty;
+      ProductContainer.push({ medicine, qnty });
+    }
+    const lineItems = ProductContainer.map((med) => ({
+      price_data: {
+        currency: "inr",
+        product_data: {
+          name: med?.medicine?.name,
+          images: [med?.medicine?.imgurl],
+          metadata:{
+            userId:userId,
+            orderId:orderId, 
+          }
+        },
+        unit_amount: Number(med?.medicine?.price),
       },
-      unit_amount: Number(med?.medicine?.price),
-    },
-    quantity: med.qnty,
-  }));
-  const session = await stripeInstance.checkout.sessions.create({
-    line_items: lineItems,
-    mode: "payment",
-    success_url: `${YOUR_DOMAIN}/user/orders`,
-    cancel_url: `${YOUR_DOMAIN}/cart`,
-  });
-  res.json({ id: session.id });
+      adjustable_quantity: { enabled: true, minimum: 1, maximum: 10 },
+      quantity: med.qnty,
+    }));
+    const session = await stripeInstance.checkout.sessions.create({
+      payment_intent_data: {
+        metadata: {
+          userId: userId,
+          orderId:orderId,
+        },
+        setup_future_usage: "off_session",
+      },
+      line_items: lineItems,
+
+      mode: "payment",
+
+      success_url: `${YOUR_DOMAIN}/user/orders`,
+      cancel_url: `${YOUR_DOMAIN}/user/cart`,
+      payment_method_types: ["card"], // You can specify other payment methods as needed
+      shipping_address_collection: {
+        allowed_countries: ["US", "CA", "IN", "NZ"], // Specify the countries where shipping is allowed
+      },
+      metadata: {
+        userId: userId,
+        orderId:orderId,
+      },
+    });
+    res.json({ id: session.id });
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 const PORT = process.env.PORT || 7000;

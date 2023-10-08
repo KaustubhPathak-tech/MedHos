@@ -2,6 +2,7 @@ import users from "../models/auth1.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import doctors from "../models/doctor.js";
+import Order from "../models/orders.js";
 import appointmentModel from "../models/appointmentModel.js";
 import moment from "moment";
 
@@ -381,7 +382,25 @@ const userAppointmentsController = async (req, res) => {
     });
   }
 };
-
+const updateOrderStatus = async (req, res) => {
+  try {
+    const { orderId, newStatus } = req.body;
+    const order = await Order.findOne({orderId:orderId});
+    order.status = newStatus;
+    await order.save();
+    res.status(200).send({
+      success: true,
+      message: "Order status updated successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      error,
+      message: "Error while updating order status",
+    });
+  }
+}
 export {
   loginController,
   registerController,
@@ -394,4 +413,5 @@ export {
   bookAppointmentController,
   bookingAvailabilityController,
   userAppointmentsController,
+  updateOrderStatus,
 };

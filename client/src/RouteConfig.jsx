@@ -30,6 +30,8 @@ import Navbartest from "./Components/Navbartest";
 import Medicines from "./Pages/Medicines/Medicines";
 import Medicine from "./Pages/Medicines/Medicine";
 import Cart from "./Pages/Cart/Cart";
+import AdminOrders from "./Pages/admin/AdminOrders";
+import UserOrders from "./Pages/User/UserOrders/UserOrders";
 const lightTheme = createTheme({
   palette: {
     mode: "light",
@@ -128,6 +130,14 @@ const RouteConfig = ({ change }) => {
             }
           />
           <Route
+            path="/admin/orders"
+            element={
+              <ProtectedRoute>
+                <AdminOrders />
+              </ProtectedRoute>
+            }
+          />
+          <Route
             path="/doctor/profile/:id"
             element={
               <ProtectedRoute>
@@ -172,6 +182,14 @@ const RouteConfig = ({ change }) => {
             element={
               <ProtectedRoute>
                 <UserDoctor />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/user/orders"
+            element={
+              <ProtectedRoute>
+                <UserOrders />
               </ProtectedRoute>
             }
           />

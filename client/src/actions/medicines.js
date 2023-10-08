@@ -66,3 +66,17 @@ export const decreaseQty = (medicine) => async (dispatch) => {
     );
   } catch (error) {}
 };
+
+export const verifyPayment = (paymentData) => async (dispatch) => {
+  try {
+    const { data } = await api.verifyPayment(paymentData);
+    console.log(data);
+    dispatch({ type: "ADD_TO_CART", data });
+    localStorage.setItem(
+      "cart",
+      JSON.stringify(JSON.parse(localStorage.getItem("updateUser"))?.data)
+    );
+  } catch (error) {
+    console.log(error);
+  }
+} 

@@ -14,15 +14,16 @@ import Doctors from "./Doctors";
 import "./Home.css";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addMedicine } from "../../actions/medicines";
 import { message } from "antd";
 // import { addMedicine } from "./redux/medicineActions"; // Assuming you have Redux set up
 import { getMedicines } from "../../actions/medicines";
+import AdminOrders from "./AdminOrders";
+import { getOrder } from "../../actions/auth";
 const Home = () => {
-  useEffect(() => {
-    dispatch(getMedicines());
-  }, [getMedicines]);
+  const User = useSelector((state) => state.fetch_cuurent_userReducer);
+
   const handleDateChange = (date) => {
     setFormData({ ...formData, expiry: date });
   };
@@ -55,10 +56,14 @@ const Home = () => {
       window.location.reload();
     }, 2000);
   };
+  useEffect(() => {
+    dispatch(getMedicines());
+    dispatch(getOrder({ userId: User?.user?.id }));
+  }, [getMedicines,getOrder]);
   return (
-    <div>
+    <div style={{marginTop:"5%"}}>
       <h2>Admin Panel</h2>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
+      
       <Users />
       <br />
       <hr />
@@ -66,6 +71,11 @@ const Home = () => {
       <Doctors />
       <br />
       <hr />
+      <br />
+      <AdminOrders />
+      <br />
+      <hr />
+      <br />
       <br />
       <Typography>Add Medicines</Typography>
       <div id="addMedicine">
