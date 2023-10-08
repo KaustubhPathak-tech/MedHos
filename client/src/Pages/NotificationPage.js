@@ -142,7 +142,7 @@ const NotificationPage = () => {
     console.log("getNotification");
     try {
       const res = await axios.post(
-        "http://localhost:7000/user/get-all-notification",
+        "https://med-hos-server.vercel.app/user/get-all-notification",
         {
           userId: user?.user?._id,
           userType: user?.user?.userType,
@@ -174,7 +174,7 @@ const NotificationPage = () => {
       // dispatch(showLoading());
 
       const res = await axios.post(
-        "http://localhost:7000/user/mark-allRead-notification",
+        "https://med-hos-server.vercel.app/user/mark-allRead-notification",
         {
           userId: user?.user?._id,
           userType: user?.user?.userType,
@@ -208,7 +208,7 @@ const NotificationPage = () => {
     try {
       // dispatch(showLoading());
       const res = await axios.post(
-        "http://localhost:7000/user/delete-all-notification",
+        "https://med-hos-server.vercel.app/user/delete-all-notification",
         { userId: user?.user?._id, userType: user?.user?.userType },
         {
           headers: {

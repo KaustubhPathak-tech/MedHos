@@ -59,7 +59,7 @@ const BookingPage = () => {
       //   return toast.error("Appointment not available");
       // }
       const res = await axios.post(
-        "http://localhost:7000/user/booking-availbility",
+        "https://med-hos-server.vercel.app/user/booking-availbility",
         { doctorId: params.doctorId, date, time },
         {
           headers: {
@@ -89,7 +89,7 @@ const BookingPage = () => {
       }
       // dispatch(showLoading());
       const res = await axios.post(
-        "http://localhost:7000/user/book-appointment",
+        "https://med-hos-server.vercel.app/user/book-appointment",
         {
           doctorId: params.doctorId,
           userId: user?.user?._id,

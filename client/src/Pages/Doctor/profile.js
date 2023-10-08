@@ -41,7 +41,7 @@ const Profile = () => {
       ];
       dispatch(showLoading());
       const res = await axios.post(
-        "http://localhost:7000/doctor/updateProfile",
+        "https://med-hos-server.vercel.app/doctor/updateProfile",
         {
           ...values,
           userId: user._id,
@@ -72,7 +72,7 @@ const Profile = () => {
   const getDoctorInfo = async () => {
     try {
       const res = await axios.post(
-        "http://localhost:7000/doctor/getDoctorInfo",
+        "https://med-hos-server.vercel.app/doctor/getDoctorInfo",
         { userId: params.id },
         {
           headers: {

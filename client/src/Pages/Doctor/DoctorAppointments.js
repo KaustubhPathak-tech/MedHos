@@ -15,7 +15,7 @@ const DoctorAppointments = () => {
   const getAppointments = async () => {
     try {
       const res = await axios.post(
-        "http://localhost:7000/doctor/doctor-appointments",
+        "https://med-hos-server.vercel.app/doctor/doctor-appointments",
         { userId: user?.user?._id },
         {
           headers: {
@@ -39,7 +39,7 @@ const DoctorAppointments = () => {
   const handleStatus = async (record, status) => {
     try {
       const res = await axios.post(
-        "http://localhost:7000/doctor/update-status",
+        "https://med-hos-server.vercel.app/doctor/update-status",
         { appointmentsId: record._id, status },
         {
           headers: {

@@ -10,7 +10,7 @@ const Doctors = () => {
   //getUsers
   const getDoctors = async () => {
     try {
-      const res = await axios.get("http://localhost:7000/admin/getAllDoctors", {
+      const res = await axios.get("https://med-hos-server.vercel.app/admin/getAllDoctors", {
         headers: {
           Authorization: `Bearer ${profile?.token}`,
         },
@@ -27,7 +27,7 @@ const Doctors = () => {
   const handleAccountStatus = async (record, status) => {
     try {
       const res = await axios.post(
-        "http://localhost:7000/admin/changeAccountStatus",
+        "https://med-hos-server.vercel.app/admin/changeAccountStatus",
         { doctorId: record._id, status: status },
         {
           headers: {

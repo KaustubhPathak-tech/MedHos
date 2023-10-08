@@ -15,7 +15,7 @@ export default function ProtectedRoute({ children }) {
     try {
       // dispatch(showLoading());
       const res = await axios.post(
-        "http://localhost:7000/user/getUserData",
+        "https://med-hos-server.vercel.app/user/getUserData",
         {
           userId: profile?.user?._id,
           userType: profile?.user?.userType,
