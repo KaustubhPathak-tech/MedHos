@@ -9,28 +9,38 @@ import mongoose from "mongoose";
 import users from "./models/auth1.js";
 import Order from "./models/orders.js";
 import deleteOldOrders from "./deleteoldOrders.js";
-const payment = express();
+const app = express();
 
-payment.use(cors());
+app.use(cors());
 // payment.use(bodyParser.raw({ type: "application/json" }));
 
 dotenv.config();
 const stripeInstance = stripe(process.env.Stripe_secret);
 
 let endpointSecret = process.env.webhook_secret;
-payment.get("/", (req, res) => {
+app.get("/", (req, res) => {
   res.send("Hello from express");
 });
-payment.post("/webhook",express.raw({type: 'application/json'}), async (request, response) => {
-  let secret = endpointSecret;
-  const sig = request.headers["stripe-signature"];
-  const payload = request.body;
+app.post(
+  "/webhook",
+  express.raw({ type: "application/json" }),
+  async (request, response) => {
+    let event = request.body;
 
-  let event;
-
-  try {
-    event = stripeInstance.webhooks.constructEvent(payload, sig, secret);
-    console.log(event);
+    if (endpointSecret) {
+      // Get the signature sent by Stripe
+      const signature = request.headers["stripe-signature"];
+      try {
+        event = stripeInstance.webhooks.constructEvent(
+          request.body,
+          signature,
+          endpointSecret
+        );
+      } catch (err) {
+        console.log(`⚠️  Webhook signature verification failed.`, err.message);
+        return response.sendStatus(400);
+      }
+    }
     switch (event.type) {
       case "payment_intent.succeeded":
         console.log("PaymentIntent was successful!");
@@ -56,7 +66,7 @@ payment.post("/webhook",express.raw({type: 'application/json'}), async (request,
           await user.save();
           // Then define and call a function to handle the event checkout.session.completed
           const order = await Order.findOne({ orderId: Mydata.orderId });
-          order.status="Order Confirmed"
+          order.status = "Order Confirmed";
           order.confirmed = true;
           await order.save();
         } catch (error) {
@@ -89,14 +99,8 @@ payment.post("/webhook",express.raw({type: 'application/json'}), async (request,
       default:
         console.log(`Unhandled event type ${event.type}`);
     }
-
-    response.status(200).json({ success: true }).end();
-  } catch (err) {
-    console.log(err.message);
-    response.status(404).json({ "Webhook Error": err.message });
-    return;
   }
-});
+);
 
 //stripe webhook end
 const PORT = process.env.PORT || 5000;
@@ -104,7 +108,7 @@ const DATABASE = process.env.MONGO_URL;
 mongoose
   .connect(DATABASE, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() =>
-    payment.listen(PORT, () => {
+    app.listen(PORT, () => {
       console.log(`server is running on port ${PORT}`);
     })
   )
@@ -113,4 +117,4 @@ mongoose
     console.log("         Database URL       ");
   });
 
-export default payment;
+export default app;
