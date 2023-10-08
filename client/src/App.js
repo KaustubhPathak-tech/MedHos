@@ -36,7 +36,7 @@ const darkTheme = createTheme({
 getCity().then((res) => {
   localStorage.setItem("Citi", JSON.stringify(res?.data));
 });
-console.log(typeof JSON.parse(localStorage.getItem("Citi"))[0].geonames);
+// console.log(typeof JSON.parse(localStorage.getItem("Citi"))[0].geonames);
 
 function App() {
   useEffect(() => {
