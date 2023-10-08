@@ -125,7 +125,7 @@ const Cart = () => {
       "Content-Type": "application/json",
     };
     const response = await fetch(
-      "http://localhost:7000/create-checkout-session", //https://fine-puce-hen-wig.cyclic.cloud
+      "https://fine-puce-hen-wig.cyclic.cloud/create-checkout-session", //http://localhost:7000
       {
         method: "POST",
         headers: headers,
