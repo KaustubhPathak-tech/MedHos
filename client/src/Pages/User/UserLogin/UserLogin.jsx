@@ -137,9 +137,9 @@ const UserLogin = () => {
     setTimeout(() => {
       dispatch(getOrder({ userId: User?.user?._id }));
     }, 2000);
-    setTimeout(() => {
-      window.location.reload();
-    }, 2000);
+    // setTimeout(() => {
+    //   window.location.reload();
+    // }, 2000);
 
     message.success("Login Succesfully");
   }

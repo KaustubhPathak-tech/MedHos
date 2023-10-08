@@ -49,7 +49,7 @@ function App() {
       const data = JSON.parse(localStorage.getItem("FinalCities"));
       const cities = data.map((city) => city.name);
       localStorage.setItem("Cities", JSON.stringify(cities));
-    }, 2000);
+    }, 10000);
   }, [getAllDoctors]);
   const [checked, setChecked] = useState(true);
   const handleTheme = () => {
