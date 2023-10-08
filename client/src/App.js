@@ -10,15 +10,16 @@ import { getCity } from "./api";
 const apiKey = "kaustubh9";
 const countryCode = "IN";
 
-const apiUrl = "https://api.geonames.org/searchJSON?country=IN&maxRows=1000&username=kaustubh9";
+const apiUrl =
+  "http://api.geonames.org/searchJSON?country=IN&maxRows=1000&username=kaustubh9";
 
-// fetch(apiUrl)
-//   .then((response) => response.json())
-//   .then((data) => {
-//     const cities = data.geonames.map((city) => city.name);
-//     localStorage.setItem("Cities", JSON.stringify(cities));
-//   })
-//   .catch((error) => console.error("Error:", error));
+fetch(apiUrl)
+  .then((response) => response.json())
+  .then((data) => {
+    const cities = data.geonames.map((city) => city.name);
+    localStorage.setItem("Cities", JSON.stringify(cities));
+  })
+  .catch((error) => console.error("Error:", error));
 
 const lightTheme = createTheme({
   palette: {
@@ -30,12 +31,20 @@ const darkTheme = createTheme({
     mode: "dark",
   },
 });
+
 getCity().then((res) => {
-  localStorage.setItem("Cities", JSON.stringify(res.data));
+  localStorage.setItem("Citi", JSON.stringify(res?.data));
 });
+console.log(typeof JSON.parse(localStorage.getItem("Citi"))[0].geonames);
 
 function App() {
-
+  useEffect(() => {
+    getAllDoctors();
+    localStorage.setItem(
+      "FinalCities",
+      JSON.stringify(JSON.parse(localStorage.getItem("Citi"))[0].geonames)
+    );
+  }, [getAllDoctors]);
   const [checked, setChecked] = useState(true);
   const handleTheme = () => {
     try {

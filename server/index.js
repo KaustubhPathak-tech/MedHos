@@ -22,7 +22,7 @@ app.use("/user", userRoutes);
 app.use("/doctor", doctorRoutes);
 app.use("/medicines", medicineRoutes);
 app.use("/admin", adminRoutes);
-app.get("/fetchCity",allCity);
+app.post("/fetchCity",allCity);
 app.get("/", (req, res) => {
   res.send("<h1>Hurray! Server is Running</h1>");
 });

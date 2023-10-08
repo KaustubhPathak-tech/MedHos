@@ -1,6 +1,6 @@
 // app.js
 
-import { connectToMongo, closeMongoConnection } from "./mongodb";
+import { connectToMongo, closeMongoConnection } from "./db.js";
 
 export const allCity = async (req, res) => {
   try {
@@ -10,9 +10,9 @@ export const allCity = async (req, res) => {
     const collection = db.collection("city");
 
     // Perform queries or find documents in the collection
-    const documents = await collection.find({});
+    const documents = await collection.find().toArray();
 
-    console.log("Retrieved documents:", documents);
+    // console.log("Retrieved documents: ", documents);
 
     // You can now work with the JSON data here
     res.send(documents);
