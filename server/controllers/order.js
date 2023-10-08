@@ -25,18 +25,17 @@ export const saveOrder = async (req, res) => {
 };
 export const verifyPayment = async (req, res) => {
   const { userId } = req.body;
-  console.log(req.body);
-  const user1 = await users.findById(userId);
-  const order = await Order.find({user:userId});
-  console.log(order[order.length - 1].status);
-  if (order[order.length - 1].status === "Order Confirmed") {
-    res.status(201).send({
-      success: true,
-      message: "Order already confirmed",
-      data: user1.cart,
-    });
-  }
+
   try {
+    const user1 = await users.findById(userId);
+    const order = await Order.find({ user: userId });
+    if (order[order.length - 1].status === "Order Confirmed") {
+      res.status(201).send({
+        success: true,
+        message: "Order already confirmed",
+        data: user1.cart,
+      });
+    }
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

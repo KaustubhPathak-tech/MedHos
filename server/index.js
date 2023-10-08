@@ -30,7 +30,7 @@ app.get("/favicon.ico", function (req, res) {
 });
 var paymentRequest;
 //stripe integration
-const stripeInstance = stripe(process.env.Stripe_secret);
+const stripeInstance = stripe(process.env.Stripe_test);
 const YOUR_DOMAIN = "https://medhos.vercel.app";
 app.post("/create-checkout-session", async (req, res) => {
   console.log(req.body)

@@ -12,7 +12,7 @@ import deleteOldOrders from "./deleteoldOrders.js";
 const payment = express();
 
 payment.use(cors());
-payment.use(bodyParser.raw({ type: "application/json" }));
+// payment.use(bodyParser.raw({ type: "application/json" }));
 
 dotenv.config();
 const stripeInstance = stripe(process.env.Stripe_secret);
@@ -21,7 +21,7 @@ let endpointSecret = process.env.webhook_secret;
 payment.get("/", (req, res) => {
   res.send("Hello from express");
 });
-payment.post("/webhook", async (request, response) => {
+payment.post("/webhook",express.raw({type: 'application/json'}), async (request, response) => {
   let secret = endpointSecret;
   const sig = request.headers["stripe-signature"];
   const payload = request.body;
@@ -40,7 +40,7 @@ payment.post("/webhook", async (request, response) => {
         // Use the userId to update userInfo or perform other actions.
         console.log("Completed for user ID: ", userId);
         break;
-      case "payment_intent.failed":
+      case "payment_intent.payment_failed":
         console.log("PaymentIntent failed!");
         break;
       case "customer.created":

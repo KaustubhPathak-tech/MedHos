@@ -42,5 +42,5 @@ router.get("/user-appointments", mid, userAppointmentsController);
 router.post("/saveOrder", saveOrder);
 router.post("/getOrder",mid, getOrder);
 router.post("/updateOrderStatus",mid, updateOrderStatus);
-router.post("/verifyPayment",mid, verifyPayment);
+router.post("/verifyPayment", verifyPayment);
 export default router;

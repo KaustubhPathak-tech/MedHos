@@ -1,7 +1,7 @@
 import axios from "axios";
 const API = axios.create({
-  baseURL: "https://fine-puce-hen-wig.cyclic.cloud",
-}); // https://medhosserver.onrender.com/  https://otivaindustries.in    https://fine-puce-hen-wig.cyclic.cloud  http://localhost:7000
+  baseURL: "http://localhost:7000",
+}); // https://medhosserver.onrender.com/  https://otivaindustries.in    https://fine-puce-hen-wig.cyclic.cloud  
 API.interceptors.request.use((req) => {
   if (localStorage.getItem("Profile")) {
     req.headers.authorization = `Bearer ${
