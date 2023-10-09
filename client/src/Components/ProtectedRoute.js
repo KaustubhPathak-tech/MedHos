@@ -27,7 +27,7 @@ export default function ProtectedRoute({ children }) {
           },
         }
       );
-
+      console.log(res);
       // dispatch(hideLoading());
       if (res.data.success) {
         // dispatch(setCurrentUser(res.data.data));
