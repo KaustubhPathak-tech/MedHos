@@ -30,7 +30,7 @@ export default function ProtectedRoute({ children }) {
 
       // dispatch(hideLoading());
       if (res.data.success) {
-        dispatch(setCurrentUser(res.data.data));
+        // dispatch(setCurrentUser(res.data.data));
       } else {
         localStorage.clear();
         <Navigate to={`/${profile?.user?.userType}/login`} />;
