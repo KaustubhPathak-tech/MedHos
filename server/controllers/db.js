@@ -10,7 +10,7 @@ const url = process.env.CONNECTION_URL; // Replace with your MongoDB server URL
 const dbName = 'MedHos';
 
 // Create a new MongoClient
-const client = new MongoClient(url, { useUnifiedTopology: true });
+const client = new MongoClient(url, { useUnifiedTopology : true });
 
 // Function to connect to MongoDB
 export async function connectToMongo() {

@@ -51,7 +51,8 @@ export const verifyPayment = async (req, res) => {
 };
 
 export const getOrder = async (req, res) => {
-  const user = await users.findById(req.body.userId);
+  const { userId } = req.body;
+  const user = await users.findOne({ _id: userId });
   if (user?.userType === "user") {
     try {
       const order = await Order.find({

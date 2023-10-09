@@ -115,7 +115,8 @@ const UserLogin = () => {
     event.preventDefault();
   };
   const userType = "user";
-  var User = useSelector((state) => state.fetch_current_userReducer);
+  const User = useSelector((state) => state.fetch_current_userReducer);
+
   const navigate = useNavigate();
   useEffect(() => {
     if (Date.now() < User?.time + 3.6e6) {
@@ -134,9 +135,10 @@ const UserLogin = () => {
       handleClose();
     }, 5000);
     dispatch(glogin({ name, email, pic, password, userType }, navigate));
+    console.log(User?.user?._id);
     setTimeout(() => {
       dispatch(getOrder({ userId: User?.user?._id }));
-    }, 2000);
+    }, 6000);
     // setTimeout(() => {
     //   window.location.reload();
     // }, 2000);

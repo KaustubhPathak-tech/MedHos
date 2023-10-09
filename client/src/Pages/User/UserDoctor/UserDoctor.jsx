@@ -152,7 +152,7 @@ const UserDoctor = () => {
                 .filter((city) =>
                   city.toLowerCase().includes(first.toLocaleLowerCase())
                 )
-                .map((city) => (
+                .map((city,index) => index < 5 && (
                   <ListItem>
                     <Button
                       onClick={() => {

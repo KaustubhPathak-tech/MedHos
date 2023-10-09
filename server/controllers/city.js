@@ -17,7 +17,7 @@ export const allCity = async (req, res) => {
     // You can now work with the JSON data here
     res.send(documents);
     // Close the MongoDB connection when done
-    closeMongoConnection();
+    // closeMongoConnection();
   } catch (error) {
     console.error("Error:", error);
   }

@@ -383,13 +383,13 @@ export const glogin = async (req, res) => {
           });
         });
         const token = jwt.sign(
-          { email: email, id: password },
+          { email: email, id: newUser._id },
           process.env.JWT_SECRET,
           {
             expiresIn: "1h",
           }
         );
-        return res.status(200).json({ user: newUser, token });
+        return res.status(200).json({ user:newUser,time:Date.now(), token ,cart:newUser.cart});
       } catch (error) {
         res.status(500).json("Something went wrong!");
       }
