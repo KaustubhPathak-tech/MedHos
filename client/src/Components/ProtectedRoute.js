@@ -36,7 +36,7 @@ export default function ProtectedRoute({ children }) {
         <Navigate to={`/${profile?.user?.userType}/login`} />;
       }
     } catch (error) {
-      localStorage.clear();
+      // localStorage.clear();
       // dispatch(hideLoading());
       console.log(error);
     }
