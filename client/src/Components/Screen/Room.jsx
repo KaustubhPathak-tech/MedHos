@@ -33,7 +33,9 @@ import staticImage from "../../Assets/videono.png";
 
 const Room = () => {
   const socket = useSocket();
-
+  const { roomId } = useParams();
+  const Email = roomId;
+  const Room = roomId;
   //message char settings
   const [messagesRecieved, setMessagesReceived] = useState([]);
   const messagesColumnRef = useRef(null); // Add this
@@ -221,10 +223,7 @@ const Room = () => {
     setOpen(true);
   };
   const [remoteSocket, SetRemoteSocket] = useState(null);
-  const {roomId}=useParams();
-  var User = useSelector((state) => state.fetch_current_userReducer);
-  const Email = roomId;
-  const Room = roomId;
+
   const [init, setInit] = useState(false);
   const handleSubmit = useCallback(
     (e) => {
