@@ -33,9 +33,7 @@ import staticImage from "../../Assets/videono.png";
 
 const Room = () => {
   const socket = useSocket();
-  const { roomId } = useParams();
-  const Email = roomId;
-  const Room = roomId;
+
   //message char settings
   const [messagesRecieved, setMessagesReceived] = useState([]);
   const messagesColumnRef = useRef(null); // Add this
@@ -223,7 +221,10 @@ const Room = () => {
     setOpen(true);
   };
   const [remoteSocket, SetRemoteSocket] = useState(null);
-
+  const {roomId}=useParams();
+  var User = useSelector((state) => state.fetch_current_userReducer);
+  const Email = roomId;
+  const Room = roomId;
   const [init, setInit] = useState(false);
   const handleSubmit = useCallback(
     (e) => {
@@ -395,7 +396,7 @@ const Room = () => {
 
   const [audioEnabled, setAudioEnabled] = useState(true);
   const audioToggle = () => {
-    if (mystream) {
+    if (remoteStream) {
       const audioTrack = mystream.getAudioTracks()[0];
       if (audioTrack) {
         audioTrack.enabled = !audioTrack.enabled; // Toggle audio track state
