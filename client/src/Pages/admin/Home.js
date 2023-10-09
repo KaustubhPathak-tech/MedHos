@@ -20,7 +20,7 @@ import { message } from "antd";
 // import { addMedicine } from "./redux/medicineActions"; // Assuming you have Redux set up
 import { getMedicines } from "../../actions/medicines";
 import AdminOrders from "./AdminOrders";
-import { getOrder } from "../../actions/auth";
+import { getAdminOrders } from "../../actions/auth";
 const Home = () => {
   const User = useSelector((state) => state.fetch_cuurent_userReducer);
 
@@ -56,14 +56,15 @@ const Home = () => {
       window.location.reload();
     }, 2000);
   };
+  getAdminOrders();
   useEffect(() => {
     dispatch(getMedicines());
-    dispatch(getOrder({ userId: User?.user?.id }));
-  }, [getMedicines,getOrder]);
+    dispatch(getAdminOrders());
+  }, [getMedicines, getAdminOrders,User]);
   return (
-    <div style={{marginTop:"5%"}}>
+    <div style={{ marginTop: "5%" }}>
       <h2>Admin Panel</h2>
-      
+
       <Users />
       <br />
       <hr />

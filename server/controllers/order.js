@@ -38,22 +38,21 @@ export const verifyPayment = async (req, res) => {
     //     data: user1.cart,
     //   });
     // }
-    res
-      .status(201)
-      .send({
-        success: true,
-        message: "Order already confirmed",
-        data: user1.cart,
-      });
+    res.status(201).send({
+      success: true,
+      message: "Order already confirmed",
+      data: user1.cart,
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
 export const getOrder = async (req, res) => {
+  console.log(req.body.userId);
   const { userId } = req.body;
   const user = await users.findOne({ _id: userId });
-  if (user?.userType === "user") {
+  if (!user?.isAdmin) {
     try {
       const order = await Order.find({
         user: req.body.userId,
@@ -70,5 +69,14 @@ export const getOrder = async (req, res) => {
     } catch (error) {
       res.status(404).json({ message: error.message });
     }
+  }
+};
+
+export const getAdminOrders = async (req, res) => {
+  try {
+    const order = await Order.find({ confirmed: true });
+    res.status(200).json({ order: order });
+  } catch (error) {
+    res.status(404).json({ message: error.message });
   }
 };

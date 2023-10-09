@@ -12,7 +12,7 @@ import {
   updateOrderStatus,
 } from "../controllers/user.js";
 
-import { getOrder, saveOrder,verifyPayment } from "../controllers/order.js";
+import { getAdminOrders, getOrder, saveOrder,verifyPayment } from "../controllers/order.js";
 import mid from "../middlewares/authMiddleware.js";
 import { allCity } from "../controllers/city.js";
 const router = express.Router();
@@ -42,6 +42,7 @@ router.post("/booking-availbility", mid, bookingAvailabilityController);
 router.get("/user-appointments", mid, userAppointmentsController);
 router.post("/saveOrder", saveOrder);
 router.post("/getOrder",mid, getOrder);
+router.post("/getAdminOrders", getAdminOrders);
 router.post("/updateOrderStatus", updateOrderStatus);
 router.post("/verifyPayment", verifyPayment);
 export default router;

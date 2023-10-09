@@ -388,10 +388,8 @@ const updateOrderStatus = async (req, res) => {
     const order = await Order.findOne({orderId:orderId});
     order.status = newStatus;
     await order.save();
-    res.status(200).send({
-      success: true,
-      message: "Order status updated successfully",
-    });
+    const ordersss=await Order.find({confirmed:true});
+    res.status(200).json({ order: ordersss });
   } catch (error) {
     console.log(error);
     res.status(500).send({

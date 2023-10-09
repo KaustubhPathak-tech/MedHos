@@ -168,11 +168,23 @@ export const getOrder = (authData) => async (dispatch) => {
     <ToastContainer />;
   }
 };
-export const updateOrderStatus = (authData) => async () => {
+export const getAdminOrders = () => async (dispatch) => {
+  try {
+    const {data}=await api.getAdminOrders();
+    console.log(data);
+    dispatch({ type: "GET_ORDER", payload: data });
+  } catch (error) {
+    toast.error(error.response.data);
+    <ToastContainer />;
+  }
+};
+
+
+export const updateOrderStatus = (authData) => async (dispatch) => {
   try {
     const {data}=await api.updateOrderStatus(authData);
     console.log(data);
-    // dispatch({ type: "GET_ORDER", payload: data });
+    dispatch({ type: "GET_ORDER", payload: data });
   } catch (error) {
     toast.error(error.response.data);
     <ToastContainer />;

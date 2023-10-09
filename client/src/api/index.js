@@ -16,6 +16,7 @@ export const dlogIn = (authData) => API.post("/doctor/login", authData);
 export const glogIn = (authData) => API.post("/user/glogin", authData);
 export const saveOrder = (authData) => API.post("/user/saveOrder", authData);
 export const getOrder = (authData) => API.post("/user/getOrder", authData);
+export const getAdminOrders = () => API.post("/user/getAdminOrders");
 export const updateOrderStatus = (authData) =>
   API.post("/user/updateOrderStatus", authData);
 export const verifyPayment = (paymentData) =>
