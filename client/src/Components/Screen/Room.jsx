@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState, useRef } from "react";
 import ReactPlayer from "react-player";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSocket } from "../Context/SocketProvider";
 import Peer from "./Services/Peer";
 
@@ -221,10 +221,10 @@ const Room = () => {
     setOpen(true);
   };
   const [remoteSocket, SetRemoteSocket] = useState(null);
-
+  const {roomId}=useParams();
   var User = useSelector((state) => state.fetch_current_userReducer);
-  const Email = User?.user?.email;
-  const Room = User?.user?.email;
+  const Email = roomId;
+  const Room = roomId;
   const [init, setInit] = useState(false);
   const handleSubmit = useCallback(
     (e) => {
@@ -396,7 +396,7 @@ const Room = () => {
 
   const [audioEnabled, setAudioEnabled] = useState(true);
   const audioToggle = () => {
-    if (mystream) {
+    if (remoteStream) {
       const audioTrack = mystream.getAudioTracks()[0];
       if (audioTrack) {
         audioTrack.enabled = !audioTrack.enabled; // Toggle audio track state
@@ -422,7 +422,6 @@ const Room = () => {
 
   return (
     <div id="room">
-      
       {isIncomingAudioPlaying && (
         <audio
           src={outgoing}

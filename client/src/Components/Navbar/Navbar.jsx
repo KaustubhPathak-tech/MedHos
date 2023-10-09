@@ -87,7 +87,7 @@ function ResponsiveAppBar({ change }) {
             </ListItem>
             <ListItem disablePadding>
               <ListItemButton>
-                <NavLink to={`/consult-room/${User?.user?.email}`}>
+                <NavLink to={`/user/doctor-consult`}>
                   Video Consult
                 </NavLink>
               </ListItemButton>
@@ -106,7 +106,7 @@ function ResponsiveAppBar({ change }) {
             </ListItem>
             <ListItem disablePadding>
               <ListItemButton>
-                <NavLink to={`/consult-room/${User?.user?.email}`}>
+                <NavLink to={`/user/doctor-consult`}>
                   Video Consult
                 </NavLink>
               </ListItemButton>
@@ -321,7 +321,7 @@ function ResponsiveAppBar({ change }) {
               </NavLink>
             </Button> */}
             <NavLink to="/user/doctor">Find Doctors</NavLink>
-            <NavLink to={`/consult-room/${User?.user?.email}`}>
+            <NavLink to={`/user/doctor-consult`}>
               Video Consult
             </NavLink>
             <NavLink to={`/medicines`}>Medicines</NavLink>

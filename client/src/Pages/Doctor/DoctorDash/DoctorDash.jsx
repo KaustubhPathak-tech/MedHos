@@ -1,12 +1,14 @@
 import React, { useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 // var fs = require("fs");
 
 import "./DoctorDash.css";
+import { Button } from "antd";
 const DoctorDash = () => {
   var User = useSelector((state) => state.fetch_current_userReducer);
+  console.log(User?.user?._id);
   // const profile = JSON.parse(localStorage.getItem("Profile"));
 
   // const getNotification = async () => {
@@ -42,7 +44,6 @@ const DoctorDash = () => {
   // useEffect(() => {
   //   getNotification();
   // }, [getNotification]);
-
 
   const base64img = User?.user?.file;
   var imagefile = base64img;
@@ -97,11 +98,15 @@ const DoctorDash = () => {
       navigate("/");
     }
   }, [navigate, User]);
+  const doctorId = User?.user?._id;
   return (
     <div id="doctorDash">
       <br />
       {/* <img src={image.png} alt='image'/> */}
       <button onClick={handleDownload}>Download your Aadhaar</button>
+      <Button className="mt-2" type="primary">
+        <NavLink to={`/consultation-Room/${doctorId}`}>Video Consult</NavLink>
+      </Button>
     </div>
   );
 };

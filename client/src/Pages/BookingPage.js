@@ -2,10 +2,11 @@ import React, { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../styles/Booking.css";
+import videoImg from "../Assets/video-consult.png";
 import Layout from "../Components/Layout";
-import { useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import axios from "axios";
-import { DatePicker, message, TimePicker } from "antd";
+import { Button, DatePicker, message, TimePicker } from "antd";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import { showLoading, hideLoading } from "../ToolkitReducers/alertSlice";
@@ -119,6 +120,8 @@ const BookingPage = () => {
     }
   };
 
+  const handleStart = async () => {};
+  const { doctorId } = useParams();
   return (
     <Layout>
       <h3>Booking Page</h3>
@@ -180,6 +183,15 @@ const BookingPage = () => {
             </div>
           </div>
         )}
+
+        <div className="mt-5">
+          <h4>Video Consult</h4>
+          <img src={videoImg} />
+          <Button className="mt-2" type="primary">
+            <NavLink to={`/consultation-Room/${doctorId}`}>Video Consult</NavLink>
+          </Button>
+        </div>
+
         <ToastContainer />
       </div>
     </Layout>

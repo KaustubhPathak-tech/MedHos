@@ -87,6 +87,22 @@ const RouteConfig = ({ change }) => {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/user/dash"
+            element={
+              <ProtectedRoute>
+                <HomePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/user/doctor-consult"
+            element={
+              <ProtectedRoute>
+                <HomePage />
+              </ProtectedRoute>
+            }
+          />
 
           <Route
             path="/doctor/login"
@@ -101,7 +117,7 @@ const RouteConfig = ({ change }) => {
           <Route path="/payment" element={<Payment />} />
 
           <Route
-            path="/consult-room/:roomid"
+            path="/consultation-Room/:roomid"
             element={
               <ProtectedRoute>
                 <Room />
