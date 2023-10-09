@@ -8,7 +8,7 @@ import { Dropdown, Space, Tooltip } from "antd";
 
 const AdminOrders = () => {
   const order = JSON.parse(localStorage.getItem("orders"));
-  const user = useSelector((state) => state.fetch_cuurent_userReducer);
+  const user = useSelector((state) => state.fetch_current_userReducer);
   const dispatch = useDispatch();
   const medicine = JSON.parse(localStorage.getItem("Medicines"));
   var [selectedOrderId, setSelectedOrderId] = useState(""); // Store the selected order ID

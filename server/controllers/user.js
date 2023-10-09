@@ -386,6 +386,16 @@ const updateOrderStatus = async (req, res) => {
   try {
     const { orderId, newStatus } = req.body;
     const order = await Order.findOne({orderId:orderId});
+    const userId=order.user;
+    const user=await users.findById(userId);
+    console.log(user);
+    const notification = user.notification;
+    notification.push({
+      type: "order-status-updated",
+      message: `Your Order Status has been updated. Status: ${newStatus}`,
+      onCLickPath: "/user/orders",
+    });
+    await user.save();
     order.status = newStatus;
     await order.save();
     const ordersss=await Order.find({confirmed:true});
