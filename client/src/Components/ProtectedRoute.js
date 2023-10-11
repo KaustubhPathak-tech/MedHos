@@ -10,8 +10,8 @@ export default function ProtectedRoute({ children }) {
 
   //get user
   //eslint-disable-next-line
+  const profile = JSON.parse(localStorage.getItem("Profile"));
   const getUser = async () => {
-    const profile = JSON.parse(localStorage.getItem("Profile"));
     try {
       // dispatch(showLoading());
       const res = await axios.post(
@@ -44,11 +44,13 @@ export default function ProtectedRoute({ children }) {
 
   useEffect(() => {
     if (!user) {
-      getUser();
+      if (Date.now() < profile?.time + 3.6e6) {
+        getUser();
+      }
     }
   }, [user, getUser]);
 
-  if (localStorage.getItem("Profile") || Date.now() < user?.time + 3.6e6) {
+  if (Date.now() < profile?.time + 3.6e6) {
     return children;
   } else {
     return <Navigate to="/" />;

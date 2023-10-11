@@ -32,6 +32,7 @@ import Medicine from "./Pages/Medicines/Medicine";
 import Cart from "./Pages/Cart/Cart";
 import AdminOrders from "./Pages/admin/AdminOrders";
 import UserOrders from "./Pages/User/UserOrders/UserOrders";
+import ChatComponent from "./Components/NLP/NLP";
 const lightTheme = createTheme({
   palette: {
     mode: "light",
@@ -249,6 +250,14 @@ const RouteConfig = ({ change }) => {
               </ProtectedRoute>
             }
           />
+          {/* <Route
+            path="/searchwithvoice"
+            element={
+              <ProtectedRoute>
+                <ChatComponent />
+              </ProtectedRoute>
+            }
+          /> */}
           <Route path="/test" element={<Navbartest />} />
         </Routes>
       </BrowserRouter>
