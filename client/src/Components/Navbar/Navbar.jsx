@@ -38,8 +38,17 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { logout } from "../../actions/auth";
 
-const pages = ["Find Doctors", "Video Consult", "Medicines"];
-const StyledHeader = styled(AppBar)``;
+const StyledHeader = styled(AppBar)`
+  background-color: #f0f2f1 !important;
+  flex-direction: row;
+  flex-grow: 1;
+`;
+
+const links = styled(Typography)`
+  color: black;
+  font-weight: 600;
+`;
+
 const lightTheme = createTheme({
   palette: {
     mode: "light",
@@ -52,6 +61,8 @@ const darkTheme = createTheme({
 });
 
 function ResponsiveAppBar({ change }) {
+  var User = useSelector((state) => state.fetch_current_userReducer);
+
   //drawer settings
 
   const [state, setState] = React.useState({
@@ -87,9 +98,7 @@ function ResponsiveAppBar({ change }) {
             </ListItem>
             <ListItem disablePadding>
               <ListItemButton>
-                <NavLink to={`/user/doctor-consult`}>
-                  Video Consult
-                </NavLink>
+                <NavLink to={`/user/doctor-consult`}>Video Consult</NavLink>
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding>
@@ -106,9 +115,7 @@ function ResponsiveAppBar({ change }) {
             </ListItem>
             <ListItem disablePadding>
               <ListItemButton>
-                <NavLink to={`/user/doctor-consult`}>
-                  Video Consult
-                </NavLink>
+                <NavLink to={`/user/doctor-consult`}>Video Consult</NavLink>
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding>
@@ -144,7 +151,6 @@ function ResponsiveAppBar({ change }) {
 
   // const { user } = useAuth0();
   const dispatch = useDispatch();
-  var User = useSelector((state) => state.fetch_current_userReducer);
   React.useEffect(() => {
     dispatch(setCurrentUser(JSON.parse(localStorage.getItem("Profile"))));
   }, [dispatch]);
@@ -258,7 +264,7 @@ function ResponsiveAppBar({ change }) {
             </Drawer>
           </React.Fragment>
 
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+          {/* <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <Menu
               id="menu-appbar"
               anchorEl={anchorElNav}
@@ -283,7 +289,7 @@ function ResponsiveAppBar({ change }) {
                 </MenuItem>
               ))}
             </Menu>
-          </Box>
+          </Box> */}
 
           <Typography
             variant="h5"
@@ -303,8 +309,9 @@ function ResponsiveAppBar({ change }) {
           >
             <img src={logo} height="50px" alt="logo" />
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {/* <Button
+          {User?.user?.userType === "user" && (
+            <Box className="navBox">
+              {/* <Button
               onClick={() => {
                 handleCloseNavMenu();
               }}
@@ -320,40 +327,51 @@ function ResponsiveAppBar({ change }) {
                 Video Consult
               </NavLink>
             </Button> */}
-            <NavLink to="/user/doctor">Find Doctors</NavLink>
-            <NavLink to={`/user/doctor-consult`}>
-              Video Consult
-            </NavLink>
-            <NavLink to={`/medicines`}>Medicines</NavLink>
-          </Box>
+
+              <NavLink to="/user/doctor" className="navlinks">
+                Find Doctors
+              </NavLink>
+
+              <NavLink to={`/user/doctor-consult`} className="navlinks">
+                Video Consult
+              </NavLink>
+              <NavLink to={`/medicines`} className="navlinks">
+                Medicines
+              </NavLink>
+            </Box>
+          )}
 
           {/* <Typography>{User?.user?.name || user?.name}</Typography> */}
-          <Stack spacing={2} direction="row">
-            <IconButton>
-              <Badge badgeContent={cart?.length} color="primary">
-                <NavLink to={`/user/cart`}>
-                  <ShoppingCartIcon />
-                </NavLink>
-              </Badge>
-            </IconButton>
-            <IconButton
-              onClick={() => {
-                setTimeout(() => {
-                  window.location.reload();
-                }, 2000);
-              }}
-            >
-              <Badge
-                badgeContent={notification?.notification?.length}
-                color="primary"
-              >
-                <NavLink to={`${User?.user?.userType}/notifications`}>
-                  <NotificationsActiveIcon />
-                </NavLink>
-              </Badge>
-            </IconButton>
-          </Stack>
-          <IconButton sx={{ ml: 1 }} onClick={() => change()} color="inherit">
+          <div className="toolbox">
+            {User?.user?.userType === "user" && (
+              <Stack spacing={2} direction="row">
+                <IconButton>
+                  <Badge badgeContent={cart?.length} color="primary">
+                    <NavLink to={`/user/cart`}>
+                      <ShoppingCartIcon />
+                    </NavLink>
+                  </Badge>
+                </IconButton>
+                <IconButton
+                  onClick={() => {
+                    setTimeout(() => {
+                      window.location.reload();
+                    }, 2000);
+                  }}
+                >
+                  <Badge
+                    badgeContent={notification?.notification?.length}
+                    color="primary"
+                  >
+                    <NavLink to={`${User?.user?.userType}/notifications`}>
+                      <NotificationsActiveIcon />
+                    </NavLink>
+                  </Badge>
+                </IconButton>
+              </Stack>
+            )}
+
+            {/* <IconButton sx={{ ml: 1 }} onClick={() => change()} color="inherit">
             {theme.palette.mode === "dark" ? (
               <>
                 <Brightness7Icon />
@@ -363,86 +381,148 @@ function ResponsiveAppBar({ change }) {
                 <Brightness4Icon />
               </>
             )}
-          </IconButton>
+          </IconButton> */}
 
-          {User === null ? (
-            <></>
-          ) : (
-            <>
-              <Box sx={{ flexGrow: 0, marginLeft: "10px" }}>
-                <Tooltip>
-                  <IconButton sx={{ p: 0 }} onClick={handleOpenUserMenu}>
-                    <Avatar
-                      alt={`${User?.user?.name}`}
-                      src={`${User?.user?.avatar}`}
-                    />
-                  </IconButton>
-                </Tooltip>
-                <Menu
-                  sx={{ mt: "45px" }}
-                  id="menu-appbar"
-                  anchorEl={anchorElUser}
-                  anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  open={Boolean(anchorElUser)}
-                  onClose={handleCloseUserMenu}
-                >
-                  <MenuItem onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">
-                      <NavLink to={`/${User?.user?.userType}/appointments`}>
-                        My Appointments
-                      </NavLink>
-                    </Typography>
-                  </MenuItem>
-                  <MenuItem onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">My Tests</Typography>
-                  </MenuItem>
-                  <MenuItem
-                    onClick={() => {
-                      handleCloseUserMenu();
+            {User === null ? (
+              <></>
+            ) : (
+              <>
+                {User?.user?.userType === "doctor" ? (
+                  <Box
+                    sx={{
+                      flexGrow: 1,
+                      textAlign: "right",
+                      marginRight: "0px",
                     }}
                   >
-                    <Typography textAlign="center">
-                      <NavLink to={`/${User?.user?.userType}/orders`}>
-                        Your Orders
-                      </NavLink>
-                    </Typography>
-                  </MenuItem>
-                  <MenuItem onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">
-                      My Medical Records
-                    </Typography>
-                  </MenuItem>
-                  <MenuItem onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">
-                      My Online Consultation
-                    </Typography>
-                  </MenuItem>
-                  <MenuItem onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">My Feedback</Typography>
-                  </MenuItem>
-                  <MenuItem onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">
-                      View/Update Profile
-                    </Typography>
-                  </MenuItem>
-                  <MenuItem onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">Settings</Typography>
-                  </MenuItem>
-                  <MenuItem onClick={handleLogout}>
-                    <Typography textAlign="center">Logout</Typography>
-                  </MenuItem>
-                </Menu>
-              </Box>
-            </>
-          )}
+                    <Tooltip>
+                      <IconButton sx={{ p: 0 }} onClick={handleOpenUserMenu}>
+                        <Avatar
+                          alt={`${User?.user?.name}`}
+                          src={`${User?.user?.avatar}`}
+                        />
+                      </IconButton>
+                    </Tooltip>
+                    <Menu
+                      sx={{ mt: "45px" }}
+                      id="menu-appbar"
+                      anchorEl={anchorElUser}
+                      anchorOrigin={{
+                        vertical: "top",
+                        horizontal: "right",
+                      }}
+                      keepMounted
+                      transformOrigin={{
+                        vertical: "top",
+                        horizontal: "right",
+                      }}
+                      open={Boolean(anchorElUser)}
+                      onClose={handleCloseUserMenu}
+                    >
+                      <MenuItem onClick={handleCloseUserMenu}>
+                        <Typography textAlign="center">
+                          <NavLink to={`/${User?.user?.userType}/appointments`}>
+                            My Appointments
+                          </NavLink>
+                        </Typography>
+                      </MenuItem>
+
+                      <MenuItem
+                        onClick={() => {
+                          handleCloseUserMenu();
+                        }}
+                      >
+                        <Typography textAlign="center">
+                          <NavLink to={`/${User?.user?.userType}/orders`}>
+                            Your Orders
+                          </NavLink>
+                        </Typography>
+                      </MenuItem>
+
+                      <MenuItem onClick={handleCloseUserMenu}>
+                        <Typography textAlign="center">
+                          View/Update Profile
+                        </Typography>
+                      </MenuItem>
+
+                      <MenuItem onClick={handleLogout}>
+                        <Typography textAlign="center">Logout</Typography>
+                      </MenuItem>
+                    </Menu>
+                  </Box>
+                ) : (
+                  <>
+                    <Box
+                      sx={{
+                        flexGrow: 0,
+                        marginLeft: "10px",
+                        position: "sticky",
+                        marginRight: "0px",
+                      }}
+                    >
+                      <Tooltip>
+                        <IconButton sx={{ p: 0 }} onClick={handleOpenUserMenu}>
+                          <Avatar
+                            alt={`${User?.user?.name}`}
+                            src={`${User?.user?.avatar}`}
+                          />
+                        </IconButton>
+                      </Tooltip>
+                      <Menu
+                        sx={{ mt: "45px" }}
+                        id="menu-appbar"
+                        anchorEl={anchorElUser}
+                        anchorOrigin={{
+                          vertical: "top",
+                          horizontal: "right",
+                        }}
+                        keepMounted
+                        transformOrigin={{
+                          vertical: "top",
+                          horizontal: "right",
+                        }}
+                        open={Boolean(anchorElUser)}
+                        onClose={handleCloseUserMenu}
+                      >
+                        <MenuItem onClick={handleCloseUserMenu}>
+                          <Typography textAlign="center">
+                            <NavLink
+                              to={`/${User?.user?.userType}/appointments`}
+                              className="toollinks"
+                            >
+                              My Appointments
+                            </NavLink>
+                          </Typography>
+                        </MenuItem>
+
+                        <MenuItem
+                          onClick={() => {
+                            handleCloseUserMenu();
+                          }}
+                        >
+                          <Typography textAlign="center">
+                            <NavLink to={`/${User?.user?.userType}/orders`} className="toollinks">
+                              Your Orders
+                            </NavLink>
+                          </Typography>
+                        </MenuItem>
+
+                        <MenuItem onClick={handleCloseUserMenu}>
+                          <Typography textAlign="center" className="toollinks">
+                            View/Update Profile
+                          </Typography>
+                        </MenuItem>
+
+                        <MenuItem onClick={handleLogout}>
+                          <Typography textAlign="center" className="toollinks">Logout</Typography>
+                        </MenuItem>
+                      </Menu>
+                    </Box>
+                  </>
+                )}
+              </>
+            )}
+          </div>
         </Toolbar>
       </Container>
     </StyledHeader>

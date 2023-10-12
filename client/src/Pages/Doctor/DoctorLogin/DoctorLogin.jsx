@@ -294,15 +294,46 @@ const DoctorLogin = () => {
         <CircularProgress color="inherit" />
       </Backdrop>
       <div className="row">
-        <div id="login/signup">
-          <Button variant="outlined" onClick={() => setSwitch(false)}>
-            Log in
-          </Button>
-          &nbsp;
-          <Button variant="outlined" onClick={() => setSwitch(true)}>
-            Register
-          </Button>
-        </div>
+        {Switch ? (
+          <>
+            <div id="login/signup">
+              <Button
+              variant = "outlined"
+                onClick={() => {
+                  setSwitch(false);
+                  ;
+                }}
+              >
+                Log in
+              </Button>
+              &nbsp;
+              <Button
+                variant="contained"
+                onClick={() => setSwitch(true)}
+                id="userRegister"
+              >
+                Register
+              </Button>
+            </div>
+          </>
+        ) : (
+          <>
+            <div id="login/signup">
+              <Button
+                variant="contained"
+                onClick={() => {
+                  setSwitch(false);
+                }}
+              >
+                Log in
+              </Button>
+              &nbsp;
+              <Button variant="outlined" onClick={() => setSwitch(true)}>
+                Register
+              </Button>
+            </div>
+          </>
+        )}
       </div>
       <br />
 
@@ -377,339 +408,345 @@ const DoctorLogin = () => {
                       {activeStep === 0 ? (
                         <>
                           <Container maxWidth="md" id="basicDetails">
-                            <Card id="form1Doctor">                          
-                            <form>
-                              <Grid container spacing={2}>
-                                <Grid item xs={6}>
-                                  <TextField
-                                    fullWidth
-                                    label="First Name"
-                                    name="firstName"
-                                    value={formData.firstName}
-                                    onChange={handleInputChange}
-                                    required
-                                  />
-                                </Grid>
-                                <Grid item xs={6}>
-                                  <TextField
-                                    fullWidth
-                                    label="Last Name"
-                                    name="lastName"
-                                    value={formData.lastName}
-                                    onChange={handleInputChange}
-                                    required
-                                  />
-                                </Grid>
-                                <Grid item xs={12}>
-                                  <FormControl fullWidth>
-                                    <InputLabel>Specialization</InputLabel>
-                                    <Select
-                                      name="specialization"
-                                      value={formData.specialization}
+                            <Card id="form1Doctor">
+                              <form>
+                                <Grid container spacing={2}>
+                                  <Grid item xs={6}>
+                                    <TextField
+                                      fullWidth
+                                      label="First Name"
+                                      name="firstName"
+                                      value={formData.firstName}
                                       onChange={handleInputChange}
                                       required
-                                    >
-                                      <MenuItem value="Dentist">
-                                        Dentist
-                                      </MenuItem>
-                                      <MenuItem value="cardio">cardio</MenuItem>
-                                      <MenuItem value="Physio">Physio</MenuItem>
-                                    </Select>
-                                  </FormControl>
-                                </Grid>
-                                <Grid item xs={12}>
-                                  <TextField
-                                    fullWidth
-                                    type="email"
-                                    label="Email"
-                                    name="email"
-                                    value={formData.email}
-                                    onChange={handleInputChange}
-                                    required
-                                  />
-                                </Grid>
-                                <Grid item xs={12}>
-                                  <TextField
-                                    fullWidth
-                                    type="tel"
-                                    label="Cotact No."
-                                    name="contact"
-                                    value={formData.contact}
-                                    onChange={handleInputChange}
-                                    required
-                                  />
-                                </Grid>
-                                <Grid item xs={12}>
-                                  <FormControl fullWidth>
-                                    <FormLabel id="demo-row-radio-buttons-group-label">
-                                      Gender
-                                    </FormLabel>
-                                    <RadioGroup
-                                      value={formData.gender}
-                                      onChange={handleInputChange}
-                                      row
-                                      aria-labelledby="demo-row-radio-buttons-group-label"
-                                      name="row-radio-buttons-group"
-                                      id="genderSelect"
-                                    >
-                                      <FormControlLabel
-                                        value="female"
-                                        name="female"
-                                        control={<Radio />}
-                                        label="Female"
-                                        onClick={() => {
-                                          formData.gender = "female";
-                                        }}
-                                      />
-                                      <FormControlLabel
-                                        value="male"
-                                        name="male"
-                                        control={<Radio />}
-                                        label="Male"
-                                        onClick={() => {
-                                          formData.gender = "male";
-                                        }}
-                                      />
-                                      <FormControlLabel
-                                        value="other"
-                                        name="other"
-                                        control={<Radio />}
-                                        label="Other"
-                                        onClick={() => {
-                                          formData.gender = "other";
-                                        }}
-                                      />
-                                    </RadioGroup>
-                                  </FormControl>
-                                </Grid>
-                                <Grid item xs={10}>
-                                  <TextField
-                                    fullWidth
-                                    type="text"
-                                    label={
-                                      !weather ? (
-                                        <>City</>
-                                      ) : (
-                                        <>{`${weather.name}`}</>
-                                      )
-                                    }
-                                    disabled={weather !== null}
-                                    required={weather === null}
-                                    name="local_city"
-                                    value={formData.local_city}
-                                    onChange={handleInputChange}
-                                  ></TextField>
-                                </Grid>
-                                <Grid item xs={2}>
-                                  <div>
-                                    {!location ? (
-                                      <>
-                                        <Button onClick={handleLocationClick}>
-                                          <FontAwesomeIcon
-                                            icon={faLocation}
-                                            fade
-                                            size="2x"
-                                          />
-                                        </Button>
-                                        <br />
-                                        <Typography fontSize="12px">
-                                          Detect My Location
-                                        </Typography>
-                                      </>
-                                    ) : null}
-                                    {location && !weather ? (
-                                      <p> Detecting ... </p>
-                                    ) : null}
-                                    {weather ? <div></div> : null}
-                                  </div>
-                                </Grid>
-                                <Grid id="headings">
-                                  <Typography fontWeight="600">
-                                    Medical Registration
-                                  </Typography>
-                                </Grid>
-
-                                <Grid item xs={12}>
-                                  <TextField
-                                    fullWidth
-                                    type="text"
-                                    label="Registration Number"
-                                    name="doc_reg_no"
-                                    placeholder="Type registration number"
-                                    value={formData.doc_reg_no}
-                                    onChange={handleInputChange}
-                                    required
-                                  />
-                                </Grid>
-
-                                <Grid item xs={12}>
-                                  <FormControl fullWidth>
-                                    <InputLabel>
-                                      Registration Council
-                                    </InputLabel>
-                                    <Select
-                                      name="doc_reg_council"
-                                      value={formData.doc_reg_council}
+                                    />
+                                  </Grid>
+                                  <Grid item xs={6}>
+                                    <TextField
+                                      fullWidth
+                                      label="Last Name"
+                                      name="lastName"
+                                      value={formData.lastName}
                                       onChange={handleInputChange}
                                       required
+                                    />
+                                  </Grid>
+                                  <Grid item xs={12}>
+                                    <FormControl fullWidth>
+                                      <InputLabel>Specialization</InputLabel>
+                                      <Select
+                                        name="specialization"
+                                        value={formData.specialization}
+                                        onChange={handleInputChange}
+                                        required
+                                      >
+                                        <MenuItem value="Dentist">
+                                          Dentist
+                                        </MenuItem>
+                                        <MenuItem value="cardio">
+                                          cardio
+                                        </MenuItem>
+                                        <MenuItem value="Physio">
+                                          Physio
+                                        </MenuItem>
+                                      </Select>
+                                    </FormControl>
+                                  </Grid>
+                                  <Grid item xs={12}>
+                                    <TextField
+                                      fullWidth
+                                      type="email"
+                                      label="Email"
+                                      name="email"
+                                      value={formData.email}
+                                      onChange={handleInputChange}
+                                      required
+                                    />
+                                  </Grid>
+                                  <Grid item xs={12}>
+                                    <TextField
+                                      fullWidth
+                                      type="tel"
+                                      label="Cotact No."
+                                      name="contact"
+                                      value={formData.contact}
+                                      onChange={handleInputChange}
+                                      required
+                                    />
+                                  </Grid>
+                                  <Grid item xs={12}>
+                                    <FormControl fullWidth>
+                                      <FormLabel id="demo-row-radio-buttons-group-label">
+                                        Gender
+                                      </FormLabel>
+                                      <RadioGroup
+                                        value={formData.gender}
+                                        onChange={handleInputChange}
+                                        row
+                                        aria-labelledby="demo-row-radio-buttons-group-label"
+                                        name="row-radio-buttons-group"
+                                        id="genderSelect"
+                                      >
+                                        <FormControlLabel
+                                          value="female"
+                                          name="female"
+                                          control={<Radio />}
+                                          label="Female"
+                                          onClick={() => {
+                                            formData.gender = "female";
+                                          }}
+                                        />
+                                        <FormControlLabel
+                                          value="male"
+                                          name="male"
+                                          control={<Radio />}
+                                          label="Male"
+                                          onClick={() => {
+                                            formData.gender = "male";
+                                          }}
+                                        />
+                                        <FormControlLabel
+                                          value="other"
+                                          name="other"
+                                          control={<Radio />}
+                                          label="Other"
+                                          onClick={() => {
+                                            formData.gender = "other";
+                                          }}
+                                        />
+                                      </RadioGroup>
+                                    </FormControl>
+                                  </Grid>
+                                  <Grid item xs={10}>
+                                    <TextField
+                                      fullWidth
+                                      type="text"
+                                      label={
+                                        !weather ? (
+                                          <>City</>
+                                        ) : (
+                                          <>{`${weather.name}`}</>
+                                        )
+                                      }
+                                      disabled={weather !== null}
+                                      required={weather === null}
+                                      name="local_city"
+                                      value={formData.local_city}
+                                      onChange={handleInputChange}
+                                    ></TextField>
+                                  </Grid>
+                                  <Grid item xs={2}>
+                                    <div>
+                                      {!location ? (
+                                        <>
+                                          <Button onClick={handleLocationClick}>
+                                            <FontAwesomeIcon
+                                              icon={faLocation}
+                                              fade
+                                              size="2x"
+                                            />
+                                          </Button>
+                                          <br />
+                                          <Typography fontSize="12px">
+                                            Detect My Location
+                                          </Typography>
+                                        </>
+                                      ) : null}
+                                      {location && !weather ? (
+                                        <p> Detecting ... </p>
+                                      ) : null}
+                                      {weather ? <div></div> : null}
+                                    </div>
+                                  </Grid>
+                                  <Grid id="headings">
+                                    <Typography fontWeight="600">
+                                      Medical Registration
+                                    </Typography>
+                                  </Grid>
+
+                                  <Grid item xs={12}>
+                                    <TextField
+                                      fullWidth
+                                      type="text"
+                                      label="Registration Number"
+                                      name="doc_reg_no"
+                                      placeholder="Type registration number"
+                                      value={formData.doc_reg_no}
+                                      onChange={handleInputChange}
+                                      required
+                                    />
+                                  </Grid>
+
+                                  <Grid item xs={12}>
+                                    <FormControl fullWidth>
+                                      <InputLabel>
+                                        Registration Council
+                                      </InputLabel>
+                                      <Select
+                                        name="doc_reg_council"
+                                        value={formData.doc_reg_council}
+                                        onChange={handleInputChange}
+                                        required
+                                      >
+                                        <MenuItem value="Maharashtra Medical Council">
+                                          Maharashtra Medical Council
+                                        </MenuItem>
+                                        <MenuItem value="Delhi Medical Council">
+                                          Delhi Medical Council
+                                        </MenuItem>
+                                        <MenuItem value="Karnataka Medical Council">
+                                          Karnataka Medical Council
+                                        </MenuItem>
+                                      </Select>
+                                    </FormControl>
+                                  </Grid>
+                                  <Grid item xs={12}>
+                                    <LocalizationProvider
+                                      dateAdapter={AdapterDayjs}
                                     >
-                                      <MenuItem value="Maharashtra Medical Council">
-                                        Maharashtra Medical Council
-                                      </MenuItem>
-                                      <MenuItem value="Delhi Medical Council">
-                                        Delhi Medical Council
-                                      </MenuItem>
-                                      <MenuItem value="Karnataka Medical Council">
-                                        Karnataka Medical Council
-                                      </MenuItem>
-                                    </Select>
-                                  </FormControl>
-                                </Grid>
-                                <Grid item xs={12}>
-                                  <LocalizationProvider
-                                    dateAdapter={AdapterDayjs}
+                                      <DemoContainer
+                                        components={["DatePicker"]}
+                                      >
+                                        <DatePicker
+                                          views={["year"]}
+                                          label="Registration Year"
+                                          name="doc_reg_year"
+                                          value={doc_reg_year}
+                                          onChange={handleYearChange}
+                                          renderInput={(params) => (
+                                            <TextField
+                                              {...params}
+                                              label="Select Year"
+                                              variant="outlined"
+                                            />
+                                          )}
+                                          animateYearScrolling
+                                        />
+                                      </DemoContainer>
+                                    </LocalizationProvider>
+                                  </Grid>
+
+                                  <Grid
+                                    item
+                                    sx={{ textAlign: "left" }}
+                                    id="headings"
+                                    xs={12}
                                   >
-                                    <DemoContainer components={["DatePicker"]}>
-                                      <DatePicker
-                                        views={["year"]}
-                                        label="Registration Year"
-                                        name="doc_reg_year"
-                                        value={doc_reg_year}
-                                        onChange={handleYearChange}
-                                        renderInput={(params) => (
-                                          <TextField
-                                            {...params}
-                                            label="Select Year"
-                                            variant="outlined"
-                                          />
-                                        )}
-                                        animateYearScrolling
-                                      />
-                                    </DemoContainer>
-                                  </LocalizationProvider>
-                                </Grid>
+                                    <Typography fontWeight="600">
+                                      Education Qualifications
+                                    </Typography>
+                                  </Grid>
 
-                                <Grid
-                                  item
-                                  sx={{ textAlign: "left" }}
-                                  id="headings"
-                                  xs={12}
-                                >
-                                  <Typography fontWeight="600">
-                                    Education Qualifications
-                                  </Typography>
-                                </Grid>
-
-                                <Grid item xs={4}>
-                                  <FormControl fullWidth>
-                                    <InputLabel>Degree</InputLabel>
-                                    <Select
-                                      name="doc_degree"
-                                      value={formData.doc_degree}
+                                  <Grid item xs={4}>
+                                    <FormControl fullWidth>
+                                      <InputLabel>Degree</InputLabel>
+                                      <Select
+                                        name="doc_degree"
+                                        value={formData.doc_degree}
+                                        onChange={handleInputChange}
+                                        required
+                                      >
+                                        <MenuItem value="MBBS">MBBS</MenuItem>
+                                        <MenuItem value="MS">MS</MenuItem>
+                                        <MenuItem value="MD">MD</MenuItem>
+                                        <MenuItem value="M.Sc">M.Sc.</MenuItem>
+                                        <MenuItem value="M.Phil">
+                                          M.Phil.
+                                        </MenuItem>
+                                      </Select>
+                                    </FormControl>
+                                  </Grid>
+                                  <Grid item xs={4}>
+                                    <TextField
+                                      fullWidth
+                                      type="text"
+                                      label="College/Institute Name"
+                                      name="doc_institute"
+                                      placeholder="Type College/Institute"
+                                      value={formData.doc_institute}
                                       onChange={handleInputChange}
                                       required
-                                    >
-                                      <MenuItem value="MBBS">MBBS</MenuItem>
-                                      <MenuItem value="MS">MS</MenuItem>
-                                      <MenuItem value="MD">MD</MenuItem>
-                                      <MenuItem value="M.Sc">M.Sc.</MenuItem>
-                                      <MenuItem value="M.Phil">
-                                        M.Phil.
-                                      </MenuItem>
-                                    </Select>
-                                  </FormControl>
-                                </Grid>
-                                <Grid item xs={4}>
-                                  <TextField
-                                    fullWidth
-                                    type="text"
-                                    label="College/Institute Name"
-                                    name="doc_institute"
-                                    placeholder="Type College/Institute"
-                                    value={formData.doc_institute}
-                                    onChange={handleInputChange}
-                                    required
-                                  />
-                                </Grid>
-                                <Grid item xs={4}>
-                                  <TextField
-                                    fullWidth
-                                    type="text"
-                                    label="Year of Experience"
-                                    name="doc_experience"
-                                    placeholder="Type Year of Experience"
-                                    value={formData.doc_experience}
-                                    onChange={handleInputChange}
-                                    required
-                                  />
-                                </Grid>
+                                    />
+                                  </Grid>
+                                  <Grid item xs={4}>
+                                    <TextField
+                                      fullWidth
+                                      type="text"
+                                      label="Year of Experience"
+                                      name="doc_experience"
+                                      placeholder="Type Year of Experience"
+                                      value={formData.doc_experience}
+                                      onChange={handleInputChange}
+                                      required
+                                    />
+                                  </Grid>
 
-                                <Grid
-                                  item
-                                  sx={{ textAlign: "left" }}
-                                  id="headings"
-                                  xs={12}
-                                >
-                                  <Typography fontWeight="600">
-                                    Connect a Practice
-                                  </Typography>
+                                  <Grid
+                                    item
+                                    sx={{ textAlign: "left" }}
+                                    id="headings"
+                                    xs={12}
+                                  >
+                                    <Typography fontWeight="600">
+                                      Connect a Practice
+                                    </Typography>
+                                  </Grid>
+                                  <Grid item xs={4}>
+                                    <TextField
+                                      fullWidth
+                                      type="text"
+                                      label="Establishment Name"
+                                      name="est_name"
+                                      placeholder="Type Establishment Name"
+                                      value={formData.est_name}
+                                      onChange={handleInputChange}
+                                      required
+                                    />
+                                  </Grid>
+                                  <Grid item xs={6}>
+                                    <TextField
+                                      fullWidth
+                                      type="text"
+                                      value={formData.est_city}
+                                      label={
+                                        !weather ? (
+                                          <>City</>
+                                        ) : (
+                                          <>{`${weather.name}`}</>
+                                        )
+                                      }
+                                      disabled={weather !== null}
+                                      required={weather === null}
+                                      name="est_city"
+                                      onChange={handleInputChange}
+                                    ></TextField>
+                                  </Grid>
+                                  <Grid item xs={2}>
+                                    <div>
+                                      {!location ? (
+                                        <>
+                                          <Button onClick={handleLocationClick}>
+                                            <FontAwesomeIcon
+                                              icon={faLocation}
+                                              fade
+                                              size="2x"
+                                            />
+                                          </Button>
+                                          <br />
+                                          <Typography fontSize="12px">
+                                            Detect My Location
+                                          </Typography>
+                                        </>
+                                      ) : null}
+                                      {location && !weather ? (
+                                        <p> Detecting ... </p>
+                                      ) : null}
+                                      {weather ? <div></div> : null}
+                                    </div>
+                                  </Grid>
                                 </Grid>
-                                <Grid item xs={4}>
-                                  <TextField
-                                    fullWidth
-                                    type="text"
-                                    label="Establishment Name"
-                                    name="est_name"
-                                    placeholder="Type Establishment Name"
-                                    value={formData.est_name}
-                                    onChange={handleInputChange}
-                                    required
-                                  />
-                                </Grid>
-                                <Grid item xs={6}>
-                                  <TextField
-                                    fullWidth
-                                    type="text"
-                                    value={formData.est_city}
-                                    label={
-                                      !weather ? (
-                                        <>City</>
-                                      ) : (
-                                        <>{`${weather.name}`}</>
-                                      )
-                                    }
-                                    disabled={weather !== null}
-                                    required={weather === null}
-                                    name="est_city"
-                                    onChange={handleInputChange}
-                                  ></TextField>
-                                </Grid>
-                                <Grid item xs={2}>
-                                  <div>
-                                    {!location ? (
-                                      <>
-                                        <Button onClick={handleLocationClick}>
-                                          <FontAwesomeIcon
-                                            icon={faLocation}
-                                            fade
-                                            size="2x"
-                                          />
-                                        </Button>
-                                        <br />
-                                        <Typography fontSize="12px">
-                                          Detect My Location
-                                        </Typography>
-                                      </>
-                                    ) : null}
-                                    {location && !weather ? (
-                                      <p> Detecting ... </p>
-                                    ) : null}
-                                    {weather ? <div></div> : null}
-                                  </div>
-                                </Grid>
-                              </Grid>
-                            </form>
-                            </Card> 
+                              </form>
+                            </Card>
                           </Container>
                         </>
                       ) : (
@@ -784,259 +821,269 @@ const DoctorLogin = () => {
                         <>
                           <Container>
                             <Card id="form3Doctor">
-                            <form>
-                              <Grid spacing={2}>
-                                <Grid
-                                  item
-                                  sx={{ textAlign: "left" }}
-                                  id="headings"
-                                  xs={12}
-                                >
-                                  <Typography fontWeight="600">
-                                    Establishment Timings
-                                  </Typography>
-                                </Grid>
-                                <Grid>
-                                  <div className="card">
-                                    <div className="rating-container">
-                                      <div className="rating-text">
-                                        <p>Days </p>
-                                      </div>
-                                      <div className="rating">
-                                        {Monday === "" ? (
-                                          <span
-                                            id="radioText"
-                                            onClick={() => {
-                                              setMonday("Monday");
-                                            }}
-                                          >
-                                            Mo
-                                          </span>
-                                        ) : (
-                                          <span
-                                            id="radioCheckedText"
-                                            onClick={() => {
-                                              setMonday("");
-                                            }}
-                                          >
-                                            Mo
-                                          </span>
-                                        )}
-                                        {Tuesday === "" ? (
-                                          <span
-                                            id="radioText"
-                                            onClick={() => {
-                                              setTuesday("Tuesday");
-                                            }}
-                                          >
-                                            Tu
-                                          </span>
-                                        ) : (
-                                          <span
-                                            id="radioCheckedText"
-                                            onClick={() => {
-                                              setTuesday("");
-                                            }}
-                                          >
-                                            Tu
-                                          </span>
-                                        )}
-                                        {Wednesday === "" ? (
-                                          <span
-                                            id="radioText"
-                                            onClick={() => {
-                                              setWednesday("Wednesday");
-                                            }}
-                                          >
-                                            We
-                                          </span>
-                                        ) : (
-                                          <span
-                                            id="radioCheckedText"
-                                            onClick={() => {
-                                              setWednesday("");
-                                            }}
-                                          >
-                                            We
-                                          </span>
-                                        )}
-                                        {Thursday === "" ? (
-                                          <span
-                                            id="radioText"
-                                            onClick={() => {
-                                              setThursday("Thursday");
-                                            }}
-                                          >
-                                            Th
-                                          </span>
-                                        ) : (
-                                          <span
-                                            id="radioCheckedText"
-                                            onClick={() => {
-                                              setThursday("");
-                                            }}
-                                          >
-                                            Th
-                                          </span>
-                                        )}
-                                        {Friday === "" ? (
-                                          <span
-                                            id="radioText"
-                                            onClick={() => {
-                                              setFriday("Friday");
-                                            }}
-                                          >
-                                            Fr
-                                          </span>
-                                        ) : (
-                                          <span
-                                            id="radioCheckedText"
-                                            onClick={() => {
-                                              setFriday("");
-                                            }}
-                                          >
-                                            Fr
-                                          </span>
-                                        )}
-                                        {Saturday === "" ? (
-                                          <span
-                                            id="radioText"
-                                            onClick={() => {
-                                              setSaturday("Saturday");
-                                            }}
-                                          >
-                                            Sa
-                                          </span>
-                                        ) : (
-                                          <span
-                                            id="radioCheckedText"
-                                            onClick={() => {
-                                              setSaturday("");
-                                            }}
-                                          >
-                                            Sa
-                                          </span>
-                                        )}
-                                        {Sunday === "" ? (
-                                          <span
-                                            id="radioText"
-                                            onClick={() => {
-                                              setSunday("Sunday");
-                                            }}
-                                          >
-                                            Su
-                                          </span>
-                                        ) : (
-                                          <span
-                                            id="radioCheckedText"
-                                            onClick={() => {
-                                              setSunday("");
-                                            }}
-                                          >
-                                            Su
-                                          </span>
-                                        )}
+                              <form>
+                                <Grid spacing={2}>
+                                  <Grid
+                                    item
+                                    sx={{ textAlign: "left" }}
+                                    id="headings"
+                                    xs={12}
+                                  >
+                                    <Typography fontWeight="600">
+                                      Establishment Timings
+                                    </Typography>
+                                  </Grid>
+                                  <Grid>
+                                    <div className="card">
+                                      <div className="rating-container">
+                                        <div className="rating-text">
+                                          <p>Days </p>
+                                        </div>
+                                        <div className="rating">
+                                          {Monday === "" ? (
+                                            <span
+                                              id="radioText"
+                                              onClick={() => {
+                                                setMonday("Monday");
+                                              }}
+                                            >
+                                              Mo
+                                            </span>
+                                          ) : (
+                                            <span
+                                              id="radioCheckedText"
+                                              onClick={() => {
+                                                setMonday("");
+                                              }}
+                                            >
+                                              Mo
+                                            </span>
+                                          )}
+                                          {Tuesday === "" ? (
+                                            <span
+                                              id="radioText"
+                                              onClick={() => {
+                                                setTuesday("Tuesday");
+                                              }}
+                                            >
+                                              Tu
+                                            </span>
+                                          ) : (
+                                            <span
+                                              id="radioCheckedText"
+                                              onClick={() => {
+                                                setTuesday("");
+                                              }}
+                                            >
+                                              Tu
+                                            </span>
+                                          )}
+                                          {Wednesday === "" ? (
+                                            <span
+                                              id="radioText"
+                                              onClick={() => {
+                                                setWednesday("Wednesday");
+                                              }}
+                                            >
+                                              We
+                                            </span>
+                                          ) : (
+                                            <span
+                                              id="radioCheckedText"
+                                              onClick={() => {
+                                                setWednesday("");
+                                              }}
+                                            >
+                                              We
+                                            </span>
+                                          )}
+                                          {Thursday === "" ? (
+                                            <span
+                                              id="radioText"
+                                              onClick={() => {
+                                                setThursday("Thursday");
+                                              }}
+                                            >
+                                              Th
+                                            </span>
+                                          ) : (
+                                            <span
+                                              id="radioCheckedText"
+                                              onClick={() => {
+                                                setThursday("");
+                                              }}
+                                            >
+                                              Th
+                                            </span>
+                                          )}
+                                          {Friday === "" ? (
+                                            <span
+                                              id="radioText"
+                                              onClick={() => {
+                                                setFriday("Friday");
+                                              }}
+                                            >
+                                              Fr
+                                            </span>
+                                          ) : (
+                                            <span
+                                              id="radioCheckedText"
+                                              onClick={() => {
+                                                setFriday("");
+                                              }}
+                                            >
+                                              Fr
+                                            </span>
+                                          )}
+                                          {Saturday === "" ? (
+                                            <span
+                                              id="radioText"
+                                              onClick={() => {
+                                                setSaturday("Saturday");
+                                              }}
+                                            >
+                                              Sa
+                                            </span>
+                                          ) : (
+                                            <span
+                                              id="radioCheckedText"
+                                              onClick={() => {
+                                                setSaturday("");
+                                              }}
+                                            >
+                                              Sa
+                                            </span>
+                                          )}
+                                          {Sunday === "" ? (
+                                            <span
+                                              id="radioText"
+                                              onClick={() => {
+                                                setSunday("Sunday");
+                                              }}
+                                            >
+                                              Su
+                                            </span>
+                                          ) : (
+                                            <span
+                                              id="radioCheckedText"
+                                              onClick={() => {
+                                                setSunday("");
+                                              }}
+                                            >
+                                              Su
+                                            </span>
+                                          )}
+                                        </div>
                                       </div>
                                     </div>
-                                  </div>
-                                </Grid>
-                                <Grid
-                                  item
-                                  sx={{ textAlign: "left" }}
-                                  id="headings"
-                                  xs={12}
-                                >
-                                  <Typography fontWeight="200">
-                                    Session 1
-                                  </Typography>
-                                </Grid>
-                                <Grid item xs={6}>
-                                  <LocalizationProvider
-                                    dateAdapter={AdapterDayjs}
+                                  </Grid>
+                                  <Grid
+                                    item
+                                    sx={{ textAlign: "left" }}
+                                    id="headings"
+                                    xs={12}
                                   >
-                                    <DemoContainer
-                                      components={["TimePicker", "TimePicker"]}
+                                    <Typography fontWeight="200">
+                                      Session 1
+                                    </Typography>
+                                  </Grid>
+                                  <Grid item xs={6}>
+                                    <LocalizationProvider
+                                      dateAdapter={AdapterDayjs}
                                     >
-                                      <TimePicker
-                                        label="From"
-                                        value={docSes1s}
-                                        onChange={(newValue) => {
-                                          setDocSes1s(newValue);
-                                        }}
-                                        // onChange={(newValue) =>
-                                        //   setValue(newValue)
-                                        // }
-                                        defaultValue={dayjs("2022-04-17T15:30")}
-                                      />
-                                      <TimePicker
-                                        label="To"
-                                        value={docSes1e}
-                                        onChange={(newValue) => {
-                                          setDocSes1e(newValue);
-                                        }}
-                                      />
-                                    </DemoContainer>
-                                  </LocalizationProvider>
-                                </Grid>
-                                <Grid
-                                  item
-                                  sx={{ textAlign: "left" }}
-                                  id="headings"
-                                  xs={12}
-                                >
-                                  <Typography fontWeight="200">
-                                    Session 2
-                                  </Typography>
-                                </Grid>
-                                <Grid item xs={6}>
-                                  <LocalizationProvider
-                                    dateAdapter={AdapterDayjs}
+                                      <DemoContainer
+                                        components={[
+                                          "TimePicker",
+                                          "TimePicker",
+                                        ]}
+                                      >
+                                        <TimePicker
+                                          label="From"
+                                          value={docSes1s}
+                                          onChange={(newValue) => {
+                                            setDocSes1s(newValue);
+                                          }}
+                                          // onChange={(newValue) =>
+                                          //   setValue(newValue)
+                                          // }
+                                          defaultValue={dayjs(
+                                            "2022-04-17T15:30"
+                                          )}
+                                        />
+                                        <TimePicker
+                                          label="To"
+                                          value={docSes1e}
+                                          onChange={(newValue) => {
+                                            setDocSes1e(newValue);
+                                          }}
+                                        />
+                                      </DemoContainer>
+                                    </LocalizationProvider>
+                                  </Grid>
+                                  <Grid
+                                    item
+                                    sx={{ textAlign: "left" }}
+                                    id="headings"
+                                    xs={12}
                                   >
-                                    <DemoContainer
-                                      components={["TimePicker", "TimePicker"]}
+                                    <Typography fontWeight="200">
+                                      Session 2
+                                    </Typography>
+                                  </Grid>
+                                  <Grid item xs={6}>
+                                    <LocalizationProvider
+                                      dateAdapter={AdapterDayjs}
                                     >
-                                      <TimePicker
-                                        label="From"
-                                        value={docSes2s}
-                                        onChange={(newValue) => {
-                                          setDocSes2s(newValue);
-                                        }}
-                                        defaultValue={dayjs("2022-04-17T15:30")}
-                                      />
-                                      <TimePicker
-                                        label="To"
-                                        value={docSes2e}
-                                        onChange={(newValue) => {
-                                          setDocSes2e(newValue);
-                                        }}
-                                      />
-                                    </DemoContainer>
-                                  </LocalizationProvider>
+                                      <DemoContainer
+                                        components={[
+                                          "TimePicker",
+                                          "TimePicker",
+                                        ]}
+                                      >
+                                        <TimePicker
+                                          label="From"
+                                          value={docSes2s}
+                                          onChange={(newValue) => {
+                                            setDocSes2s(newValue);
+                                          }}
+                                          defaultValue={dayjs(
+                                            "2022-04-17T15:30"
+                                          )}
+                                        />
+                                        <TimePicker
+                                          label="To"
+                                          value={docSes2e}
+                                          onChange={(newValue) => {
+                                            setDocSes2e(newValue);
+                                          }}
+                                        />
+                                      </DemoContainer>
+                                    </LocalizationProvider>
+                                  </Grid>
+                                  <Grid
+                                    item
+                                    sx={{ textAlign: "left" }}
+                                    id="headings"
+                                    xs={12}
+                                  >
+                                    <Typography fontWeight="600">
+                                      Consultation Fees
+                                    </Typography>
+                                  </Grid>
+                                  <Grid item xs={12}>
+                                    <TextField
+                                      fullWidth
+                                      type="text"
+                                      label="Consultation Fee"
+                                      placeholder="Type Consultation Fee"
+                                      name="doc_fee"
+                                      value={formData.doc_fee}
+                                      onChange={handleInputChange}
+                                      required
+                                    />
+                                  </Grid>
                                 </Grid>
-                                <Grid
-                                  item
-                                  sx={{ textAlign: "left" }}
-                                  id="headings"
-                                  xs={12}
-                                >
-                                  <Typography fontWeight="600">
-                                    Consultation Fees
-                                  </Typography>
-                                </Grid>
-                                <Grid item xs={12}>
-                                  <TextField
-                                    fullWidth
-                                    type="text"
-                                    label="Consultation Fee"
-                                    placeholder="Type Consultation Fee"
-                                    name="doc_fee"
-                                    value={formData.doc_fee}
-                                    onChange={handleInputChange}
-                                    required
-                                  />
-                                </Grid>
-                              </Grid>
-                            </form>
+                              </form>
                             </Card>
                           </Container>{" "}
                         </>

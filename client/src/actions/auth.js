@@ -79,7 +79,7 @@ export const login = (authData, navigate) => async (dispatch) => {
     );
     navigate("/user/dash");
     setTimeout(() => {}, 2000);
-    message.success("Login Successful", { position: "top-center" });
+    // message.success("Login Successful", { position: "top-center" });
   } catch (error) {
     toast.error(error.response.data);
     <ToastContainer />;
@@ -99,7 +99,7 @@ export const doctorlogin = (authData, navigate) => async (dispatch) => {
     );
     navigate("/doctor/dash");
     setTimeout(() => {}, 2000);
-    message.success("Login Successful", { position: "top-center" });
+    // message.success("Login Successful", { position: "top-center" });
   } catch (error) {
     toast.error(error.response.data);
     <ToastContainer />;
@@ -127,8 +127,8 @@ export const glogin = (authData, navigate) => async (dispatch) => {
       JSON.stringify(JSON.parse(localStorage.getItem("Profile"))?.cart)
     );
     navigate("/user/dash");
-    setTimeout(() => {}, 2000);
-    message.success("Login Successful", { position: "top-center" });
+    // setTimeout(() => {}, 2000);
+    // message.success("Login Successful", { position: "top-center" });
   } catch (error) {
     toast.error(error.response.data);
     <ToastContainer />;

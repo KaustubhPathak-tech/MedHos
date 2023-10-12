@@ -26,6 +26,7 @@ import {
   InputAdornment,
   IconButton,
   Box,
+  styled,
 } from "@mui/material";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress, {
@@ -76,6 +77,10 @@ function FacebookCircularProgress(props) {
     </Box>
   );
 }
+
+const actionButton = styled(Button)({
+  textTransform: "none",
+});
 
 const UserLogin = () => {
   const [captched, setCaptched] = useState(false);
@@ -157,7 +162,7 @@ const UserLogin = () => {
     // setTimeout(() => {
     //   window.location.reload();
     // }, 2000);
-    message.success("Login Succesfully");
+    // message.success("Login Succesfully");
   };
   const handleRegister = (e) => {
     e.preventDefault();
@@ -226,6 +231,8 @@ const UserLogin = () => {
       toast.error(error);
     }
   };
+
+  var variant = "outlined";
   return (
     <div id="userloginPage">
       <div className="row">
@@ -241,32 +248,63 @@ const UserLogin = () => {
       >
         <CircularProgress color="inherit" />
       </Backdrop>
-      <div className="row">
-        <div id="login/signup">
-          <Button variant="outlined" onClick={() => setSwitch(false)}>
-            Log in
-          </Button>
-          &nbsp;
-          <Button variant="outlined" onClick={() => setSwitch(true)}>
-            Register
-          </Button>
-        </div>
+      <div className="row" id="chooseAction">
+        {Switch ? (
+          <>
+            <div id="login/signup">
+              <Button
+                variant={`${variant}`}
+                onClick={() => {
+                  setSwitch(false);
+                  variant = "contained";
+                }}
+              >
+                Log in
+              </Button>
+              &nbsp;
+              <Button
+                variant="contained"
+                onClick={() => setSwitch(true)}
+                id="userRegister"
+              >
+                Register
+              </Button>
+            </div>
+          </>
+        ) : (
+          <>
+            <div id="login/signup">
+              <Button
+                variant="contained"
+                onClick={() => {
+                  setSwitch(false);
+                }}
+              >
+                Log in
+              </Button>
+              &nbsp;
+              <Button variant="outlined" onClick={() => setSwitch(true)}>
+                Register
+              </Button>
+            </div>
+          </>
+        )}
       </div>
-
-      <br />
+      <div className="seperatorLogin"></div>
       <div className="row">
         <div className="col-lg-6">
           <img src={login_img} alt="login_image" id="loginImg" />
         </div>
+
         <div className="col-lg-6" style={{ paddingLeft: "25px" }}>
           {Switch ? (
             <>
               <div className="usersignup" id="usersignup">
                 <Card
                   sx={{
-                    maxWidth: 400,
+                    maxWidth: 600,
                     margin: "auto",
-                    marginTop: (theme) => theme.spacing(5),
+                    // marginTop: (theme) => theme.spacing(5),
                     padding: (theme) => theme.spacing(2),
                     textAlign: "center",
                   }}
@@ -297,7 +335,7 @@ const UserLogin = () => {
                       label="Email"
                       name="email"
                       sx={{
-                        width: "70%",
+                        minWidth: "83%",
                         marginBottom: (theme) => theme.spacing(2),
                       }}
                       variant="outlined"
@@ -307,8 +345,10 @@ const UserLogin = () => {
                     />
                     <Button
                       disabled={sent}
+                      sx={{borderRadius:"10px"}}
                       onClick={handleSendOTP}
                       hidden={email.indexOf("@") === -1}
+                      id="optsendbtn"
                     >
                       {otpverified ? (
                         <>
@@ -327,17 +367,19 @@ const UserLogin = () => {
                       label="OTP"
                       name="otp"
                       sx={{
-                        width: "75%",
+                        minWidth: "83%",
                         marginBottom: (theme) => theme.spacing(2),
                       }}
                       variant="outlined"
                       onChange={(e) => {
                         setOtp(e.target.value);
                       }}
+                      
                     />
                     <Button
                       hidden={!sent || otpverified}
                       onClick={handleVerifyOTP}
+                      id="optverifybtn"
                     >
                       {loading ? (
                         <>
@@ -667,7 +709,7 @@ const UserLogin = () => {
                         name="phone"
                         disabled={phoneValidated}
                         sx={{
-                          width: "45%",
+                          width: "50%",
                           marginBottom: (theme) => theme.spacing(2),
                         }}
                         variant="outlined"
@@ -677,10 +719,10 @@ const UserLogin = () => {
                       />
 
                       <Button
-                        hidden={phone.length < 5 || !phone_code}
+                        disabled={phone.length < 5 || !phone_code||phoneValidated}
                         type="submit"
                         onClick={handlePhoneVerify}
-                        disabled={phoneValidated}
+                        id="phoneverifybtn"
                       >
                         {phoneValidated ? (
                           <>
@@ -700,7 +742,7 @@ const UserLogin = () => {
                       </Button>
                     </form>
                     <FormControl
-                      sx={{ m: 1, width: "36ch" }}
+                      sx={{ m: 1, width: "53ch" }}
                       variant="outlined"
                     >
                       <InputLabel htmlFor="outlined-adornment-password">
@@ -743,10 +785,14 @@ const UserLogin = () => {
                       </span>
                     </div>
                     <br />
+                    <div id="captcha">
                     <ReCAPTCHA
                       sitekey="6LdObVUoAAAAAHYn9BYhbKcy1ggsqnOS6jsesWx1"
                       onChange={onChange}
+                      
                     />
+                    </div>
+                    
 
                     <Button
                       disabled={!captched}
@@ -781,37 +827,37 @@ const UserLogin = () => {
                       console.log("Login Failed");
                     }}
                     text="continue_with"
-                    width="290px"
+                    width="400px"
                     locale="hindi"
                     logo_alignment="center"
                   />
                 </div>
 
                 <br />
-                <div>Or</div>
+                <div id="seperatorOr">Or</div>
                 <br />
+
                 <TextField
-                  id="outlined-basic"
                   name="email"
                   type="text"
                   label="Mobile Number or Email ID"
                   variant="outlined"
                   autoComplete="off"
-                  sx={{ width: "95%" }}
                   onChange={(e) => {
                     setEmail(e.target.value);
                   }}
+                  id="userlogininput"
                 />
                 <br />
                 <br />
-                <FormControl sx={{ m: 1, width: "30ch" }} variant="outlined">
+                <FormControl variant="outlined">
                   <InputLabel htmlFor="outlined-adornment-password">
                     Password
                   </InputLabel>
                   <OutlinedInput
+                    className="userlogininput"
                     id="outlined-adornment-password"
                     type={showPassword ? "text" : "password"}
-                    sx={{ width: "100%" }}
                     onChange={(e) => {
                       setPassword(e.target.value);
                     }}
@@ -840,7 +886,7 @@ const UserLogin = () => {
                 <Button
                   variant="contained"
                   onClick={handleLogin}
-                  sx={{ width: "95%" }}
+                  id="submitLogin"
                 >
                   Login
                 </Button>

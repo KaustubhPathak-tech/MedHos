@@ -32,7 +32,6 @@ import Medicine from "./Pages/Medicines/Medicine";
 import Cart from "./Pages/Cart/Cart";
 import AdminOrders from "./Pages/admin/AdminOrders";
 import UserOrders from "./Pages/User/UserOrders/UserOrders";
-import ChatComponent from "./Components/NLP/NLP";
 const lightTheme = createTheme({
   palette: {
     mode: "light",
@@ -64,193 +63,191 @@ const RouteConfig = ({ change }) => {
     theme = lightTheme;
   }
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <BrowserRouter>
-        <ScrolltoTop />
-        <ResponsiveAppBar change={handleTheme} />
-        <Routes>
-          <Route exact path="/" element={<LandingPage />} />
+    <BrowserRouter>
+      <ScrolltoTop />
+      <ResponsiveAppBar change={handleTheme} />
+      <Routes>
+        <Route exact path="/" element={<LandingPage />} />
 
-          <Route
-            path="/user/login"
-            element={
-              <PublicRoute>
-                <UserLogin />
-              </PublicRoute>
-            }
-          />
-          <Route
-            path="/user/dash"
-            element={
-              <ProtectedRoute>
-                <HomePage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/user/dash"
-            element={
-              <ProtectedRoute>
-                <HomePage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/user/doctor-consult"
-            element={
-              <ProtectedRoute>
-                <HomePage />
-              </ProtectedRoute>
-            }
-          />
+        <Route
+          path="/user/login"
+          element={
+            <PublicRoute>
+              <UserLogin />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/user/dash"
+          element={
+            <ProtectedRoute>
+              <HomePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/user/dash"
+          element={
+            <ProtectedRoute>
+              <HomePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/user/doctor-consult"
+          element={
+            <ProtectedRoute>
+              <HomePage />
+            </ProtectedRoute>
+          }
+        />
 
-          <Route
-            path="/doctor/login"
-            element={
-              <PublicRoute>
-                <DoctorLogin />
-              </PublicRoute>
-            }
-          />
+        <Route
+          path="/doctor/login"
+          element={
+            <PublicRoute>
+              <DoctorLogin />
+            </PublicRoute>
+          }
+        />
 
-          <Route path="/doctor/dash" element={<DoctorDash />} />
-          <Route path="/payment" element={<Payment />} />
+        <Route path="/doctor/dash" element={<DoctorDash />} />
+        <Route path="/payment" element={<Payment />} />
 
-          <Route
-            path="/consultation-Room/:roomid"
-            element={
-              <ProtectedRoute>
-                <Room />
-              </ProtectedRoute>
-            }
-          />
+        <Route
+          path="/consultation-Room/:roomid"
+          element={
+            <ProtectedRoute>
+              <Room />
+            </ProtectedRoute>
+          }
+        />
 
-          <Route path="*" element={<Missing />} />
+        <Route path="*" element={<Missing />} />
 
-          {/* new routes */}
-          <Route
-            path="/admin/users"
-            element={
-              <ProtectedRoute>
-                <Users />
-              </ProtectedRoute>
-            }
-          />
+        {/* new routes */}
+        <Route
+          path="/admin/users"
+          element={
+            <ProtectedRoute>
+              <Users />
+            </ProtectedRoute>
+          }
+        />
 
-          <Route
-            path="/admin/doctors"
-            element={
-              <ProtectedRoute>
-                <Doctors />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/admin/orders"
-            element={
-              <ProtectedRoute>
-                <AdminOrders />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/doctor/profile/:id"
-            element={
-              <ProtectedRoute>
-                <Profile />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/user/doctor/book-appointment/:doctorId"
-            element={
-              <ProtectedRoute>
-                <BookingPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/notification"
-            element={
-              <ProtectedRoute>
-                <NotificationPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/user/appointments"
-            element={
-              <ProtectedRoute>
-                <Appointments />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/doctor/appointments"
-            element={
-              <ProtectedRoute>
-                <DoctorAppointments />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/user/doctor"
-            element={
-              <ProtectedRoute>
-                <UserDoctor />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/user/orders"
-            element={
-              <ProtectedRoute>
-                <UserOrders />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path={`${User?.user?.userType}/notifications`}
-            element={
-              <ProtectedRoute>
-                <NotificationPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/admin/dashboard"
-            element={
-              <ProtectedRoute>
-                <Home />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/medicines"
-            element={
-              <ProtectedRoute>
-                <Medicines />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/medicines/:medicineid"
-            element={
-              <ProtectedRoute>
-                <Medicine />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/user/cart"
-            element={
-              <ProtectedRoute>
-                <Cart />
-              </ProtectedRoute>
-            }
-          />
-          {/* <Route
+        <Route
+          path="/admin/doctors"
+          element={
+            <ProtectedRoute>
+              <Doctors />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/orders"
+          element={
+            <ProtectedRoute>
+              <AdminOrders />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/doctor/profile/:id"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/user/doctor/book-appointment/:doctorId"
+          element={
+            <ProtectedRoute>
+              <BookingPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/notification"
+          element={
+            <ProtectedRoute>
+              <NotificationPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/user/appointments"
+          element={
+            <ProtectedRoute>
+              <Appointments />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/doctor/appointments"
+          element={
+            <ProtectedRoute>
+              <DoctorAppointments />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/user/doctor"
+          element={
+            <ProtectedRoute>
+              <UserDoctor />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/user/orders"
+          element={
+            <ProtectedRoute>
+              <UserOrders />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path={`${User?.user?.userType}/notifications`}
+          element={
+            <ProtectedRoute>
+              <NotificationPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/dashboard"
+          element={
+            <ProtectedRoute>
+              <Home />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/medicines"
+          element={
+            <ProtectedRoute>
+              <Medicines />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/medicines/:medicineid"
+          element={
+            <ProtectedRoute>
+              <Medicine />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/user/cart"
+          element={
+            <ProtectedRoute>
+              <Cart />
+            </ProtectedRoute>
+          }
+        />
+        {/* <Route
             path="/searchwithvoice"
             element={
               <ProtectedRoute>
@@ -258,10 +255,9 @@ const RouteConfig = ({ change }) => {
               </ProtectedRoute>
             }
           /> */}
-          <Route path="/test" element={<Navbartest />} />
-        </Routes>
-      </BrowserRouter>
-    </ThemeProvider>
+        <Route path="/test" element={<Navbartest />} />
+      </Routes>
+    </BrowserRouter>
   );
 };
 
