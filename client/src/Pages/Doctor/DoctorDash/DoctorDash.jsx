@@ -1,11 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import videoImg from "../../../Assets/video-consult.png";
+
 // var fs = require("fs");
 
 import "./DoctorDash.css";
 import { Button } from "antd";
+import DoctorAppointments from "../DoctorAppointments";
 const DoctorDash = () => {
   var User = useSelector((state) => state.fetch_current_userReducer);
   console.log(User?.user?._id);
@@ -99,14 +102,78 @@ const DoctorDash = () => {
     }
   }, [navigate, User]);
   const doctorId = User?.user?._id;
+  const [hovered, setHovered] = useState(false);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+
+  const handleMouseEnter = () => setHovered(true);
+  const handleMouseLeave = () => setHovered(false);
+  const handleMouseMove = (e) =>
+    setPosition({ x: e.nativeEvent.offsetX, y: e.nativeEvent.offsetY });
+
+  const containerStyle = {
+    color: "white",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: "5px",
+    fontSize: "22px",
+    position: "relative",
+    minWidth: "100%",
+    minHeight: "65px",
+    background: `linear-gradient(
+      217deg,
+      rgba(88, 228, 197, 0.8),
+      rgba(255, 0, 0, 0) 70.71%
+    ),
+    linear-gradient(127deg, rgba(0, 128, 255, 0.8), rgba(0, 255, 0, 0) 70.71%),
+    linear-gradient(336deg, rgba(0, 0, 255, 0.8), rgba(0, 0, 255, 0) 70.71%)`,
+    overflow: "hidden",
+  };
+
+  const effectStyle = {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    background: hovered
+      ? `radial-gradient(circle at ${position.x}px ${position.y}px, transparent 0%, rgba(255, 255, 255, 0.3) 70%)`
+      : "rgba(255, 255, 255, 0)",
+    transition: "background 0.3s ease",
+  };
   return (
     <div id="doctorDash">
       <br />
+      <div className="row" id="videoCon">
+        <div
+          style={containerStyle}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          onMouseMove={handleMouseMove}
+        >
+          <div style={effectStyle}>
+            <span id="headContent">Appoitment List</span>
+          </div>
+        </div>
+      </div>
+      <div className="row" id="videoCon">
+        <DoctorAppointments />
+      </div>
+      <div className="row" id="videoCon">
+        <div className="ConsultHead">Video Consult</div>
+        <div className="row" id="videoCon">
+          <div className="col-md-6">
+            <img src={videoImg} />
+          </div>
+          <div className="col-md-6" id="btncontainervideo">
+            <Button className="mt-2" type="primary" id="videoBtn">
+              <NavLink to={`/consultation-Room/${doctorId}`} id="links">
+                Video Consult
+              </NavLink>
+            </Button>
+          </div>
+        </div>
+      </div>
       {/* <img src={image.png} alt='image'/> */}
-      <button onClick={handleDownload}>Download your Aadhaar</button>
-      <Button className="mt-2" type="primary">
-        <NavLink to={`/consultation-Room/${doctorId}`}>Video Consult</NavLink>
-      </Button>
+      <Button onClick={handleDownload}>Download your Aadhaar</Button>
     </div>
   );
 };

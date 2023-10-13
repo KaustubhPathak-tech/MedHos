@@ -4,7 +4,7 @@ import { getAdminOrders, updateOrderStatus } from "../../../actions/auth"; // Im
 import { Button } from "@mui/material";
 import { DownOutlined, SmileOutlined } from "@ant-design/icons";
 import { Dropdown, Space } from "antd";
-
+import "./UserOrder.css";
 const UserOrders = () => {
   const order = JSON.parse(localStorage.getItem("orders"));
   const user = useSelector((state) => state.fetch_current_userReducer);
@@ -19,8 +19,8 @@ const UserOrders = () => {
       day: "numeric",
       hour: "numeric",
       minute: "numeric",
-      second: "numeric",
-      timeZoneName: "short",
+     
+   
     };
 
     // Create a Date object from the timestamp
@@ -37,6 +37,7 @@ const UserOrders = () => {
   return (
     <div id="adminOrders" style={{ marginTop: "5%" }}>
       <h4>Orders</h4>
+      <br />
       <div className="row">
         <div className="col-12">
           <table className="table table-hover" id="UserOrdertable">

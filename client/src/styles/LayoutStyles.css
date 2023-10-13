@@ -120,7 +120,6 @@
     height: 100vh;
     /* border: 1px solid red; */
     margin-bottom: 20px;
-    box-shadow: 0 0 2px rgba(0, 0, 0, 0.5); /* Slightly transparent gray shadow */
     /* background-color: #ECF0F1; Light gray background color */
 }
 

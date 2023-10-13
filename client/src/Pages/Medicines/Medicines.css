@@ -1,9 +1,23 @@
-#medicinePage{
-    margin-top: 5%;
+#medicinePage {
+  margin-top: 5%;
 }
 
-#medicines{
-    /* border: 1px solid #e74949; */
-    border-radius: 10px;
-    box-shadow:  0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
+#medicines {
+  /* border: 1px solid #e74949; */
+  border-radius: 10px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -4px rgba(0, 0, 0, 0.1);
+}
+
+#meddetail{
+    margin-left: 5px;
+    width: 99%;
+}
+
+#medicineCard {
+  text-align: left;
+}
+
+#mdes {
+  opacity: 0.6;
 }

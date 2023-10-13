@@ -1,5 +1,5 @@
 import * as React from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { createTheme } from "@mui/material/styles";
 //drawer imports
 import Drawer from "@mui/material/Drawer";
@@ -26,6 +26,7 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import Backdrop from "@mui/material/Backdrop";
+import HomeIcon from "@mui/icons-material/Home";
 import CircularProgress from "@mui/material/CircularProgress";
 import MenuItem from "@mui/material/MenuItem";
 import logo from "../../Assets/Logo.png";
@@ -94,15 +95,32 @@ function ResponsiveAppBar({ change }) {
         <>
           <List>
             <ListItem disablePadding>
-              <ListItemButton>Find Doctors</ListItemButton>
-            </ListItem>
-            <ListItem disablePadding>
               <ListItemButton>
-                <NavLink to={`/user/doctor-consult`}>Video Consult</NavLink>
+                <Link to={`/${User?.user?.userType}/dash`} id="drawerLinks">
+                  <HomeIcon />
+                </Link>
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding>
-              <NavLink to="/medicines">Medicines</NavLink>
+              <ListItemButton>
+                <Link to={`/user/doctor`} id="drawerLinks">
+                  Find Doctors
+                </Link>
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton>
+                <Link to={`/user/doctor-consult`} id="drawerLinks">
+                  Video Consult
+                </Link>
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton>
+                <Link to="/medicines" id="drawerLinks">
+                  Medicines
+                </Link>
+              </ListItemButton>
             </ListItem>
           </List>
         </>
@@ -110,12 +128,14 @@ function ResponsiveAppBar({ change }) {
       {User?.user?.userType === "doctor" && (
         <>
           <List>
-            <ListItem disablePadding>
+            {/* <ListItem disablePadding>
               <ListItemButton>Patients</ListItemButton>
-            </ListItem>
+            </ListItem> */}
             <ListItem disablePadding>
               <ListItemButton>
-                <NavLink to={`/user/doctor-consult`}>Video Consult</NavLink>
+                <Link to={`/user/doctor-consult`} id="drawerLinks">
+                  Video Consult
+                </Link>
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding>
@@ -211,11 +231,13 @@ function ResponsiveAppBar({ change }) {
   React.useEffect(() => {
     cart = JSON.parse(localStorage.getItem("cart"));
   }, []);
+
+  const [noticlicked, setNoticlicked] = React.useState(false);
   return (
     <StyledHeader position="fixed" id="navBar" sx={{ color: "black" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <NavLink to={redirect} id="logo">
+          <Link to={redirect} id="logo" className="drawerLinks">
             <Typography
               variant="h6"
               noWrap
@@ -232,7 +254,7 @@ function ResponsiveAppBar({ change }) {
             >
               <img src={logo} height="40px" alt="logo" />
             </Typography>
-          </NavLink>
+          </Link>
 
           <Backdrop
             sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
@@ -241,29 +263,52 @@ function ResponsiveAppBar({ change }) {
           >
             <CircularProgress color="inherit" />
           </Backdrop>
+          {User && (
+            <React.Fragment>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={toggleDrawer("left", true)}
+                color="inherit"
+                sx={{ display: { xs: "flex", md: "none" } }}
+              >
+                <MenuIcon />
+              </IconButton>
 
-          <React.Fragment>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={toggleDrawer("left", true)}
-              color="inherit"
-              sx={{ display: { xs: "flex", md: "none" } }}
-            >
-              <MenuIcon />
-            </IconButton>
-
-            <Drawer
-              anchor="left"
-              open={state["left"]}
-              onClose={toggleDrawer("left", false)}
-            >
-              {list("left")}
-            </Drawer>
-          </React.Fragment>
-
+              <Drawer
+                anchor="left"
+                open={state["left"]}
+                onClose={toggleDrawer("left", false)}
+                id="drawer"
+              >
+                {list("left")}
+              </Drawer>
+            </React.Fragment>
+          )}
+          {!User && (
+            <Link to={redirect}>
+              <Typography
+                variant="h5"
+                noWrap
+                component="a"
+                sx={{
+                  mr: 2,
+                  display: { xs: "flex", md: "none" },
+                  flexGrow: 1,
+                  fontFamily: "monospace",
+                  fontWeight: 700,
+                  letterSpacing: ".3rem",
+                  color: "inherit",
+                  textDecoration: "none",
+                }}
+                id="mobileLogo"
+              >
+                <img src={logo} height="50px" alt="logo" />
+              </Typography>
+            </Link>
+          )}
           {/* <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <Menu
               id="menu-appbar"
@@ -295,7 +340,7 @@ function ResponsiveAppBar({ change }) {
             variant="h5"
             noWrap
             component="a"
-            href={redirect}
+            to={redirect}
             sx={{
               mr: 2,
               display: { xs: "flex", md: "none" },
@@ -306,6 +351,7 @@ function ResponsiveAppBar({ change }) {
               color: "inherit",
               textDecoration: "none",
             }}
+            id="logo"
           >
             <img src={logo} height="50px" alt="logo" />
           </Typography>
@@ -328,16 +374,19 @@ function ResponsiveAppBar({ change }) {
               </NavLink>
             </Button> */}
 
-              <NavLink to="/user/doctor" className="navlinks">
+              <Link to="/user/doctor" className="navlinks drawerLinks">
                 Find Doctors
-              </NavLink>
+              </Link>
 
-              <NavLink to={`/user/doctor-consult`} className="navlinks">
+              <Link
+                to={`/user/doctor-consult`}
+                className="navlinks drawerLinks"
+              >
                 Video Consult
-              </NavLink>
-              <NavLink to={`/medicines`} className="navlinks">
+              </Link>
+              <Link to={`/medicines`} className="navlinks drawerLinks">
                 Medicines
-              </NavLink>
+              </Link>
             </Box>
           )}
 
@@ -347,13 +396,16 @@ function ResponsiveAppBar({ change }) {
               <Stack spacing={2} direction="row">
                 <IconButton>
                   <Badge badgeContent={cart?.length} color="primary">
-                    <NavLink to={`/user/cart`}>
+                    <Link to={`/user/cart`} id="drawerLinks">
                       <ShoppingCartIcon />
-                    </NavLink>
+                    </Link>
                   </Badge>
                 </IconButton>
+
                 <IconButton
+                  size="large"
                   onClick={() => {
+                    setNoticlicked(true);
                     setTimeout(() => {
                       window.location.reload();
                     }, 2000);
@@ -363,9 +415,12 @@ function ResponsiveAppBar({ change }) {
                     badgeContent={notification?.notification?.length}
                     color="primary"
                   >
-                    <NavLink to={`${User?.user?.userType}/notifications`}>
+                    <Link
+                      to={`${User?.user?.userType}/notifications`}
+                      id="drawerLinks"
+                    >
                       <NotificationsActiveIcon />
-                    </NavLink>
+                    </Link>
                   </Badge>
                 </IconButton>
               </Stack>
@@ -421,29 +476,20 @@ function ResponsiveAppBar({ change }) {
                     >
                       <MenuItem onClick={handleCloseUserMenu}>
                         <Typography textAlign="center">
-                          <NavLink to={`/${User?.user?.userType}/appointments`}>
+                          <Link
+                            to={`/${User?.user?.userType}/appointments`}
+                            className="navlinks drawerLinks"
+                          >
                             My Appointments
-                          </NavLink>
+                          </Link>
                         </Typography>
                       </MenuItem>
 
-                      <MenuItem
-                        onClick={() => {
-                          handleCloseUserMenu();
-                        }}
-                      >
-                        <Typography textAlign="center">
-                          <NavLink to={`/${User?.user?.userType}/orders`}>
-                            Your Orders
-                          </NavLink>
-                        </Typography>
-                      </MenuItem>
-
-                      <MenuItem onClick={handleCloseUserMenu}>
+                      {/* <MenuItem onClick={handleCloseUserMenu}>
                         <Typography textAlign="center">
                           View/Update Profile
                         </Typography>
-                      </MenuItem>
+                      </MenuItem> */}
 
                       <MenuItem onClick={handleLogout}>
                         <Typography textAlign="center">Logout</Typography>
@@ -486,12 +532,12 @@ function ResponsiveAppBar({ change }) {
                       >
                         <MenuItem onClick={handleCloseUserMenu}>
                           <Typography textAlign="center">
-                            <NavLink
+                            <Link
                               to={`/${User?.user?.userType}/appointments`}
-                              className="toollinks"
+                              className="toollinks drawerLinks"
                             >
                               My Appointments
-                            </NavLink>
+                            </Link>
                           </Typography>
                         </MenuItem>
 
@@ -501,9 +547,12 @@ function ResponsiveAppBar({ change }) {
                           }}
                         >
                           <Typography textAlign="center">
-                            <NavLink to={`/${User?.user?.userType}/orders`} className="toollinks">
+                            <Link
+                              to={`/${User?.user?.userType}/orders`}
+                              className="toollinks drawerLinks"
+                            >
                               Your Orders
-                            </NavLink>
+                            </Link>
                           </Typography>
                         </MenuItem>
 
@@ -514,7 +563,9 @@ function ResponsiveAppBar({ change }) {
                         </MenuItem>
 
                         <MenuItem onClick={handleLogout}>
-                          <Typography textAlign="center" className="toollinks">Logout</Typography>
+                          <Typography textAlign="center" className="toollinks">
+                            Logout
+                          </Typography>
                         </MenuItem>
                       </Menu>
                     </Box>

@@ -4,7 +4,12 @@ import "react-toastify/dist/ReactToastify.css";
 import "../styles/Booking.css";
 import videoImg from "../Assets/video-consult.png";
 import Layout from "../Components/Layout";
-import { NavLink, useParams } from "react-router-dom";
+import {
+  NavLink,
+  useNavigate,
+  useNavigationType,
+  useParams,
+} from "react-router-dom";
 import axios from "axios";
 import { Button, DatePicker, message, TimePicker } from "antd";
 import moment from "moment";
@@ -120,81 +125,162 @@ const BookingPage = () => {
     }
   };
 
+  const navigate = useNavigate();
+
   const handleStart = async () => {};
   const { doctorId } = useParams();
+  const [hovered, setHovered] = useState(false);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+
+  const handleMouseEnter = () => setHovered(true);
+  const handleMouseLeave = () => setHovered(false);
+  const handleMouseMove = (e) =>
+    setPosition({ x: e.nativeEvent.offsetX, y: e.nativeEvent.offsetY });
+
+  const containerStyle = {
+    color: "white",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: "5px",
+    fontSize: "22px",
+    position: "relative",
+    minWidth: "98%",
+    minHeight: "65px",
+    background: `linear-gradient(
+      217deg,
+      rgba(88, 228, 197, 0.8),
+      rgba(255, 0, 0, 0) 70.71%
+    ),
+    linear-gradient(127deg, rgba(0, 128, 255, 0.8), rgba(0, 255, 0, 0) 70.71%),
+    linear-gradient(336deg, rgba(0, 0, 255, 0.8), rgba(0, 0, 255, 0) 70.71%)`,
+    overflow: "hidden",
+  };
+
+  const effectStyle = {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    background: hovered
+      ? `radial-gradient(circle at ${position.x}px ${position.y}px, transparent 0%, rgba(255, 255, 255, 0.3) 70%)`
+      : "rgba(255, 255, 255, 0)",
+    transition: "background 0.3s ease",
+  };
+  const formatDate = (timestamp) => {
+    const options = {
+      hour: "numeric",
+      minute: "numeric",
+
+      hour12: true,
+    };
+
+    const date = new Date(timestamp);
+
+    return date.toLocaleTimeString("en-IN", options);
+  };
+
   return (
-    <Layout>
-      <h3>Booking Page</h3>
-      <div className="container m-2">
+    <div id="userDoctor1">
+      <div
+        style={containerStyle}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onMouseMove={handleMouseMove}
+      >
+        <div style={effectStyle}>
+          <span id="headContent">Book Apointment</span>
+        </div>
+      </div>
+      <div id="seperator"></div>
+      <div className="container m-2" id="doctorCard1">
         {doctors && (
-          <div>
-            <h4>Dr.{doctors.name}</h4>
-            <h4>Fees : {doctors.doc_fee}</h4>
-            <h4>
-              Timings : {doctors.docSes1_start} - {doctors.docSes2_end}{" "}
-            </h4>
-            <div className="d-flex flex-column w-50">
-              <DatePicker
-                aria-required={"true"}
-                className="m-2"
-                format="DD-MM-YYYY"
-                onChange={(value) => {
-                  setIsAvailable(false);
-                  let Date = value.$D;
-                  let Month = value.$M + 1;
-                  let Year = value.$y;
+          <div className="row">
+            <div className="col-md-4">
+              <h4>Dr. {doctors.name}</h4>
+              <h4>Fees - ₹ {doctors.doc_fee}</h4>
+              <h4>
+                Timings - {formatDate(doctors.docSes1_start)} -{" "}
+                {formatDate(doctors.docSes2_end)}{" "}
+              </h4>
+            </div>
+            <div className="col-md-4">
+              <div className="d-flex flex-column w-60">
+                <DatePicker
+                  aria-required={"true"}
+                  className="m-2"
+                  format="DD-MM-YYYY"
+                  onChange={(value) => {
+                    setIsAvailable(false);
+                    let Date = value.$D;
+                    let Month = value.$M + 1;
+                    let Year = value.$y;
 
-                  if (Date < 10) Date = "0" + Date;
-                  if (Month < 10) Month = "0" + Month;
-                  if (Year < 10) Year = "0" + Year;
-                  const formattedDate = `${Date}-${Month}-${Year}`;
-                  console.log(formattedDate);
-                  setDate(formattedDate);
-                }}
-              />
-              <TimePicker
-                aria-required={"true"}
-                format="HH:mm"
-                className="mt-3"
-                onChange={(value) => {
-                  console.log(value);
-                  setIsAvailable(false);
-                  let Hour = value.$H;
-                  let Minute = value.$m;
-                  if (Hour < 10) Hour = "0" + Hour;
-                  if (Minute < 10) Minute = "0" + Minute;
-                  const formattedTime = `${Hour}:${Minute}`;
-                  console.log(formattedTime);
-                  setTime(formattedTime);
-                }}
-              />
-
+                    if (Date < 10) Date = "0" + Date;
+                    if (Month < 10) Month = "0" + Month;
+                    if (Year < 10) Year = "0" + Year;
+                    const formattedDate = `${Date}-${Month}-${Year}`;
+                    console.log(formattedDate);
+                    setDate(formattedDate);
+                  }}
+                />
+                <TimePicker
+                  aria-required={"true"}
+                  format="HH:mm"
+                  className="mt-3"
+                  onChange={(value) => {
+                    console.log(value);
+                    setIsAvailable(false);
+                    let Hour = value.$H;
+                    let Minute = value.$m;
+                    if (Hour < 10) Hour = "0" + Hour;
+                    if (Minute < 10) Minute = "0" + Minute;
+                    const formattedTime = `${Hour}:${Minute}`;
+                    console.log(formattedTime);
+                    setTime(formattedTime);
+                  }}
+                />
+              </div>
+            </div>
+            <div className="col-md-4" style={{ textAlign: "right" }}>
               <button
                 className="btn btn-primary mt-2"
                 onClick={handleAvailability}
+                hidden={isAvailable}
               >
                 Check Availability
               </button>
               {isAvailable && (
-                <button className="btn btn-dark mt-2" onClick={handleBooking}>
+                <button
+                  className="btn btn-dark mt-2"
+                  onClick={() => {
+                    handleBooking();
+                    navigate("/user/appointments");
+                  }}
+                >
                   Book Now
                 </button>
               )}
             </div>
           </div>
         )}
-
-        <div className="mt-5">
-          <h4>Video Consult</h4>
+      </div>
+      <div id="seperator"></div>
+      <div className="ConsultHead">Video Consult</div>
+      <div className="row" id="videoCon">
+        <div className="col-md-6">
           <img src={videoImg} />
-          <Button className="mt-2" type="primary">
-            <NavLink to={`/consultation-Room/${doctorId}`}>Video Consult</NavLink>
+        </div>
+        <div className="col-md-6" id="btncontainervideo">
+          <Button className="mt-2" type="primary" id="videoBtn">
+            <NavLink to={`/consultation-Room/${doctorId}`} id="links">
+              Video Consult
+            </NavLink>
           </Button>
         </div>
-
-        <ToastContainer />
       </div>
-    </Layout>
+
+      <ToastContainer />
+    </div>
   );
 };
 

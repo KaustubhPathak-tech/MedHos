@@ -18,7 +18,7 @@ const Medicine = () => {
   };
   return (
     <div style={{ marginTop: "5%" }}>
-      <div className="row">
+      <div className="row" id="meddetail">
         <div className="col-md-4">
           <div className="card">
             <div className="card-image">
@@ -27,19 +27,16 @@ const Medicine = () => {
           </div>
         </div>
         <div className="col-md-6">
-          <div className="card" style={{ minHeight: "410px" }}>
+          <div className="card" style={{ minHeight: "348px" }} id="medicineCard">
             <div className="card-content">
               <h4>Name</h4>
               <p>{medicine[0]?.name}</p>
               <br />
-              <h4>Description</h4>
-              <p>{medicine[0]?.description}</p>
+              <div id="mdes"> <h5>Description</h5>
+              <p>{medicine[0]?.description}</p></div>
+             
             </div>
             <br />
-            <div className="card-action">
-              <h4>Manufacturer</h4>
-              <p>{medicine[0]?.manufacturer}</p>
-            </div>
           </div>
         </div>
         <div className="col-md-2">

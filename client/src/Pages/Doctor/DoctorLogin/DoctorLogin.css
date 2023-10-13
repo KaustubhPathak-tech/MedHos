@@ -3,9 +3,14 @@
     margin-top: 60px;
 }
 
+#chooseAction{
+  padding-bottom: 3%;
+  border-bottom: 1px solid rgb(151, 151, 151);
+}
+
 #doctorsignup{
-  margin: 2% 0% 0% 8%;
-  width: 90%;
+  margin: 2% 0% 0% 12%;
+  max-width: 80%;
 }
 
 #basicDetails{

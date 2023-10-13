@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { loadStripe } from "@stripe/stripe-js";
+import emptyCrt from "../../Assets/empty.jpg"
 import "./Cart.css";
 import {
   Box,
@@ -289,9 +290,12 @@ const Cart = () => {
     <div style={{ marginTop: "5%" }}>
       {
         // Display a message if no items in cart
-        cartItems?.length === 0 ? (
-          <Typography variant="h6">No items in cart</Typography>
-        ) : (
+        cartItems?.length === 0 ? (<>
+        
+          <img src={emptyCrt} width="300px" />
+          <h6 style={{textAlign:"center"}}>Your Cart is Empty</h6>
+        </>
+          ) : (
           <>
             <CartContent>
               <CartItems>

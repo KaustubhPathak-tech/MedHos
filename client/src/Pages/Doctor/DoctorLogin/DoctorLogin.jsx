@@ -293,7 +293,7 @@ const DoctorLogin = () => {
       >
         <CircularProgress color="inherit" />
       </Backdrop>
-      <div className="row">
+      <div className="row" id="chooseAction">
         {Switch ? (
           <>
             <div id="login/signup">
@@ -407,7 +407,7 @@ const DoctorLogin = () => {
                     <React.Fragment>
                       {activeStep === 0 ? (
                         <>
-                          <Container maxWidth="md" id="basicDetails">
+                          <Container maxWidth="lg" id="basicDetails">
                             <Card id="form1Doctor">
                               <form>
                                 <Grid container spacing={2}>
@@ -1149,7 +1149,7 @@ const DoctorLogin = () => {
                   <br />
                   <br />
 
-                  <FormControl sx={{ m: 1, width: "30ch" }} variant="outlined">
+                  <FormControl sx={{ m: 1, width: "27ch" }} variant="outlined">
                     <InputLabel htmlFor="outlined-adornment-password">
                       Password
                     </InputLabel>

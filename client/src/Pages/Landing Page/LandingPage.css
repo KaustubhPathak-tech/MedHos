@@ -1,5 +1,4 @@
 .App-header {
-    background-color: #bebbbb;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -7,8 +6,36 @@
     justify-content: center;
     font-size: calc(10px + 2vmin);
     color: rgb(0, 0, 0);
+    background:linear-gradient(
+      217deg,
+      rgba(88, 228, 197, 0.8),
+      rgba(255, 0, 0, 0) 70.71%
+    ),
+    linear-gradient(127deg, rgba(0, 128, 255, 0.8), rgba(0, 255, 0, 0) 70.71%),
+    linear-gradient(336deg, rgba(0, 0, 255, 0.8), rgba(0, 0, 255, 0) 70.71%);
   }
 
   #header{
     margin-bottom: 5%;
+  }
+
+  .options{
+
+    min-width: 320px;
+  }
+
+  #tagline{
+    margin-top: 5%;
+    margin-bottom: 5%;
+  }
+
+
+  @media (max-width:450px){
+    .App-header{
+      margin-top: 12%;
+    }
+    .options{
+      padding-left: 18vw;
+      width: 400px;
+    }
   }

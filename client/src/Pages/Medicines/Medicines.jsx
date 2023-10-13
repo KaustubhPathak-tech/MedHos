@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Box, Typography, Button, Divider, styled } from "@mui/material";
+import { Box, Typography, Divider, styled, Grid } from "@mui/material";
+import {Button} from "antd";
 import Countdown from "react-countdown";
 import { Link } from "react-router-dom";
 import { getMedicines } from "../../actions/medicines";
@@ -133,10 +134,10 @@ const Medicines = () => {
             onFocus={() => setOpenList2(true)}
             onAbort={() => setOpenList2(false)}
           />
-          <SeachIconWrapper data-toggle="tooltip" title="Find Doctors">
+          <SeachIconWrapper data-toggle="tooltip" title="Find Medicines">
             <SearchIcon />
           </SeachIconWrapper>
-          {second && (
+          {/* {second && (
             <ListWrapper>
               {medicines?.data?.data
                 .filter((medicine) =>
@@ -156,27 +157,20 @@ const Medicines = () => {
                   </ListItem>
                 ))}
             </ListWrapper>
-          )}
+          )} */}
         </SearchContainer>
       </div>
 
       {switched ? (
         <>
           <Component>
-            <Deal>
-              <DealText>{title}</DealText>
-              {timer && (
-                <Timer>
-                  <img src={timerURL} alt="timer" style={{ width: 24 }} />
-                  <Countdown date={Date.now() + 5.04e7} renderer={renderer} />
-                </Timer>
-              )}
-            </Deal>
-            <Divider />
-            <Box sx={{ width: "100%" }}>
-              <Stack spacing={2}>
-                <Item>
-                  {medicines?.data?.data.map((medicine) => (
+            <Grid container spacing={2}>
+              {medicines?.data?.data
+                .filter((medicine) =>
+                  medicine?.name.toLowerCase().includes(second.toLowerCase())
+                )
+                .map((medicine) => (
+                  <Grid item xs={4} key={medicine._id}>
                     <Link
                       to={`/medicines/${medicine._id}`}
                       style={{ textDecoration: "none" }}
@@ -187,6 +181,7 @@ const Medicines = () => {
                         style={{
                           padding: "25px 15px",
                           margin: "20px",
+                          width: "30vw",
                           boxShadow: "0px 2px 5px 2px #e3cecc",
                         }}
                       >
@@ -200,84 +195,103 @@ const Medicines = () => {
                         <Text style={{ color: "#212121", opacity: ".6" }}>
                           {medicine?.description}
                         </Text>
-                        <Text style={{ color: "green",fontSize:"18px" }}>
-                        ₹ &nbsp;  {medicine?.price}
-                        </Text>
+                        <br />
+                        <div className="row">
+                          <div className="col-md-6">
+                            <Text style={{ color: "green", fontSize: "18px" }}>
+                              ₹ &nbsp; {medicine?.price}
+                            </Text>
+                          </div>
+                          <div className="col-md-6">
+                            {" "}
+                            <Button>Buy</Button>
+                          </div>
+                        </div>
                       </Box>
                     </Link>
-                  ))}
-                  <br />
-                  <ViewAllButton
-                    variant="contained"
-                    color="primary"
-                    onClick={handleRender}
-                  >
-                    View Less
-                  </ViewAllButton>
-                </Item>
-              </Stack>
-            </Box>
+                  </Grid>
+                ))}
+            </Grid>
+            <div id="seperator"></div>
+            <Stack spacing={2} sx={{ display: "flex", alignItems: "center" }}>
+              <ViewAllButton
+                variant="contained"
+                color="primary"
+                onClick={handleRender}
+                sx={{ width: "20vw" }}
+              >
+                View Less
+              </ViewAllButton>
+            </Stack>
           </Component>
         </>
       ) : (
         <>
           <Component>
-            <Deal>
-              <DealText>{title}</DealText>
-              {timer && (
-                <Timer>
-                  <img src={timerURL} alt="timer" style={{ width: 24 }} />
-                  <Countdown date={Date.now() + 5.04e7} renderer={renderer} />
-                </Timer>
-              )}
-            </Deal>
-            <Divider />
-            <Box sx={{ width: "100%" }}>
-              <Stack spacing={2}>
-                <Item>
-                  {medicines?.data?.data
-                    .slice(0, fullrenderLength)
-                    .map((medicine) => (
-                      <Link
-                        to={`/medicines/${medicine._id}`}
-                        style={{ textDecoration: "none" }}
-                        key={medicine._id} // Add a unique key here
+            <Grid container spacing={2}>
+              {medicines?.data?.data
+                .slice(0, fullrenderLength)
+                .filter((medicine) =>
+                  medicine?.name.toLowerCase().includes(second.toLowerCase())
+                )
+                .map((medicine) => (
+                  <Grid item xs={4} key={medicine._id}>
+                    <Link
+                      to={`/medicines/${medicine._id}`}
+                      style={{
+                        textDecoration: "none",
+                        display: "inline",
+                        width: "30vw",
+                      }}
+                      key={medicine._id}
+                    >
+                      <Box
+                        textAlign="center"
+                        style={{
+                          padding: "25px 15px",
+                          margin: "20px",
+                          boxShadow: "0px 2px 5px 2px #e3cecc",
+                          width: "30vw",
+                        }}
                       >
-                        <Box
-                          textAlign="center"
-                          style={{
-                            padding: "25px 15px",
-                            margin: "20px",
-                            boxShadow: "0px 2px 5px 2px #e3cecc",
-                          }}
-                        >
-                          <Image src={medicine.imgurl} alt="product" />
-                          <Text style={{ fontWeight: 600, color: "#212121" }}>
-                            {medicine.name}
-                          </Text>
-                          <Text style={{ color: "green" }}>
-                            {medicine?.discount}
-                          </Text>
-                          <Text style={{ color: "#212121", opacity: ".6" }}>
-                            {medicine?.description}
-                          </Text>
-                          <Text style={{ color: "red"}}>
-                          ₹  { medicine?.price}
+                        <Image src={medicine.imgurl} alt="product" />
+                        <Text style={{ fontWeight: 600, color: "#212121" }}>
+                          {medicine.name}
                         </Text>
-                        </Box>
-                      </Link>
-                    ))}
-                  <br />
-                  <ViewAllButton
-                    variant="contained"
-                    color="primary"
-                    onClick={handleRender}
-                  >
-                    View More
-                  </ViewAllButton>
-                </Item>
-              </Stack>
-            </Box>
+                        <Text style={{ color: "green" }}>
+                          {medicine?.discount}
+                        </Text>
+                        <Text style={{ color: "#212121", opacity: ".6" }}>
+                          {medicine?.description}
+                        </Text>
+                        <br />
+                        <div className="row">
+                          <div className="col-md-6">
+                            <Text style={{ color: "red", fontSize: "18px" }}>
+                              ₹ &nbsp; {medicine?.price}
+                            </Text>
+                          </div>
+                          <div className="col-md-6">
+                            {" "}
+                            <Button>Buy</Button>
+                          </div>
+                        </div>
+                      </Box>
+                    </Link>
+                  </Grid>
+                ))}
+            </Grid>
+            <div id="seperator"></div>
+            <Stack spacing={2} sx={{ display: "flex", alignItems: "center" }}>
+              <ViewAllButton
+                variant="contained"
+                color="primary"
+                onClick={handleRender}
+                sx={{ width: "20vw" }}
+              >
+                View More
+              </ViewAllButton>
+            </Stack>
           </Component>
         </>
       )}

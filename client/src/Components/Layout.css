@@ -1,3 +1,20 @@
 #appointmnets{
     margin-top: 3%;
 }
+
+#doctorCard{
+    text-align: left;
+    max-width: fit-content;
+}
+
+#doctorCard1{
+    text-align: left;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-width: 99%;
+    border: 1px solid #acacac;
+    padding: 20px;
+    box-shadow: inset 0px 0px 5px 0px #acacac;
+    
+}
