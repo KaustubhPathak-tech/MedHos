@@ -1,3 +1,20 @@
-.button-position{
-    display: flex;
+.button-position {
+  display: flex;
+}
+
+#apttable {
+  max-width: 99%;
+  margin-top: 3%;
+}
+
+@media (max-width: 450px) {
+  #apttable {
+    max-width: 99%;
+    margin-top: 3%;
+  }
+
+  #userApttable {
+    width: 360px;
+    padding-top: 5%;
+  }
 }

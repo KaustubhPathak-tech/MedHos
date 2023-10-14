@@ -14,10 +14,54 @@
     width: 99%;
 }
 
+
+#myMedRow{
+  width:99vw;
+}
+
+#medicineCard1{
+  width: "30vw";
+}
+
 #medicineCard {
   text-align: left;
 }
 
 #mdes {
   opacity: 0.6;
+}
+
+
+#viewsbtn{
+  width: 200px;
+}
+
+#medImgs{
+  width: min-content;
+}
+
+.marginTops{
+  margin-top: 5%;
+}
+
+@media (max-width:450px){
+  #medicinePage{
+    margin-top: 13%;
+  }
+
+  #medicineCard1{
+    width: 340px;
+  }
+
+  #viewsbtn{
+    width: 200px;
+  }
+  
+  .marginTops{
+    margin-top: 12%;
+  }
+
+  #meddetail1{
+    margin-bottom: 30px;
+  }
 }

@@ -116,8 +116,9 @@ const UserDoctor = () => {
 
   return (
     <div id="userDoctor">
-      <div id="form">
-        <SearchContainer id="city">
+      <div className="row" id="form">
+        
+        <SearchContainer className="col-md-6" id="city">
           <InputSearchBase
             placeholder={`${city ? city : "Enter your City"}`}
             onChange={(e) => getFirst(e.target.value)}
@@ -152,23 +153,27 @@ const UserDoctor = () => {
                 .filter((city) =>
                   city.toLowerCase().includes(first.toLocaleLowerCase())
                 )
-                .map((city,index) => index < 5 && (
-                  <ListItem>
-                    <Button
-                      onClick={() => {
-                        setFirst("");
-                        handleCityClick(city);
-                      }}
-                      style={{ textDecoration: "none", color: "inherit" }}
-                    >
-                      {city}
-                    </Button>
-                  </ListItem>
-                ))}
+                .map(
+                  (city, index) =>
+                    index < 5 && (
+                      <ListItem>
+                        <Button
+                          onClick={() => {
+                            setFirst("");
+                            handleCityClick(city);
+                          }}
+                          style={{ textDecoration: "none", color: "inherit" }}
+                        >
+                          {city}
+                        </Button>
+                      </ListItem>
+                    )
+                )}
             </ListWrapper>
           )}
         </SearchContainer>
-        <SearchContainer id="doctor">
+        <div id="doctorSeperator"></div>
+        <SearchContainer className="col-md-6" id="doctor">
           <InputSearchBase2
             placeholder="Search Doctors by name, speciality, and more"
             onChange={(e) => setSecond(e.target.value)}
@@ -176,8 +181,7 @@ const UserDoctor = () => {
             onFocus={() => setOpenList2(true)}
             onAbort={() => setOpenList2(false)}
           />
-          <SeachIconWrapper data-toggle="tooltip"
-                    title="Find Doctors">
+          <SeachIconWrapper data-toggle="tooltip" title="Find Doctors">
             <SearchIcon />
           </SeachIconWrapper>
           {second && (

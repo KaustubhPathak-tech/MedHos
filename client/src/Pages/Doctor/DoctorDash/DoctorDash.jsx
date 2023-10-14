@@ -154,14 +154,16 @@ const DoctorDash = () => {
           </div>
         </div>
       </div>
-      <div className="row" id="videoCon">
+
+      <div className="row appointments" id="videoCon">
         <DoctorAppointments />
       </div>
+      <br />
       <div className="row" id="videoCon">
         <div className="ConsultHead">Video Consult</div>
         <div className="row" id="videoCon">
           <div className="col-md-6">
-            <img src={videoImg} />
+            <img src={videoImg} width="350px" />
           </div>
           <div className="col-md-6" id="btncontainervideo">
             <Button className="mt-2" type="primary" id="videoBtn">
@@ -173,6 +175,7 @@ const DoctorDash = () => {
         </div>
       </div>
       {/* <img src={image.png} alt='image'/> */}
+      <br />
       <Button onClick={handleDownload}>Download your Aadhaar</Button>
     </div>
   );

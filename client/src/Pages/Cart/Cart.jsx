@@ -46,6 +46,10 @@ const CartItems = styled(Box)`
   width: 70%;
   overflow-y: auto;
   max-height: calc(1000vh - 50px); /* Set a maximum height for scrolling */
+
+  @media (max-width: 450px) {
+    width:98vw; // Adjust width for screens less than 450px
+  }
 `;
 
 const CartSummary = styled(Box)`
@@ -57,6 +61,13 @@ const CartSummary = styled(Box)`
   top: 0;
   right: 0;
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.1);
+  @media (max-width: 450px) {
+    width:90vw; // Adjust width for screens less than 450px
+    position: relative;
+    margin-left: 5%;
+    top: 0;
+    left: 0;
+  }
 `;
 const Component = styled(Box)`
   margin-top: 10px;
@@ -287,7 +298,7 @@ const Cart = () => {
   });
 
   return (
-    <div style={{ marginTop: "5%" }}>
+    <div className="marginTops">
       {
         // Display a message if no items in cart
         cartItems?.length === 0 ? (<>

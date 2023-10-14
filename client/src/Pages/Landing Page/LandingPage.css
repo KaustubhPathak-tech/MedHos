@@ -32,10 +32,10 @@
 
   @media (max-width:450px){
     .App-header{
-      margin-top: 12%;
+      margin-top: 8%;
     }
     .options{
-      padding-left: 18vw;
+      padding-left: 23vw;
       width: 400px;
     }
   }

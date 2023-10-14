@@ -9,7 +9,7 @@ import { message, Table } from "antd";
 import { useSelector } from "react-redux";
 
 const DoctorAppointments = () => {
-  const user=useSelector(state=>state.fetch_cuurent_userReducer);
+  const user = useSelector((state) => state.fetch_cuurent_userReducer);
   const [appointments, setAppointments] = useState([]);
   const profile = JSON.parse(localStorage.getItem("Profile"));
   const getAppointments = async () => {
@@ -25,7 +25,6 @@ const DoctorAppointments = () => {
       );
       if (res.data.success) {
         setAppointments(res.data.data);
-       
       }
     } catch (error) {
       console.log(error);
@@ -103,9 +102,15 @@ const DoctorAppointments = () => {
     },
   ];
   return (
-    <Layout>
-      <Table columns={columns} dataSource={appointments} />
-    </Layout>
+    <div className="table-responsive" id="apttable">
+      <Table
+        columns={columns}
+        dataSource={appointments}
+        id="tableApps"
+        scroll={{ x: true }}
+      />
+    </div>
+    // <Table columns={columns} dataSource={appointments} id="tableApps" />
   );
 };
 

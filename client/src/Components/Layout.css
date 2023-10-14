@@ -18,3 +18,9 @@
     box-shadow: inset 0px 0px 5px 0px #acacac;
     
 }
+
+@media (max-width: 450px) {
+    #doctorCard{
+        min-width: 95%;
+    }
+}

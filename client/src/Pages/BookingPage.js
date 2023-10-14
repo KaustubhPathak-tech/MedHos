@@ -241,7 +241,7 @@ const BookingPage = () => {
                 />
               </div>
             </div>
-            <div className="col-md-4" style={{ textAlign: "right" }}>
+            <div className="col-md-4" style={{ textAlign: "center" }}>
               <button
                 className="btn btn-primary mt-2"
                 onClick={handleAvailability}
@@ -268,7 +268,7 @@ const BookingPage = () => {
       <div className="ConsultHead">Video Consult</div>
       <div className="row" id="videoCon">
         <div className="col-md-6">
-          <img src={videoImg} />
+          <img src={videoImg}  width="350px"/>
         </div>
         <div className="col-md-6" id="btncontainervideo">
           <Button className="mt-2" type="primary" id="videoBtn">

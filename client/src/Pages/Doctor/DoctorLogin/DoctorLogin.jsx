@@ -517,7 +517,7 @@ const DoctorLogin = () => {
                                       </RadioGroup>
                                     </FormControl>
                                   </Grid>
-                                  <Grid item xs={10}>
+                                  <Grid item xs={9}>
                                     <TextField
                                       fullWidth
                                       type="text"
@@ -542,14 +542,12 @@ const DoctorLogin = () => {
                                           <Button onClick={handleLocationClick}>
                                             <FontAwesomeIcon
                                               icon={faLocation}
-                                              fade
+                                             
                                               size="2x"
                                             />
                                           </Button>
                                           <br />
-                                          <Typography fontSize="12px">
-                                            Detect My Location
-                                          </Typography>
+                                         
                                         </>
                                       ) : null}
                                       {location && !weather ? (
@@ -695,7 +693,7 @@ const DoctorLogin = () => {
                                     <TextField
                                       fullWidth
                                       type="text"
-                                      label="Establishment Name"
+                                      label="Hospital Name"
                                       name="est_name"
                                       placeholder="Type Establishment Name"
                                       value={formData.est_name}
@@ -703,7 +701,7 @@ const DoctorLogin = () => {
                                       required
                                     />
                                   </Grid>
-                                  <Grid item xs={6}>
+                                  <Grid item xs={5}>
                                     <TextField
                                       fullWidth
                                       type="text"
@@ -721,21 +719,19 @@ const DoctorLogin = () => {
                                       onChange={handleInputChange}
                                     ></TextField>
                                   </Grid>
-                                  <Grid item xs={2}>
+                                  <Grid item xs={1}>
                                     <div>
                                       {!location ? (
                                         <>
                                           <Button onClick={handleLocationClick}>
                                             <FontAwesomeIcon
                                               icon={faLocation}
-                                              fade
+                                              
                                               size="2x"
                                             />
                                           </Button>
                                           <br />
-                                          <Typography fontSize="12px">
-                                            Detect My Location
-                                          </Typography>
+                                          
                                         </>
                                       ) : null}
                                       {location && !weather ? (

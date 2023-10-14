@@ -97,13 +97,14 @@ const HomePage = () => {
         </div>
       </div>
       <Container maxWidth="lg" id="seperator"></Container>
-
-      <Row>
-        {doctors &&
-          doctors?.data?.data.map((doctor) => (
-            <DoctorList key={DoctorList} doctor={doctor} />
-          ))}
-      </Row>
+      <div id="doctorList">
+        <Row>
+          {doctors &&
+            doctors?.data?.data.map((doctor) => (
+              <DoctorList key={DoctorList} doctor={doctor} />
+            ))}
+        </Row>
+      </div>
       <Container maxWidth="lg" id="seperator"></Container>
 
       <div className="row" id="lastRowUser">
@@ -120,7 +121,6 @@ const HomePage = () => {
         </div>
       </div>
       <Container maxWidth="lg" id="seperator"></Container>
-
     </div>
   );
 };

@@ -19,8 +19,6 @@ const UserOrders = () => {
       day: "numeric",
       hour: "numeric",
       minute: "numeric",
-     
-   
     };
 
     // Create a Date object from the timestamp
@@ -32,26 +30,28 @@ const UserOrders = () => {
   getAdminOrders();
   useEffect(() => {
     dispatch(getAdminOrders());
-  }, [ getAdminOrders]);
+  }, [getAdminOrders]);
 
   return (
-    <div id="adminOrders" style={{ marginTop: "5%" }}>
+    <div id="userOrders" style={{ marginTop: "5%" }}>
       <h4>Orders</h4>
       <br />
-      <div className="row">
-        <div className="col-12">
-          <table className="table table-hover" id="UserOrdertable">
-            <thead>
-              <tr>
-                <th scope="col">Order Id</th>
-                <th scope="col">Order Date</th>
-                <th scope="col">Order Items</th>
-                <th scope="col">Shipping Address</th>
-                <th scope="col">Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {order?.order?.filter((item)=>item.user===user?.user?._id).map((item) => (
+
+      <div className="orderTable table-responsive">
+        <table className="table table-hover" id="UserOrdertable">
+          <thead>
+            <tr>
+              <th scope="col">Order Id</th>
+              <th scope="col">Order Date</th>
+              <th scope="col">Order Items</th>
+              <th scope="col">Shipping Address</th>
+              <th scope="col">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {order?.order
+              ?.filter((item) => item.user === user?.user?._id)
+              .map((item) => (
                 <tr key={item.orderId}>
                   <th scope="row"># {item.orderId}</th>
                   <td>{formatDate(item.createdAt)}</td>
@@ -71,9 +71,8 @@ const UserOrders = () => {
                   <td>{item.status}&nbsp;&nbsp;&nbsp;&nbsp;</td>
                 </tr>
               ))}
-            </tbody>
-          </table>
-        </div>
+          </tbody>
+        </table>
       </div>
     </div>
   );

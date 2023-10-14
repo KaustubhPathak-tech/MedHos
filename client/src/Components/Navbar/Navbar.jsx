@@ -131,15 +131,26 @@ function ResponsiveAppBar({ change }) {
             {/* <ListItem disablePadding>
               <ListItemButton>Patients</ListItemButton>
             </ListItem> */}
+             <ListItem disablePadding>
+              <ListItemButton>
+                <Link to={`/${User?.user?.userType}/dash`} id="drawerLinks">
+                  <HomeIcon />
+                </Link>
+              </ListItemButton>
+            </ListItem>
             <ListItem disablePadding>
               <ListItemButton>
-                <Link to={`/user/doctor-consult`} id="drawerLinks">
+                <Link to={`/consultation-Room/${User?.user?._id}`} id="drawerLinks">
                   Video Consult
                 </Link>
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding>
-              <ListItemButton>Appointments</ListItemButton>
+              <ListItemButton>
+                <Link to={`/doctor/appointments`} id="drawerLinks">
+                  Appointments
+                </Link>
+              </ListItemButton>
             </ListItem>
           </List>
         </>

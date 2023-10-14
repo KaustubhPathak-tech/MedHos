@@ -297,7 +297,7 @@ const NotificationPage = () => {
             </div>
             {seenNotification?.seennotification.map(
               (notificationMgs, index) => (
-                <div className="notification-card" key={index}>
+                <div className="notification-card responsive" key={index}>
                   <div
                     className="notification-message"
                     onClick={() => navigate(notificationMgs.onClickPath)}

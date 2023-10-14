@@ -164,13 +164,13 @@ const Medicines = () => {
       {switched ? (
         <>
           <Component>
-            <Grid container spacing={2}>
+            <div className="row" spacing={2} id="myMedRow">
               {medicines?.data?.data
                 .filter((medicine) =>
                   medicine?.name.toLowerCase().includes(second.toLowerCase())
                 )
                 .map((medicine) => (
-                  <Grid item xs={4} key={medicine._id}>
+                  <div className="col-md-4" key={medicine._id}>
                     <Link
                       to={`/medicines/${medicine._id}`}
                       style={{ textDecoration: "none" }}
@@ -181,9 +181,10 @@ const Medicines = () => {
                         style={{
                           padding: "25px 15px",
                           margin: "20px",
-                          width: "30vw",
+                          
                           boxShadow: "0px 2px 5px 2px #e3cecc",
                         }}
+                        id="medicineCard1"
                       >
                         <Image src={medicine.imgurl} alt="product" />
                         <Text style={{ fontWeight: 600, color: "#212121" }}>
@@ -209,16 +210,16 @@ const Medicines = () => {
                         </div>
                       </Box>
                     </Link>
-                  </Grid>
+                  </div>
                 ))}
-            </Grid>
+            </div>
             <div id="seperator"></div>
             <Stack spacing={2} sx={{ display: "flex", alignItems: "center" }}>
               <ViewAllButton
                 variant="contained"
                 color="primary"
                 onClick={handleRender}
-                sx={{ width: "20vw" }}
+                id="viewsbtn"
               >
                 View Less
               </ViewAllButton>
@@ -228,14 +229,14 @@ const Medicines = () => {
       ) : (
         <>
           <Component>
-            <Grid container spacing={2}>
+            <div className="row" id="myMedRow">
               {medicines?.data?.data
                 .slice(0, fullrenderLength)
                 .filter((medicine) =>
                   medicine?.name.toLowerCase().includes(second.toLowerCase())
                 )
                 .map((medicine) => (
-                  <Grid item xs={4} key={medicine._id}>
+                  <div className="col-md-4" key={medicine._id}>
                     <Link
                       to={`/medicines/${medicine._id}`}
                       style={{
@@ -251,8 +252,9 @@ const Medicines = () => {
                           padding: "25px 15px",
                           margin: "20px",
                           boxShadow: "0px 2px 5px 2px #e3cecc",
-                          width: "30vw",
+                         
                         }}
+                        id="medicineCard1"
                       >
                         <Image src={medicine.imgurl} alt="product" />
                         <Text style={{ fontWeight: 600, color: "#212121" }}>
@@ -278,16 +280,16 @@ const Medicines = () => {
                         </div>
                       </Box>
                     </Link>
-                  </Grid>
+                  </div>
                 ))}
-            </Grid>
+            </div>
             <div id="seperator"></div>
             <Stack spacing={2} sx={{ display: "flex", alignItems: "center" }}>
               <ViewAllButton
                 variant="contained"
                 color="primary"
                 onClick={handleRender}
-                sx={{ width: "20vw" }}
+                id="viewsbtn"
               >
                 View More
               </ViewAllButton>

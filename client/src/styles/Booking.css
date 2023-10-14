@@ -131,3 +131,15 @@ h3 {
   min-height: 50px;
   min-width: 100px;
 }
+
+@media (max-width: 450px) {
+  #userDoctor1 {
+    padding-left: 10px;
+    margin-top: 15%;
+    max-width: 350px;
+  }
+  #videoCon {
+    margin-left: 0%;
+    max-width: 340px;
+  }
+}

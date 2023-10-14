@@ -1,3 +1,15 @@
-#doctorDash{
-    padding-top: 5%;
+#doctorDash {
+  padding-top: 5%;
+}
+
+@media (max-width: 450px) {
+  #doctorDash {
+    padding-top: 10%;
+    padding-left: 5%;
+    max-width: 350px;
+  }
+
+  .appointments {
+    max-width: 340px;
+  }
 }

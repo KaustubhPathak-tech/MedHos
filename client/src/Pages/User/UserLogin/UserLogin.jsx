@@ -301,8 +301,8 @@ const UserLogin = () => {
             <>
               <div className="usersignup" id="usersignup">
                 <Card
+                  id="signupcard"
                   sx={{
-                    maxWidth: 600,
                     margin: "auto",
                     // marginTop: (theme) => theme.spacing(5),
                     padding: (theme) => theme.spacing(2),
@@ -335,9 +335,9 @@ const UserLogin = () => {
                       label="Email"
                       name="email"
                       sx={{
-                        minWidth: "83%",
                         marginBottom: (theme) => theme.spacing(2),
                       }}
+                      id="registeremail"
                       variant="outlined"
                       onChange={(e) => {
                         setEmail(e.target.value);
@@ -345,7 +345,7 @@ const UserLogin = () => {
                     />
                     <Button
                       disabled={sent}
-                      sx={{borderRadius:"10px"}}
+                      sx={{ borderRadius: "10px" }}
                       onClick={handleSendOTP}
                       hidden={email.indexOf("@") === -1}
                       id="optsendbtn"
@@ -362,19 +362,18 @@ const UserLogin = () => {
                     <TextField
                       hidden={!sent || otpverified}
                       autoComplete="off"
+                      id="verifyOTP"
                       required
                       type="otp"
                       label="OTP"
                       name="otp"
                       sx={{
-                        minWidth: "83%",
                         marginBottom: (theme) => theme.spacing(2),
                       }}
                       variant="outlined"
                       onChange={(e) => {
                         setOtp(e.target.value);
                       }}
-                      
                     />
                     <Button
                       hidden={!sent || otpverified}
@@ -709,17 +708,19 @@ const UserLogin = () => {
                         name="phone"
                         disabled={phoneValidated}
                         sx={{
-                          width: "50%",
                           marginBottom: (theme) => theme.spacing(2),
                         }}
                         variant="outlined"
                         onChange={(e) => {
                           setPhone(e.target.value);
                         }}
+                        id="phone_number"
                       />
 
                       <Button
-                        disabled={phone.length < 5 || !phone_code||phoneValidated}
+                        disabled={
+                          phone.length < 5 || !phone_code || phoneValidated
+                        }
                         type="submit"
                         onClick={handlePhoneVerify}
                         id="phoneverifybtn"
@@ -742,7 +743,7 @@ const UserLogin = () => {
                       </Button>
                     </form>
                     <FormControl
-                      sx={{ m: 1, width: "53ch" }}
+                      sx={{ m: 1 }}
                       variant="outlined"
                     >
                       <InputLabel htmlFor="outlined-adornment-password">
@@ -751,7 +752,7 @@ const UserLogin = () => {
                       <OutlinedInput
                         id="outlined-adornment-password"
                         type={showPassword ? "text" : "password"}
-                        sx={{ width: "100%" }}
+                        className="signuppassword"
                         onChange={(e) => {
                           setPassword(e.target.value);
                         }}
@@ -786,13 +787,11 @@ const UserLogin = () => {
                     </div>
                     <br />
                     <div id="captcha">
-                    <ReCAPTCHA
-                      sitekey="6LdObVUoAAAAAHYn9BYhbKcy1ggsqnOS6jsesWx1"
-                      onChange={onChange}
-                      
-                    />
+                      <ReCAPTCHA
+                        sitekey="6LdObVUoAAAAAHYn9BYhbKcy1ggsqnOS6jsesWx1"
+                        onChange={onChange}
+                      />
                     </div>
-                    
 
                     <Button
                       disabled={!captched}
@@ -827,7 +826,6 @@ const UserLogin = () => {
                       console.log("Login Failed");
                     }}
                     text="continue_with"
-                    width="400px"
                     locale="hindi"
                     logo_alignment="center"
                   />

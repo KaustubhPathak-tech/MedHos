@@ -17,16 +17,16 @@ const Medicine = () => {
     setTimeout(() => {  window.location.reload(); }, 2000);
   };
   return (
-    <div style={{ marginTop: "5%" }}>
+    <div className="marginTops">
       <div className="row" id="meddetail">
-        <div className="col-md-4">
+        <div className="col-md-4" id="meddetail1">
           <div className="card">
             <div className="card-image">
-              <img src={`${medicine[0]?.imgurl}`} />
+              <img src={`${medicine[0]?.imgurl}`} id="medImgs" />
             </div>
           </div>
         </div>
-        <div className="col-md-6">
+        <div className="col-md-6" id="meddetail1">
           <div className="card" style={{ minHeight: "348px" }} id="medicineCard">
             <div className="card-content">
               <h4>Name</h4>
@@ -39,7 +39,7 @@ const Medicine = () => {
             <br />
           </div>
         </div>
-        <div className="col-md-2">
+        <div className="col-md-2" id="meddetail1">
           <div className="card">
             <div className="card-image">
               <span className="card-title">

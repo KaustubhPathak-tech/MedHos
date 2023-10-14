@@ -6,6 +6,8 @@ import { Table } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserAppointments } from "../actions/auth";
 
+import "../styles/DoctorAppointments.css"
+
 const Appointments = () => {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -43,9 +45,16 @@ const Appointments = () => {
   return (
     <Layout>
       <br />
+      <br />
       <h4>Appointment Lists</h4>
       <br />
-      <Table columns={columns} dataSource={appointments?.data?.data} />
+      <div className="table-responsive" id="userApttable">
+        <Table
+          columns={columns}
+          dataSource={appointments?.data?.data}
+          scroll={{ x: true }}
+        />
+      </div>
     </Layout>
   );
 };

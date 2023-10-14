@@ -221,7 +221,7 @@ const Room = () => {
     setOpen(true);
   };
   const [remoteSocket, SetRemoteSocket] = useState(null);
-  const {roomId}=useParams();
+  const { roomId } = useParams();
   var User = useSelector((state) => state.fetch_current_userReducer);
   const Email = roomId;
   const Room = roomId;
@@ -467,110 +467,111 @@ const Room = () => {
 
           {remoteStream ? (
             <>
-              <ReactPlayer
-                // light={staticImage}
-                className="video-player"
-                playing
-                autoPlay
-                // muted
-                onStart={() => {
-                  handleClose();
-                  setIsIncomingAudioPlaying(false);
-                }}
-                url={remoteStream}
-                height="60vh"
-                width="60%"
-                light={getlight}
-                playIcon={<img src={staticImage} height="60vh" />}
-                style={{
-                  border: "0px solid black",
-                  borderRadius: "10px",
-                  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-                  padding: "10px 20px",
-                  pointerEvents: "stroke",
-                }}
-              />
-              <div id="box" className="button-container">
-                {audioEnabled ? (
-                  <>
-                    <Tooltip title="unmute">
+              <div className="videCallPAge">
+                <ReactPlayer
+                  // light={staticImage}
+                  className="video-player"
+                  playing
+                  autoPlay
+                  // muted
+                  onStart={() => {
+                    handleClose();
+                    setIsIncomingAudioPlaying(false);
+                  }}
+                  url={remoteStream}
+                  id="videoMain"
+                  light={getlight}
+                  playIcon={<img src={staticImage} height="60vh" />}
+                  style={{
+                    border: "0px solid black",
+                    borderRadius: "10px",
+                    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+                    padding: "10px 20px",
+                    pointerEvents: "stroke",
+                  }}
+                />
+                <div id="box" className="button-container">
+                  {audioEnabled ? (
+                    <>
+                      <Tooltip title="unmute">
+                        <Button
+                          className="action-button"
+                          variant="contained"
+                          onClick={audioToggle}
+                        >
+                          {" "}
+                          <FontAwesomeIcon icon={faMicrophoneSlash} size="2x" />
+                        </Button>
+                      </Tooltip>
+                    </>
+                  ) : (
+                    <Tooltip title="mute">
                       <Button
                         className="action-button"
-                        variant="contained"
+                        variant="outlined"
                         onClick={audioToggle}
                       >
                         {" "}
                         <FontAwesomeIcon icon={faMicrophoneSlash} size="2x" />
                       </Button>
                     </Tooltip>
-                  </>
-                ) : (
-                  <Tooltip title="mute">
+                  )}
+                  {videoEnabled ? (
+                    <>
+                      <Button
+                        className="action-button"
+                        variant="contained"
+                        onClick={videoToggle}
+                      >
+                        <>
+                          <FontAwesomeIcon icon={faVideoSlash} size="2x" />
+                        </>
+                      </Button>
+                    </>
+                  ) : (
+                    <>
+                      <Button
+                        className="action-button"
+                        variant="outlined"
+                        onClick={videoToggle}
+                      >
+                        <>
+                          <FontAwesomeIcon icon={faVideoSlash} size="2x" />
+                        </>
+                      </Button>
+                    </>
+                  )}
+                  <React.Fragment>
                     <Button
                       className="action-button"
                       variant="outlined"
-                      onClick={audioToggle}
-                    >
-                      {" "}
-                      <FontAwesomeIcon icon={faMicrophoneSlash} size="2x" />
-                    </Button>
-                  </Tooltip>
-                )}
-                {videoEnabled ? (
-                  <>
-                    <Button
-                      className="action-button"
-                      variant="contained"
-                      onClick={videoToggle}
+                      onClick={toggleDrawer("right", true)}
                     >
                       <>
-                        <FontAwesomeIcon icon={faVideoSlash} size="2x" />
+                        <FontAwesomeIcon icon={faCommentMedical} size="2x" />
                       </>
                     </Button>
-                  </>
-                ) : (
-                  <>
-                    <Button
-                      className="action-button"
-                      variant="outlined"
-                      onClick={videoToggle}
+                    <Drawer
+                      anchor="right"
+                      open={state["right"]}
+                      onClose={toggleDrawer("right", false)}
                     >
-                      <>
-                        <FontAwesomeIcon icon={faVideoSlash} size="2x" />
-                      </>
-                    </Button>
-                  </>
-                )}
-                <React.Fragment>
+                      {list("left")}
+                    </Drawer>
+                  </React.Fragment>
                   <Button
-                    className="action-button"
-                    variant="outlined"
-                    onClick={toggleDrawer("right", true)}
+                    className="action-button hangup-button"
+                    onClick={handleHangup}
                   >
                     <>
-                      <FontAwesomeIcon icon={faCommentMedical} size="2x" />
+                      <img
+                        src={Hangup}
+                        width={20}
+                        style={{ borderRadius: "10px" }}
+                      />
                     </>
                   </Button>
-                  <Drawer
-                    anchor="right"
-                    open={state["right"]}
-                    onClose={toggleDrawer("right", false)}
-                  >
-                    {list("left")}
-                  </Drawer>
-                </React.Fragment>
-                <Button
-                  className="action-button hangup-button"
-                  onClick={handleHangup}
-                >
-                  <>
-                    <img
-                      src={Hangup}
-                      width={20}
-                      style={{ borderRadius: "10px" }}
-                    />
-                  </>
-                </Button>
+                </div>
               </div>
             </>
           ) : (

@@ -55,3 +55,9 @@
     cursor: auto;
     background-color: #05a8ff;
 }
+
+@media (max-width:450px){
+    #myFav{
+        width: 300px;
+    }
+}
