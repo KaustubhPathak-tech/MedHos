@@ -789,6 +789,7 @@ const UserLogin = () => {
                     <div id="captcha">
                       <ReCAPTCHA
                         sitekey="6LdObVUoAAAAAHYn9BYhbKcy1ggsqnOS6jsesWx1"
+                        size="200px"
                         onChange={onChange}
                       />
                     </div>
