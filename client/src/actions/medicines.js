@@ -76,6 +76,7 @@ export const verifyPayment = (paymentData) => async (dispatch) => {
       "cart",
       JSON.stringify(JSON.parse(localStorage.getItem("updateUser"))?.data)
     );
+    getMedicines();
   } catch (error) {
     console.log(error);
   }
