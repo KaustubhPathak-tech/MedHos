@@ -20,6 +20,7 @@ import Stack from "@mui/material/Stack";
 
 import {
   decreaseQty,
+  getMedicines,
   increaseQty,
   remove,
   verifyPayment,
@@ -121,7 +122,8 @@ const Cart = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(verifyPayment({ userId: user?.user?._id }));
-  }, [dispatch, verifyPayment, checksum, user?.user?._id]);
+    dispatch(getMedicines());
+  }, [dispatch, verifyPayment, checksum, user?.user?._id,getMedicines]);
 
   const handlePayment = async () => {
     const stripe = await loadStripe(
