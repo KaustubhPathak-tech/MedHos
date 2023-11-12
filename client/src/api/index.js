@@ -22,7 +22,7 @@ export const updateOrderStatus = (authData) =>
 export const verifyPayment = (paymentData) =>
   API.post("/user/verifyPayment", paymentData);
 export const signUp = (authData) => API.post("/user/signup", authData);
-export const sendOTP = (authData) => API.post("/doctor/send/email", authData);
+// export const sendOTP = (authData) => API.post("/doctor/send/email", authData);
 export const makePayment = () => API.post("/create-checkout-session");
 export const verifyOTP = (authData) =>
   API.post("/doctor/verify/email", authData);

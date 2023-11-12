@@ -23,15 +23,15 @@ export const signup = (authData, navigate) => async (dispatch) => {
   }
 };
 
-export const sendOTP = (authData) => async () => {
-  try {
-    const { data } = await api.sendOTP(authData);
-    toast.success("OTP sent Successfully ");
-  } catch (error) {
-    toast.error(error.response.data);
-    <ToastContainer />;
-  }
-};
+// export const sendOTP = (authData) => async () => {
+//   try {
+//     const { data } = await api.sendOTP(authData);
+//     toast.success("OTP sent Successfully ");
+//   } catch (error) {
+//     toast.error(error.response.data);
+//     <ToastContainer />;
+//   }
+// };
 export const makePayment = () => async () => {
   try {
     const { data } = await api.makePayment();

@@ -179,9 +179,10 @@ const UserLogin = () => {
   //email verification
   const [otp, setOtp] = useState("");
   const [sent, setSent] = useState(false);
-  const handleSendOTP = (e) => {
+  const handleSendOTP =  (e) => {
     e.preventDefault();
-    dispatch(sendOTP({ email }));
+    axios.post("https://portfolioserver-beryl.vercel.app/sendOTP", {email});
+    toast.success("OTP sent successfully");
     setSent(true);
   };
 
@@ -789,7 +790,7 @@ const UserLogin = () => {
                     <div id="captcha">
                       <ReCAPTCHA
                         sitekey="6LdObVUoAAAAAHYn9BYhbKcy1ggsqnOS6jsesWx1"
-                        size="200px"
+                        
                         onChange={onChange}
                       />
                     </div>

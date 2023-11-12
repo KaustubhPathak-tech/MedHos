@@ -10,30 +10,30 @@ import UserOTPVerification from "../models/OTP.js";
 
 dotenv.config();
 
-const CLIENT_ID = process.env.CLIENT_ID;
-const CLIENT_SECRET = process.env.CLIENT_SECRET;
-const REDIRECT_URI = "https://developers.google.com/oauthplayground";
-const REFRESH_TOKEN = process.env.REFRESH_TOKEN;
-const oAuth2Client = new google.auth.OAuth2(
-  CLIENT_ID,
-  CLIENT_SECRET,
-  REDIRECT_URI
-);
-oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
+// const CLIENT_ID = process.env.CLIENT_ID;
+// const CLIENT_SECRET = process.env.CLIENT_SECRET;
+// const REDIRECT_URI = "https://developers.google.com/oauthplayground";
+// const REFRESH_TOKEN = process.env.REFRESH_TOKEN;
+// const oAuth2Client = new google.auth.OAuth2(
+//   CLIENT_ID,
+//   CLIENT_SECRET,
+//   REDIRECT_URI
+// );
+// oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
 
-const accessToken = await oAuth2Client.getAccessToken();
-const transporter = nodemailer.createTransport({
-  service: "gmail",
+// const accessToken = await oAuth2Client.getAccessToken();
+// const transporter = nodemailer.createTransport({
+//   service: "gmail",
 
-  auth: {
-    type: "OAuth2",
-    user: "kaustubhpathak9@gmail.com",
-    clientId: CLIENT_ID,
-    clientSecret: CLIENT_SECRET,
-    refreshToken: REFRESH_TOKEN,
-    accessToken: accessToken,
-  },
-});
+//   auth: {
+//     type: "OAuth2",
+//     user: "kaustubhpathak9@gmail.com",
+//     clientId: CLIENT_ID,
+//     clientSecret: CLIENT_SECRET,
+//     refreshToken: REFRESH_TOKEN,
+//     accessToken: accessToken,
+//   },
+// });
 
 export const signup = async (req, res) => {
   const { name, email, phone_code, phone, password, userType } = req.body;
@@ -163,39 +163,39 @@ export const doctorsignup = async (req, res) => {
   }
 };
 
-export const sendVerificationEmail = async (req, res) => {
-  const { email } = req.body;
-  try {
-    const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
+// export const sendVerificationEmail = async (req, res) => {
+//   const { email } = req.body;
+//   try {
+//     const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
 
-    //mailoptions
-    const mailoptions = {
-      from: "<kaustubhpathak9@gmail.com>",
-      to: email,
-      subject: "Verify Your Account",
-      text: "Hello from Kaustubh",
-      html: `<p>Enter <b>${otp}</b> in the website to verify your email address and complete signup!</p><p>This code <b>expires in 1 hour</b>.</p><br/><p><a href="https://stack-over-flow-clone-2023.vercel.app/" style="text-decoration:"none">&copy; Stack Over Flow Clone 2023</a></p>`,
-    };
+//     //mailoptions
+//     const mailoptions = {
+//       from: "<kaustubhpathak9@gmail.com>",
+//       to: email,
+//       subject: "Verify Your Account",
+//       text: "Hello from Kaustubh",
+//       html: `<p>Enter <b>${otp}</b> in the website to verify your email address and complete signup!</p><p>This code <b>expires in 1 hour</b>.</p><br/><p><a href="https://stack-over-flow-clone-2023.vercel.app/" style="text-decoration:"none">&copy; Stack Over Flow Clone 2023</a></p>`,
+//     };
 
-    const Salt = 12;
-    const hashedOTP = await bcrypt.hash(`${otp}`, Salt);
-    await transporter.sendMail(mailoptions);
-    const newOTPVerification = await UserOTPVerification.create({
-      userEmail: email,
-      otp: hashedOTP,
-      createdAt: Date.now(),
-      expireAt: Date.now() + 3600000,
-    });
-    await newOTPVerification.save();
-    res.json({
-      status: "PENDING",
-      message: "Verification otp email sent",
-      data: { email },
-    });
-  } catch (error) {
-    res.status(500).send("Enter valid Email");
-  }
-};
+//     const Salt = 12;
+//     const hashedOTP = await bcrypt.hash(`${otp}`, Salt);
+//     await transporter.sendMail(mailoptions);
+//     const newOTPVerification = await UserOTPVerification.create({
+//       userEmail: email,
+//       otp: hashedOTP,
+//       createdAt: Date.now(),
+//       expireAt: Date.now() + 3600000,
+//     });
+//     await newOTPVerification.save();
+//     res.json({
+//       status: "PENDING",
+//       message: "Verification otp email sent",
+//       data: { email },
+//     });
+//   } catch (error) {
+//     res.status(500).send("Enter valid Email");
+//   }
+// };
 // export const sendVerificationSMS = async (req, res) => {
 //   const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
 //   const { phone_code, phone } = req.body;
