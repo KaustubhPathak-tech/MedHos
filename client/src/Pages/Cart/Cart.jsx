@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { loadStripe } from "@stripe/stripe-js";
-import emptyCrt from "../../Assets/empty.jpg"
+import emptyCrt from "../../Assets/empty.jpg";
 import "./Cart.css";
 import {
   Box,
@@ -49,7 +49,7 @@ const CartItems = styled(Box)`
   max-height: calc(1000vh - 50px); /* Set a maximum height for scrolling */
 
   @media (max-width: 450px) {
-    width:98vw; // Adjust width for screens less than 450px
+    width: 98vw; // Adjust width for screens less than 450px
   }
 `;
 
@@ -63,7 +63,7 @@ const CartSummary = styled(Box)`
   right: 0;
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.1);
   @media (max-width: 450px) {
-    width:90vw; // Adjust width for screens less than 450px
+    width: 90vw; // Adjust width for screens less than 450px
     position: relative;
     margin-left: 5%;
     top: 0;
@@ -123,7 +123,7 @@ const Cart = () => {
   useEffect(() => {
     dispatch(verifyPayment({ userId: user?.user?._id }));
     dispatch(getMedicines());
-  }, [dispatch, verifyPayment, checksum, user?.user?._id,getMedicines]);
+  }, [dispatch, verifyPayment, checksum, user?.user?._id, getMedicines]);
 
   const handlePayment = async () => {
     const stripe = await loadStripe(
@@ -148,34 +148,7 @@ const Cart = () => {
     );
     console.log(response?.body);
     const session = await response.json();
-    // console.log(session);
     const result = stripe.redirectToCheckout({ sessionId: session?.id });
-    // if (result.error) {
-    //   console.log(result.error);
-    // }
-    // e.preventDefault();
-    // const stripe = await loadStripe(
-    //   "pk_live_51MpOpKSDYoz6IJUAZQcoxCR50ognDEzbS6swgVU59253gVyWQXJcG4fe31g2D8N5pmt9LxvlZ6YjoFflpwyP8P0j001KZoXrDs"
-    // );
-
-    // const response = await axios.post(
-    //   "https://fine-puce-hen-wig.cyclic.cloud/create-checkout-session"
-    // );
-
-    // const result = stripe.redirectToCheckout({ sessionId: response?.data?.id });
-    // if(result.error){
-    //   console.log(result.error);
-    // }
-    // await axios
-    //   .post("http://localhost:7000/create-checkout-session", {})
-    //   .then((res) => {
-    //     if (res.data.url) {
-    //       window.location.href = res.data.url;
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
   };
   const cartItemsDisplay = cartItems.map((cartItem) => {
     const med = medicine?.data.find(
@@ -303,12 +276,12 @@ const Cart = () => {
     <div className="marginTops">
       {
         // Display a message if no items in cart
-        cartItems?.length === 0 ? (<>
-        
-          <img src={emptyCrt} width="300px" />
-          <h6 style={{textAlign:"center"}}>Your Cart is Empty</h6>
-        </>
-          ) : (
+        cartItems?.length === 0 ? (
+          <>
+            <img src={emptyCrt} width="300px" />
+            <h6 style={{ textAlign: "center" }}>Your Cart is Empty</h6>
+          </>
+        ) : (
           <>
             <CartContent>
               <CartItems>
