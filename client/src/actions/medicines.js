@@ -17,8 +17,9 @@ export const addMedicine = (medicine) => async (dispatch) => {
 export const getMedicines = () => async (dispatch) => {
   try {
     const { data } = await api.getMedicines();
+    console.log(data);
     dispatch({ type: "GET_MEDICINES", payload: data });
-    toast.success("Medicine fetched Successfully");
+    // toast.success("Medicine fetched Successfully");
   } catch (error) {
     toast.error(error.response.data);
     <ToastContainer />;

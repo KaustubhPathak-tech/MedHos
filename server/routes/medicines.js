@@ -11,7 +11,7 @@ import {
 import mid from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
-router.get("/getMedicines", mid, getMedicinesController);
+router.get("/getMedicines", getMedicinesController);
 router.post("/add", mid, addMedicineController);
 router.post("/remove", mid, removeController);
 router.patch("/increseQty", mid, increaseQty);

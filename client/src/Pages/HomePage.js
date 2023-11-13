@@ -27,7 +27,7 @@ const HomePage = () => {
   }, [User]);
 
   useEffect(() => {
-    getMedicines();
+    
   }, [getMedicines]);
   useEffect(() => {
     if (

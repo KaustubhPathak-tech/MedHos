@@ -121,7 +121,6 @@ export const glogin = (authData, navigate) => async (dispatch) => {
     const { data } = await api.glogIn(authData);
     dispatch({ type: "LOGIN", data });
     dispatch(setCurrentUser(JSON.parse(localStorage.getItem("Profile"))));
-    console.log(JSON.parse(localStorage.getItem("Profile"))?.cart);
     localStorage.setItem(
       "cart",
       JSON.stringify(JSON.parse(localStorage.getItem("Profile"))?.cart)

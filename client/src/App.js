@@ -4,8 +4,10 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import RouteConfig from "./RouteConfig.jsx";
 import MyFooter from "./Components/Footer/MyFooter.jsx";
+import { getMedicines } from "./actions/medicines";
 import { getAllDoctors } from "./actions/doctor";
 import { getCity } from "./api";
+import { useDispatch } from "react-redux";
 
 const apiKey = "kaustubh9";
 const countryCode = "IN";
@@ -36,11 +38,15 @@ const darkTheme = createTheme({
 // console.log(typeof JSON.parse(localStorage.getItem("Citi"))[0].geonames);
 
 function App() {
+  const dispatch = useDispatch();
   useEffect(() => {
-    getAllDoctors();
     getCity().then((res) => {
       localStorage.setItem("Citi", JSON.stringify(res?.data));
     });
+    setTimeout(() => {
+      dispatch(getAllDoctors());
+      dispatch(getMedicines());
+    }, 3000);
     setTimeout(() => {
       localStorage.setItem(
         "FinalCities",
@@ -50,7 +56,7 @@ function App() {
       const cities = data.map((city) => city.name);
       localStorage.setItem("Cities", JSON.stringify(cities));
     }, 10000);
-  }, [getAllDoctors]);
+  }, [getAllDoctors, getMedicines]);
   const [checked, setChecked] = useState(true);
   const handleTheme = () => {
     try {

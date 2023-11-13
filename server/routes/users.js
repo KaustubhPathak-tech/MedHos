@@ -32,7 +32,7 @@ router.post("/mark-allRead-notification", mid, markAllReadNotification);
 router.post("/delete-all-notification", mid, deleteAllNotificationController);
 
 // //GET ALL DOC
-router.get("/getAllDoctors",mid, getAllDoctorsController);
+router.get("/getAllDoctors", getAllDoctorsController);
 
 // //BOOK APPOINTMENT
 router.post("/book-appointment", mid, bookAppointmentController);
