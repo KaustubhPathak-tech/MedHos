@@ -127,7 +127,7 @@ const Cart = () => {
 
   const handlePayment = async () => {
     const stripe = await loadStripe(
-      "pk_test_51MpOpKSDYoz6IJUA995OjkPkLkzItEBJoCYfdYsXEUZmD26AjWp8I4ssGJCePQSTQY61TwlTZdF7yio4HYI0fYy600sr0LE8SC" //pk_live_51MpOpKSDYoz6IJUAZQcoxCR50ognDEzbS6swgVU59253gVyWQXJcG4fe31g2D8N5pmt9LxvlZ6YjoFflpwyP8P0j001KZoXrDs
+      "pk_live_51MpOpKSDYoz6IJUAZQcoxCR50ognDEzbS6swgVU59253gVyWQXJcG4fe31g2D8N5pmt9LxvlZ6YjoFflpwyP8P0j001KZoXrDs" //pk_test_51MpOpKSDYoz6IJUA995OjkPkLkzItEBJoCYfdYsXEUZmD26AjWp8I4ssGJCePQSTQY61TwlTZdF7yio4HYI0fYy600sr0LE8SC
     );
     const body = {
       product: cartItems,
