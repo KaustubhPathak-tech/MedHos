@@ -569,7 +569,12 @@ function ResponsiveAppBar({ change }) {
 
                         <MenuItem onClick={handleCloseUserMenu}>
                           <Typography textAlign="center" className="toollinks">
-                            View/Update Profile
+                          <Link
+                              to="/user/profile"
+                              className="toollinks drawerLinks"
+                            >
+                              View/Update Profile
+                            </Link>
                           </Typography>
                         </MenuItem>
 

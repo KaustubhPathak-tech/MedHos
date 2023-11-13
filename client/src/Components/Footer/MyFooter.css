@@ -1,15 +1,27 @@
-.footer{
-    width: 100%;
-    position: relative;
-    bottom: 0;
-    left: 0;
-    margin: 20px 0px 20px 0px;
+.footer {
+  width: 100%;
+  position: relative;
+  bottom: 0;
+  left: 0;
+  margin: 20px 0px 0px 0px;
 }
-.seperator{
-    min-height: 30vh;
+.seperator {
+  min-height: 30vh;
 }
-#container{
-    padding-top: 15px;
-    border-top:1px solid black;
-    width: 98vw;
+#container {
+  margin: 0;
+  padding: 0;
+  color: white;
+  background: linear-gradient(
+      217deg,
+      rgba(88, 228, 228, 0.8),
+      #1081eb 70.71%
+    );
+  border: 1px solid transparent;
+  padding-top: 15px;
+  width: 99vw;
+}
+
+.footer a{
+    color: white;
 }

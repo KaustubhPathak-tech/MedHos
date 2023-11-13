@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Box, Typography, Divider, styled, Grid } from "@mui/material";
-import {Button} from "antd";
+import { Button } from "antd";
 import Countdown from "react-countdown";
 import { Link } from "react-router-dom";
 import { getMedicines } from "../../actions/medicines";
@@ -137,27 +137,7 @@ const Medicines = () => {
           <SeachIconWrapper data-toggle="tooltip" title="Find Medicines">
             <SearchIcon />
           </SeachIconWrapper>
-          {/* {second && (
-            <ListWrapper>
-              {medicines?.data?.data
-                .filter((medicine) =>
-                  medicine?.name.toLowerCase().includes(second.toLowerCase())
-                )
-                .map((medicine) => (
-                  <ListItem key={medicine._id}>
-                    <Button
-                      onClick={() => {
-                        setSecond("");
-                        navigate(`/medicines/${medicine?._id}`);
-                      }}
-                      style={{ textDecoration: "none", color: "inherit" }}
-                    >
-                      {medicine?.name}
-                    </Button>
-                  </ListItem>
-                ))}
-            </ListWrapper>
-          )} */}
+          
         </SearchContainer>
       </div>
 
@@ -181,8 +161,7 @@ const Medicines = () => {
                         style={{
                           padding: "25px 15px",
                           margin: "20px",
-                          
-                          boxShadow: "0px 2px 5px 2px #e3cecc",
+                          // boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
                         }}
                         id="medicineCard1"
                       >
@@ -249,10 +228,10 @@ const Medicines = () => {
                       <Box
                         textAlign="center"
                         style={{
+                          borderRadius: "5px",
                           padding: "25px 15px",
                           margin: "20px",
-                          boxShadow: "0px 2px 5px 2px #e3cecc",
-                         
+                          
                         }}
                         id="medicineCard1"
                       >

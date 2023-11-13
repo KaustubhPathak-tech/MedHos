@@ -21,6 +21,13 @@
 
 #medicineCard1{
   width: "30vw";
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  transition: 0.2s;
+}
+
+#medicineCard1:hover{
+  scale: 1.01;
+  box-shadow: rgba(84, 84, 84, 0.24) 0px 3px 8px;
 }
 
 #medicineCard {

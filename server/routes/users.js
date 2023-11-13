@@ -10,6 +10,7 @@ import {
   bookingAvailabilityController,
   userAppointmentsController,
   updateOrderStatus,
+  updateProfile,
 } from "../controllers/user.js";
 
 import { getAdminOrders, getOrder, saveOrder,verifyPayment } from "../controllers/order.js";
@@ -17,6 +18,7 @@ import mid from "../middlewares/authMiddleware.js";
 import { allCity } from "../controllers/city.js";
 const router = express.Router();
 router.post("/signup", signup);
+router.post("/update", mid, updateProfile);
 router.post("/login", login);
 router.post("/glogin", glogin);
 router.post("/getUserData", mid, authController);

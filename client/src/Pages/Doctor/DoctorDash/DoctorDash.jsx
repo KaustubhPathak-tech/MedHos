@@ -122,11 +122,9 @@ const DoctorDash = () => {
     minHeight: "65px",
     background: `linear-gradient(
       217deg,
-      rgba(88, 228, 197, 0.8),
-      rgba(255, 0, 0, 0) 70.71%
-    ),
-    linear-gradient(127deg, rgba(0, 128, 255, 0.8), rgba(0, 255, 0, 0) 70.71%),
-    linear-gradient(336deg, rgba(0, 0, 255, 0.8), rgba(0, 0, 255, 0) 70.71%)`,
+      rgba(88, 228, 228, 0.8),
+      #1081eb 70.71%
+    )`,
     overflow: "hidden",
   };
 
@@ -145,9 +143,9 @@ const DoctorDash = () => {
       <div className="row" id="videoCon">
         <div
           style={containerStyle}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-          onMouseMove={handleMouseMove}
+          // onMouseEnter={handleMouseEnter}
+          // onMouseLeave={handleMouseLeave}
+          // onMouseMove={handleMouseMove}
         >
           <div style={effectStyle}>
             <span id="headContent">Appoitment List</span>

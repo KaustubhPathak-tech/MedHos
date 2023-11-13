@@ -4,19 +4,21 @@ import { useDispatch } from "react-redux";
 
 import Layout from "../Components/Layout";
 import { Row } from "antd";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import DoctorList from "../Components/DoctorList";
 import { getAllDoctors } from "../actions/doctor";
 import { getMedicines } from "../actions/medicines";
 import { useSelector } from "react-redux";
 import { getUserAppointments } from "../actions/auth";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useParams, useLocation } from "react-router-dom";
 import { Container } from "@mui/material";
 
 import "./HomePage.css";
 
 const HomePage = () => {
   var User = useSelector((state) => state.fetch_current_userReducer);
+  const params = useLocation();
+  const headerDecider = params.pathname;
   const navigate = useNavigate();
   useEffect(() => {
     if (User?.user?.isAdmin) {
@@ -66,11 +68,9 @@ const HomePage = () => {
     minHeight: "65px",
     background: `linear-gradient(
       217deg,
-      rgba(88, 228, 197, 0.8),
-      rgba(255, 0, 0, 0) 70.71%
-    ),
-    linear-gradient(127deg, rgba(0, 128, 255, 0.8), rgba(0, 255, 0, 0) 70.71%),
-    linear-gradient(336deg, rgba(0, 0, 255, 0.8), rgba(0, 0, 255, 0) 70.71%)`,
+      rgba(88, 228, 228, 0.8),
+      #1081eb 70.71%
+    )`,
     overflow: "hidden",
   };
 
@@ -86,14 +86,36 @@ const HomePage = () => {
 
   return (
     <div id="userHome">
-      <div
-        style={containerStyle}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        onMouseMove={handleMouseMove}
-      >
+      <div style={containerStyle}>
         <div style={effectStyle}>
-          <span id="headContent">Available Doctors</span>
+          <span id="headContent">
+            {headerDecider === "/user/dash" ? (
+              <>Available Doctors</>
+            ) : (
+              <>
+                Online Doctors{" "}
+                <svg
+                  height="36"
+                  preserveAspectRatio="xMidYMid meet"
+                  viewBox="0 0 36 36"
+                  width="36"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    class="fade-beat"
+                    d="m18 11a7 7 0 1 1 -7 7 7 7 0 0 1 7-7"
+                    fill="#1081eb"
+                  />
+                  <path
+                    className="fade-beat-1"
+                    d="m18 34a16 16 0 1 1 16-16 16 16 0 0 1 -16 16zm0-30a14 14 0 1 0 14 14 14 14 0 0 0 -14-14z"
+                    fill="white"
+                  />
+                  <path d="m0 0h36v36h-36z" fill="none" />
+                </svg>
+              </>
+            )}
+          </span>
         </div>
       </div>
       <Container maxWidth="lg" id="seperator"></Container>

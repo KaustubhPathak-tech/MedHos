@@ -1,0 +1,66 @@
+/* Base styles */
+
+.userProfileUpdate {
+    text-align: left;
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 100px;
+  }
+  
+  h1 {
+    text-align: center;
+    color: #333;
+  }
+  
+  #updation {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  #updation label {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #555;
+  }
+  
+  #updation input {
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #848484;
+    border-radius: 4px;
+  }
+  
+  #updation button {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  #updation button:hover {
+    background-color: #45a049;
+  }
+  
+  /* Media queries for screens below 450px */
+  
+  @media screen and (max-width: 450px) {
+    .userProfileUpdate {
+      padding: 10px;
+    }
+  
+    input {
+      font-size: 14px;
+    }
+  
+    button {
+      font-size: 16px;
+    }
+  }
+  

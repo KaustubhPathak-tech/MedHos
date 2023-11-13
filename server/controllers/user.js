@@ -409,6 +409,29 @@ const updateOrderStatus = async (req, res) => {
     });
   }
 }
+const updateProfile = async (req, res) => {
+  const {formData,userId}=req.body;
+  try {
+    const user = await users.findById(userId);
+    if(formData.name!==''){
+      user.name=formData.name;
+    }
+    if(formData.avatar!==''){
+      user.avatar=formData.avatar;
+    }
+    await user.save();
+    res.status(200).json({user});
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      error,
+      message: "Error while updating order status",
+    });
+  }
+}
+
+
 export {
   loginController,
   registerController,
@@ -422,4 +445,5 @@ export {
   bookingAvailabilityController,
   userAppointmentsController,
   updateOrderStatus,
+  updateProfile,
 };

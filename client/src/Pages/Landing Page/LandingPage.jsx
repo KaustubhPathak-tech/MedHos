@@ -29,28 +29,28 @@ const LandingPage = () => {
       <div className="">
         <Grid container spacing={2} className="options">
           <Box component="span" sx={{ p: 2, border: "0px dashed grey" }}>
-            <Button
-              variant="outlined"
-              sx={{ width: 200, padding: 5, margin: 0 }}
-            >
-              <NavLink to="/user/login">
-                <FontAwesomeIcon icon={faUser} size="6x" />
-              </NavLink>
-            </Button>
+            <NavLink to="/user/login">
+              <Button
+                variant="outlined"
+                sx={{ width: 200, padding: 5, margin: 0 }}
+              >
+                <FontAwesomeIcon icon={faUser} size="4x" />
+              </Button>
+            </NavLink>
             <Typography variant="h6" id="tagline">
               User
             </Typography>
           </Box>
 
           <Box component="span" sx={{ p: 2, border: "0px dashed grey" }}>
-            <Button
-              variant="outlined"
-              sx={{ width: 200, padding: 5, margin: 0 }}
-            >
-              <NavLink to="/doctor/login">
-                <FontAwesomeIcon icon={faUserDoctor} size="6x" />
-              </NavLink>
-            </Button>
+            <NavLink to="/doctor/login">
+              <Button
+                variant="outlined"
+                sx={{ width: 200, padding: 5, margin: 0 }}
+              >
+                <FontAwesomeIcon icon={faUserDoctor} size="4x" />
+              </Button>
+            </NavLink>
             <Typography variant="h6" id="tagline">
               Doctor
             </Typography>

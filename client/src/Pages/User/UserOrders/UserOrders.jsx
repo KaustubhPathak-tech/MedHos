@@ -8,7 +8,6 @@ import "./UserOrder.css";
 const UserOrders = () => {
   const order = JSON.parse(localStorage.getItem("orders"));
   const user = useSelector((state) => state.fetch_current_userReducer);
-  console.log(user);
   const dispatch = useDispatch();
   const medicine = JSON.parse(localStorage.getItem("Medicines"));
   const [selectedOrderId, setSelectedOrderId] = useState(null); // Store the selected order ID
@@ -32,48 +31,57 @@ const UserOrders = () => {
     dispatch(getAdminOrders());
   }, [getAdminOrders]);
 
+  const stringedOrders = localStorage.getItem("StringOrders");
+  const userId = user?.user?._id;
+  const iOs = stringedOrders?.includes(userId);
   return (
     <div id="userOrders" style={{ marginTop: "5%" }}>
-      <h4>Orders</h4>
-      <br />
+      {!iOs ? (
+        <>You've No Orders</>
+      ) : (
+        <>
+          <h4>Orders</h4>
+          <br />
 
-      <div className="orderTable table-responsive">
-        <table className="table table-hover" id="UserOrdertable">
-          <thead>
-            <tr>
-              <th scope="col">Order Id</th>
-              <th scope="col">Order Date</th>
-              <th scope="col">Order Items</th>
-              <th scope="col">Shipping Address</th>
-              <th scope="col">Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {order?.order
-              ?.filter((item) => item.user === user?.user?._id)
-              .map((item) => (
-                <tr key={item.orderId}>
-                  <th scope="row"># {item.orderId}</th>
-                  <td>{formatDate(item.createdAt)}</td>
-
-                  <script></script>
-                  <td>
-                    {item.orderItems.map((item) => (
-                      <div key={item.medicineId}>
-                        {medicine?.data
-                          .filter((med) => med._id === item.medicineId)
-                          .map((med) => med.name)}{" "}
-                        x {item.qty}
-                      </div>
-                    ))}
-                  </td>
-                  <td>{item.shippingAddress}</td>
-                  <td>{item.status}&nbsp;&nbsp;&nbsp;&nbsp;</td>
+          <div className="orderTable table-responsive">
+            <table className="table table-hover" id="UserOrdertable">
+              <thead>
+                <tr>
+                  <th scope="col">Order Id</th>
+                  <th scope="col">Order Date</th>
+                  <th scope="col">Order Items</th>
+                  <th scope="col">Shipping Address</th>
+                  <th scope="col">Status</th>
                 </tr>
-              ))}
-          </tbody>
-        </table>
-      </div>
+              </thead>
+              <tbody>
+                {order?.order
+                  ?.filter((item) => item.user === user?.user?._id)
+                  .map((item) => (
+                    <tr key={item.orderId}>
+                      <th scope="row"># {item.orderId}</th>
+                      <td>{formatDate(item.createdAt)}</td>
+
+                      <script></script>
+                      <td>
+                        {item.orderItems.map((item) => (
+                          <div key={item.medicineId}>
+                            {medicine?.data
+                              .filter((med) => med._id === item.medicineId)
+                              .map((med) => med.name)}{" "}
+                            x {item.qty}
+                          </div>
+                        ))}
+                      </td>
+                      <td>{item.shippingAddress}</td>
+                      <td>{item.status}&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </div>
+        </>
+      )}
     </div>
   );
 };

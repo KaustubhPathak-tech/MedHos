@@ -32,6 +32,7 @@ import Medicine from "./Pages/Medicines/Medicine";
 import Cart from "./Pages/Cart/Cart";
 import AdminOrders from "./Pages/admin/AdminOrders";
 import UserOrders from "./Pages/User/UserOrders/UserOrders";
+import UserProfile from "./Pages/User/UserProfileUpdate/UserProfile";
 const lightTheme = createTheme({
   palette: {
     mode: "light",
@@ -244,6 +245,14 @@ const RouteConfig = ({ change }) => {
           element={
             <ProtectedRoute>
               <Cart />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/user/profile"
+          element={
+            <ProtectedRoute>
+              <UserProfile />
             </ProtectedRoute>
           }
         />

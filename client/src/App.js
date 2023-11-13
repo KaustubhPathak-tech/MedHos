@@ -73,7 +73,6 @@ function App() {
   return (
     <div className="App">
       <br />
-
       <RouteConfig change={handleTheme} />
       <MyFooter />
     </div>

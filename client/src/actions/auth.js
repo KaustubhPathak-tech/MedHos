@@ -171,7 +171,7 @@ export const getOrder = (authData) => async (dispatch) => {
 export const getAdminOrders = () => async (dispatch) => {
   try {
     const {data}=await api.getAdminOrders();
-    console.log(data);
+    localStorage.setItem("StringOrders", JSON.stringify(data));
     dispatch({ type: "GET_ORDER", payload: data });
   } catch (error) {
     toast.error(error.response.data);
@@ -188,6 +188,20 @@ export const updateOrderStatus = (authData) => async (dispatch) => {
   } catch (error) {
     toast.error(error.response.data);
     <ToastContainer />;
+  }
+};
+
+export const updateUser = (authData,navigate) => async (dispatch) => {
+  console.log(authData);
+  try {
+    const res=await api.updateUser(authData);
+    const {data}=res;
+    console.log(res);
+    if(res.status===200){
+      navigate("/user/dash");
+    }
+  } catch (error) {
+    
   }
 };
 

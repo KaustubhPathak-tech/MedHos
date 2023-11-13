@@ -1,26 +1,90 @@
-#appointmnets{
-    margin-top: 3%;
+#appointmnets {
+  width: 99vw;
+  margin-top: 3%;
+}
+.doctor-card {
+  text-align: left;
+  max-width: fit-content;
+  transition: 0.2s;
+  background-color: rgb(230, 230, 230);
+  position: relative;
+  overflow: hidden;
 }
 
-#doctorCard{
-    text-align: left;
-    max-width: fit-content;
+.cursor-follower {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: white;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
 }
 
-#doctorCard1{
-    text-align: left;
-    display: inline-flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    min-width: 99%;
-    border: 1px solid #acacac;
-    padding: 20px;
-    box-shadow: inset 0px 0px 5px 0px #acacac;
-    
+.doctor-card:hover .cursor-follower {
+  animation: followCursor 0.2s linear infinite;
+}
+
+@keyframes followCursor {
+  0%,
+  100% {
+    transform: translate(-50%, -50%);
+  }
+  50% {
+    transform: translate(50%, 50%);
+  }
+}
+
+.doctor-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.shiny {
+  color: white;
+  position: relative;
+  border: none;
+  padding: 10px 15px;
+  background: linear-gradient(217deg, rgba(88, 228, 228, 0.8), #1081eb 70.71%);
+  border-radius: 10px;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.shiny::after {
+  content: "";
+  position: absolute;
+  top: calc(var(--y, 0) * 1px - 50px);
+  left: calc(var(--x, 0) * 1px - 50px);
+  width: 100px;
+  height: 100px;
+  background: radial-gradient(white, #3984ff00 80%);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.shiny:hover::after {
+  opacity: 0.4;
+}
+
+#doctorCard1 {
+  text-align: left;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-width: 99%;
+  border: 1px solid transparent;
+  padding: 20px;
+  box-shadow: inset 0px 0px 5px 0px #acacac;
+}
+#doctorName {
+  font-weight: 500;
+  font-size: 16px;
+  color: #ffffff;
 }
 
 @media (max-width: 450px) {
-    #doctorCard{
-        min-width: 95%;
-    }
+  #doctorCard {
+    min-width: 95%;
+  }
 }

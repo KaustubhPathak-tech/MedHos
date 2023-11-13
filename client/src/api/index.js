@@ -1,7 +1,7 @@
 import axios from "axios";
 const API = axios.create({
-  baseURL: "https://med-hos-server.vercel.app",
-}); // https://medhosserver.onrender.com/  https://otivaindustries.in  https://fine-puce-hen-wig.cyclic.cloud      http://localhost:7000
+  baseURL: "http://localhost:7000",
+}); // https://medhosserver.onrender.com/  https://otivaindustries.in  https://fine-puce-hen-wig.cyclic.cloud  https://med-hos-server.vercel.app
 API.interceptors.request.use((req) => {
   if (localStorage.getItem("Profile")) {
     req.headers.authorization = `Bearer ${
@@ -13,6 +13,7 @@ API.interceptors.request.use((req) => {
 
 export const logIn = (authData) => API.post("/user/login", authData);
 export const dlogIn = (authData) => API.post("/doctor/login", authData);
+export const updateUser = (authData) => API.post("/user/update", authData);
 export const glogIn = (authData) => API.post("/user/glogin", authData);
 export const saveOrder = (authData) => API.post("/user/saveOrder", authData);
 export const getOrder = (authData) => API.post("/user/getOrder", authData);
