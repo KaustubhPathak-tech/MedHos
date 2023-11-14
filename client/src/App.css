@@ -40,41 +40,6 @@
     transform: rotate(360deg);
   }
 }
-
-/* width
-::-webkit-scrollbar {
-  max-width: 10px;
-  margin: 1px 2px;
-  border-left: 1px solid #ff0000;
-} */
-
-/* Track */
-/* ::-webkit-scrollbar-track {
-  background: #ffffff;
-  padding: 1px;
-  width: 12px;
-} */
-
-/* Handle */
-/* ::-webkit-scrollbar-thumb {
-  background: rgb(93, 100, 121);
-  border-radius: 20px;
-  min-width: 15px;
-  box-shadow: 0 0 5px rgba(248, 32, 32, 0.2);
-  padding: 1px;
-  
-} */
-
-/* Handle on hover */
-/* ::-webkit-scrollbar-thumb:hover {
-  background: #5e769e;
-} */
-
-/* tooltip */
-/* Tooltip container */
-
-/* Style the scrollbar track */
-/* Track */
 ::-webkit-scrollbar-track
 {
 	-webkit-box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.3);

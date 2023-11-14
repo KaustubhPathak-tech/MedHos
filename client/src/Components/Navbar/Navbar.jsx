@@ -34,7 +34,6 @@ import logo from "../../Assets/Logo.png";
 import Badge from "@mui/material/Badge";
 import Stack from "@mui/material/Stack";
 
-// import { useAuth0 } from "@auth0/auth0-react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { logout } from "../../actions/auth";
@@ -128,10 +127,7 @@ function ResponsiveAppBar({ change }) {
       {User?.user?.userType === "doctor" && (
         <>
           <List>
-            {/* <ListItem disablePadding>
-              <ListItemButton>Patients</ListItemButton>
-            </ListItem> */}
-             <ListItem disablePadding>
+            <ListItem disablePadding>
               <ListItemButton>
                 <Link to={`/${User?.user?.userType}/dash`} id="drawerLinks">
                   <HomeIcon />
@@ -140,7 +136,10 @@ function ResponsiveAppBar({ change }) {
             </ListItem>
             <ListItem disablePadding>
               <ListItemButton>
-                <Link to={`/consultation-Room/${User?.user?._id}`} id="drawerLinks">
+                <Link
+                  to={`/consultation-Room/${User?.user?._id}`}
+                  id="drawerLinks"
+                >
                   Video Consult
                 </Link>
               </ListItemButton>
@@ -155,19 +154,6 @@ function ResponsiveAppBar({ change }) {
           </List>
         </>
       )}
-      {/* <Divider />
-      <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List> */}
     </Box>
   );
 
@@ -180,7 +166,6 @@ function ResponsiveAppBar({ change }) {
     setOpen(true);
   };
 
-  // const { user } = useAuth0();
   const dispatch = useDispatch();
   React.useEffect(() => {
     dispatch(setCurrentUser(JSON.parse(localStorage.getItem("Profile"))));
@@ -320,32 +305,6 @@ function ResponsiveAppBar({ change }) {
               </Typography>
             </Link>
           )}
-          {/* <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: "block", md: "none" },
-              }}
-            >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu} id="items">
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box> */}
 
           <Typography
             variant="h5"
@@ -368,23 +327,6 @@ function ResponsiveAppBar({ change }) {
           </Typography>
           {User?.user?.userType === "user" && (
             <Box className="navBox">
-              {/* <Button
-              onClick={() => {
-                handleCloseNavMenu();
-              }}
-              sx={{
-                my: 1,
-                color: "#03618a",
-                display: "block",
-                fontStyle: "inherit",
-                textTransform: "none",
-              }}
-            >
-              <NavLink to={`/consult-room/${User?.user?.email}`}>
-                Video Consult
-              </NavLink>
-            </Button> */}
-
               <Link to="/user/doctor" className="navlinks drawerLinks">
                 Find Doctors
               </Link>
@@ -401,7 +343,6 @@ function ResponsiveAppBar({ change }) {
             </Box>
           )}
 
-          {/* <Typography>{User?.user?.name || user?.name}</Typography> */}
           <div className="toolbox">
             {User?.user?.userType === "user" && (
               <Stack spacing={2} direction="row">
@@ -436,18 +377,6 @@ function ResponsiveAppBar({ change }) {
                 </IconButton>
               </Stack>
             )}
-
-            {/* <IconButton sx={{ ml: 1 }} onClick={() => change()} color="inherit">
-            {theme.palette.mode === "dark" ? (
-              <>
-                <Brightness7Icon />
-              </>
-            ) : (
-              <>
-                <Brightness4Icon />
-              </>
-            )}
-          </IconButton> */}
 
             {User === null ? (
               <></>
@@ -495,12 +424,6 @@ function ResponsiveAppBar({ change }) {
                           </Link>
                         </Typography>
                       </MenuItem>
-
-                      {/* <MenuItem onClick={handleCloseUserMenu}>
-                        <Typography textAlign="center">
-                          View/Update Profile
-                        </Typography>
-                      </MenuItem> */}
 
                       <MenuItem onClick={handleLogout}>
                         <Typography textAlign="center">Logout</Typography>
@@ -569,7 +492,7 @@ function ResponsiveAppBar({ change }) {
 
                         <MenuItem onClick={handleCloseUserMenu}>
                           <Typography textAlign="center" className="toollinks">
-                          <Link
+                            <Link
                               to="/user/profile"
                               className="toollinks drawerLinks"
                             >

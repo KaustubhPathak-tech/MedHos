@@ -28,42 +28,16 @@ const BookingPage = () => {
   const doctors = doctordata?.data?.data?.filter(
     (doctor) => doctor._id === params.doctorId
   )[0];
-  // const [doctors, setDoctors] = useState([]);
   const [date, setDate] = useState("");
   const [time, setTime] = useState();
   const [isAvailable, setIsAvailable] = useState(false);
 
-  // login user data
-  // const getUserData = async () => {
-  //   try {
-  //     const res = await axios.post(
-  //       "http://localhost:7000/doctor/getDoctorById",
-  //       { doctorId: params.doctorId },
-  //       {
-  //         headers: {
-  //           Authorization: "Bearer " + localStorage.getItem("Profile"),
-  //         },
-  //       }
-  //     );
-  //     if (res.data.success) {
-  //       setDoctors(res.data.data);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // ============ handle availiblity
   const handleAvailability = async () => {
     const profile = JSON.parse(localStorage.getItem("Profile"));
     try {
-      // dispatch(showLoading());
       if (!date || !time) {
         return toast.error("Date and Time Required");
       }
-      // if(date<Date.now()||time<doctors.docSes1_start||time>doctors.docSes2_end){
-      //   return toast.error("Appointment not available");
-      // }
       const res = await axios.post(
         "https://med-hos-server.vercel.app/user/booking-availbility",
         { doctorId: params.doctorId, date, time },
@@ -73,7 +47,6 @@ const BookingPage = () => {
           },
         }
       );
-      // dispatch(hideLoading());
 
       if (res.data.success) {
         setIsAvailable(true);
@@ -82,7 +55,6 @@ const BookingPage = () => {
         toast.error(res.data.message);
       }
     } catch (error) {
-      // dispatch(hideLoading());
       console.log(error);
     }
   };
@@ -93,7 +65,6 @@ const BookingPage = () => {
       if (!date && !time) {
         return alert("Date & Time Required");
       }
-      // dispatch(showLoading());
       const res = await axios.post(
         "https://med-hos-server.vercel.app/user/book-appointment",
         {
@@ -115,12 +86,10 @@ const BookingPage = () => {
           },
         }
       );
-      // dispatch(hideLoading());
       if (res.data.success) {
         toast.success(res.data.message);
       }
     } catch (error) {
-      // dispatch(hideLoading());
       toast.error(error);
     }
   };
@@ -181,9 +150,6 @@ const BookingPage = () => {
     <div id="userDoctor1">
       <div
         style={containerStyle}
-        // onMouseEnter={handleMouseEnter}
-        // onMouseLeave={handleMouseLeave}
-        // onMouseMove={handleMouseMove}
       >
         <div style={effectStyle}>
           <span id="headContent">Book Apointment</span>
@@ -266,7 +232,7 @@ const BookingPage = () => {
       <div className="ConsultHead">Video Consult</div>
       <div className="row" id="videoCon">
         <div className="col-md-6">
-          <img src={videoImg}  width="350px"/>
+          <img src={videoImg} width="350px" />
         </div>
         <div className="col-md-6" id="btncontainervideo">
           <Button className="mt-2" type="primary" id="videoBtn">

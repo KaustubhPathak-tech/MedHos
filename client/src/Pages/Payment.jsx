@@ -14,22 +14,11 @@ export default function Payment() {
     const response = await axios.post(
       "https://fine-puce-hen-wig.cyclic.cloud/create-checkout-session"
     );
-    
-    
+
     const result = stripe.redirectToCheckout({ sessionId: response?.data?.id });
-    if(result.error){
+    if (result.error) {
       console.log(result.error);
     }
-    // await axios
-    //   .post("http://localhost:7000/create-checkout-session", {})
-    //   .then((res) => {
-    //     if (res.data.url) {
-    //       window.location.href = res.data.url;
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
   };
   const ProductDisplay = () => (
     <section>
@@ -55,20 +44,7 @@ export default function Payment() {
     </section>
   );
 
-  // useEffect(() => {
-  //   // Check to see if this is a redirect back from Checkout
-  //   const query = new URLSearchParams(window.location.search);
-
-  //   if (query.get("success")) {
-  //     setMessage("Order placed! You will receive an email confirmation.");
-  //   }
-
-  //   if (query.get("canceled")) {
-  //     setMessage(
-  //       "Order canceled -- continue to shop around and checkout when you're ready."
-  //     );
-  //   }
-  // }, []);
+  
 
   return <ProductDisplay />;
 }

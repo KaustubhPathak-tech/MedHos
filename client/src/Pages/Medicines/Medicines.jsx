@@ -161,7 +161,6 @@ const Medicines = () => {
                         style={{
                           padding: "25px 15px",
                           margin: "20px",
-                          // boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
                         }}
                         id="medicineCard1"
                       >

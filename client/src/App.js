@@ -12,17 +12,7 @@ import { useDispatch } from "react-redux";
 const apiKey = "kaustubh9";
 const countryCode = "IN";
 
-// const apiUrl =
-//   "http://api.geonames.org/searchJSON?country=IN&maxRows=1000&username=kaustubh9";
 
-// fetch(apiUrl)
-//   .then((response) => response.json())
-//   .then((data) => {
-//     console.log(data);
-//     const cities = data.geonames.map((city) => city.name);
-//     localStorage.setItem("Cities", JSON.stringify(cities));
-//   })
-//   .catch((error) => console.error("Error:", error));
 
 const lightTheme = createTheme({
   palette: {

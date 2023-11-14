@@ -110,7 +110,6 @@ const DoctorAppointments = () => {
         scroll={{ x: true }}
       />
     </div>
-    // <Table columns={columns} dataSource={appointments} id="tableApps" />
   );
 };
 

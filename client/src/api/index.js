@@ -1,7 +1,7 @@
 import axios from "axios";
 const API = axios.create({
   baseURL: "https://med-hos-server.vercel.app",
-}); // https://medhosserver.onrender.com/  https://otivaindustries.in  https://fine-puce-hen-wig.cyclic.cloud  http://localhost:7000
+}); // http://localhost:7000
 API.interceptors.request.use((req) => {
   if (localStorage.getItem("Profile")) {
     req.headers.authorization = `Bearer ${
@@ -23,7 +23,6 @@ export const updateOrderStatus = (authData) =>
 export const verifyPayment = (paymentData) =>
   API.post("/user/verifyPayment", paymentData);
 export const signUp = (authData) => API.post("/user/signup", authData);
-// export const sendOTP = (authData) => API.post("/doctor/send/email", authData);
 export const makePayment = () => API.post("/create-checkout-session");
 export const verifyOTP = (authData) =>
   API.post("/doctor/verify/email", authData);

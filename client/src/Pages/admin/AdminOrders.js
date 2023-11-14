@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./Home.css";
-import { getAdminOrders, updateOrderStatus } from "../../actions/auth"; // Import updateOrderStatus action
+import { getAdminOrders, updateOrderStatus } from "../../actions/auth";
 import { Button } from "@mui/material";
 import { DownOutlined, SmileOutlined } from "@ant-design/icons";
 import { Dropdown, Space, Tooltip } from "antd";
@@ -11,22 +11,18 @@ const AdminOrders = () => {
   const user = useSelector((state) => state.fetch_current_userReducer);
   const dispatch = useDispatch();
   const medicine = JSON.parse(localStorage.getItem("Medicines"));
-  var [selectedOrderId, setSelectedOrderId] = useState(""); // Store the selected order ID
+  var [selectedOrderId, setSelectedOrderId] = useState("");
 
   const handleStatusChange = async (newStatus) => {
     console.log("newStatus", newStatus);
     console.log("selectedOrderId", selectedOrderId);
     if (selectedOrderId) {
-      // Ensure a valid order ID is selected
       try {
-        // Dispatch an action to update the order status in the backend
         await dispatch(
           updateOrderStatus({ orderId: selectedOrderId, newStatus })
         );
 
         selectOrder = "";
-        // Refresh the order list after updating the status
-        // dispatch(getOrder({ userId: user?.user?.id }));
       } catch (error) {
         console.error("Error updating order status:", error);
       }
@@ -46,7 +42,7 @@ const AdminOrders = () => {
         >
           Shipped
         </Button>
-      ), // Pass the desired status to handleStatusChange
+      ), 
     },
     {
       key: "2",
@@ -142,7 +138,9 @@ const AdminOrders = () => {
                       }}
                       trigger={["click"]}
                       onMouseOver={() => selectOrder(item.orderId)} // Store the selected order ID
-                      onClick={() => {selectOrder(item.orderId)}} // Store the selected order ID
+                      onClick={() => {
+                        selectOrder(item.orderId);
+                      }} // Store the selected order ID
                     >
                       <Tooltip title="Update Status" placement="top">
                         <a onClick={(e) => e.preventDefault()}>

@@ -8,12 +8,9 @@ export default function ProtectedRoute({ children }) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.fetch_current_userReducer);
 
-  //get user
-  //eslint-disable-next-line
   const profile = JSON.parse(localStorage.getItem("Profile"));
   const getUser = async () => {
     try {
-      // dispatch(showLoading());
       const res = await axios.post(
         "https://med-hos-server.vercel.app/user/getUserData",
         {
@@ -28,16 +25,11 @@ export default function ProtectedRoute({ children }) {
         }
       );
       console.log(res);
-      // dispatch(hideLoading());
       if (res.data.success) {
-        // dispatch(setCurrentUser(res.data.data));
       } else {
-        // localStorage.clear();
         <Navigate to={`/${profile?.user?.userType}/login`} />;
       }
     } catch (error) {
-      // localStorage.clear();
-      // dispatch(hideLoading());
       console.log(error);
     }
   };

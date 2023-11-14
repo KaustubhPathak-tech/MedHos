@@ -4,66 +4,24 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import videoImg from "../../../Assets/video-consult.png";
 
-// var fs = require("fs");
-
 import "./DoctorDash.css";
 import { Button } from "antd";
 import DoctorAppointments from "../DoctorAppointments";
 const DoctorDash = () => {
   var User = useSelector((state) => state.fetch_current_userReducer);
   console.log(User?.user?._id);
-  // const profile = JSON.parse(localStorage.getItem("Profile"));
-
-  // const getNotification = async () => {
-  //   try {
-  //     const res = await axios.post(
-  //       "http://localhost:7000/user/get-all-notification",
-  //       {
-  //         userId: User?.user?._id,
-  //         userType: User?.user?.userType,
-  //       },
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${profile?.token}`,
-  //         },
-  //       }
-  //     );
-  //     // dispatch(hideLoading());
-
-  //     if (res.data.success) {
-  //       const notification = res?.data?.notification;
-  //       const seennotification = res?.data?.seennotification;
-  //       localStorage.setItem("Notification", JSON.stringify({ notification }));
-  //       localStorage.setItem(
-  //         "SeenNotification",
-  //         JSON.stringify({ seennotification })
-  //       );
-  //     } else {
-  //       console.log(res.data.message);
-  //     }
-  //   } catch (error) {}
-  // };
-
-  // useEffect(() => {
-  //   getNotification();
-  // }, [getNotification]);
-
   const base64img = User?.user?.file;
   var imagefile = base64img;
   function trimBetweenCharacters(imagefile, startChar, endChar) {
     const startIdx = imagefile?.indexOf(startChar);
-    const endIdx = imagefile?.indexOf(endChar, startIdx + 1); // Start searching for endChar after startChar
-
+    const endIdx = imagefile?.indexOf(endChar, startIdx + 1);
     if (startIdx !== -1 && endIdx !== -1) {
       const result = imagefile?.substring(startIdx + 1, endIdx);
       return result;
     } else {
-      return ""; // Return an empty string if startChar or endChar is not found
+      return "";
     }
   }
-
-  // Example usage:
-
   const startChar = ":";
   const endChar = ";";
   const result = trimBetweenCharacters(imagefile, startChar, endChar);
@@ -141,12 +99,7 @@ const DoctorDash = () => {
     <div id="doctorDash">
       <br />
       <div className="row" id="videoCon">
-        <div
-          style={containerStyle}
-          // onMouseEnter={handleMouseEnter}
-          // onMouseLeave={handleMouseLeave}
-          // onMouseMove={handleMouseMove}
-        >
+        <div style={containerStyle}>
           <div style={effectStyle}>
             <span id="headContent">Appoitment List</span>
           </div>
@@ -172,7 +125,6 @@ const DoctorDash = () => {
           </div>
         </div>
       </div>
-      {/* <img src={image.png} alt='image'/> */}
       <br />
       <Button onClick={handleDownload}>Download your Aadhaar</Button>
     </div>

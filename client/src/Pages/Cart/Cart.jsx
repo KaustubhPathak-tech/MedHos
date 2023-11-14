@@ -275,7 +275,6 @@ const Cart = () => {
   return (
     <div className="marginTops">
       {
-        // Display a message if no items in cart
         cartItems?.length === 0 ? (
           <>
             <img src={emptyCrt} width="300px" />
@@ -335,7 +334,6 @@ const Cart = () => {
                               Continue to Payment
                             </Button>
                           </form>{" "}
-                          {/* Calculate and display the total price */}
                         </Box>
 
                         <Button
@@ -373,7 +371,6 @@ const Cart = () => {
                         </tr>
                       </table>
 
-                      {/* Calculate and display the total price */}
                     </Box>
 
                     <Button

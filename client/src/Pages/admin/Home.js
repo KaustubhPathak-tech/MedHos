@@ -17,7 +17,6 @@ import Button from "@mui/material/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { addMedicine } from "../../actions/medicines";
 import { message } from "antd";
-// import { addMedicine } from "./redux/medicineActions"; // Assuming you have Redux set up
 import { getMedicines } from "../../actions/medicines";
 import AdminOrders from "./AdminOrders";
 import { getAdminOrders } from "../../actions/auth";
@@ -49,8 +48,7 @@ const Home = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(addMedicine(formData)); // Assuming you have a Redux action for adding medicines
-    // You can also make an API request to save data in MongoDB here
+    dispatch(addMedicine(formData));
     toast.success("Medicine added successfully");
     setTimeout(() => {
       window.location.reload();
@@ -60,7 +58,7 @@ const Home = () => {
   useEffect(() => {
     dispatch(getMedicines());
     dispatch(getAdminOrders());
-  }, [getMedicines, getAdminOrders,User]);
+  }, [getMedicines, getAdminOrders, User]);
   return (
     <div style={{ marginTop: "5%" }}>
       <h2>Admin Panel</h2>
@@ -125,7 +123,7 @@ const Home = () => {
                 onChange={handleDateChange}
                 fullWidth
                 margin="normal"
-                inputFormat="yyyy-MM-dd" // Specify the desired date format
+                inputFormat="yyyy-MM-dd"
                 renderInput={(params) => <TextField {...params} />}
               />
             </DemoContainer>
@@ -172,8 +170,6 @@ const Home = () => {
             fullWidth
             margin="normal"
           />
-
-          {/* Add more fields as needed */}
 
           <Button type="submit" variant="contained" color="primary">
             Add Medicine

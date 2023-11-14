@@ -13,8 +13,6 @@ const Profile = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const params = useParams();
-  // update doc ==========
-  //handle form
   const handleFinish = async (values) => {
     try {
       console.log("jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj");

@@ -10,13 +10,11 @@ import { Badge, message } from "antd";
 
 const Layout = ({ children }) => {
   const user = useSelector((state) => state.fetch_current_userReducer);
-  // console.log(user);
   const location = useLocation();
   const navigate = useNavigate();
 
   // logout funtion
   const handleLogout = () => {
-    // localStorage.clear();
     message.success("Logout Successfully");
     navigate("/login");
   };

@@ -256,14 +256,7 @@ const RouteConfig = ({ change }) => {
             </ProtectedRoute>
           }
         />
-        {/* <Route
-            path="/searchwithvoice"
-            element={
-              <ProtectedRoute>
-                <ChatComponent />
-              </ProtectedRoute>
-            }
-          /> */}
+        
         <Route path="/test" element={<Navbartest />} />
       </Routes>
     </BrowserRouter>

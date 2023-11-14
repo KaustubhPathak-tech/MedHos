@@ -131,8 +131,7 @@ const DoctorLogin = () => {
   const handleNext = () => {
     const newActiveStep =
       isLastStep() && !allStepsCompleted()
-        ? // It's the last step, but not all steps have been completed,
-          // find the first step that has been completed
+        ? 
           steps.findIndex((step, i) => !(i in completed))
         : activeStep + 1;
     setActiveStep(newActiveStep);
@@ -782,14 +781,6 @@ const DoctorLogin = () => {
                                     </div>
                                     <div className="col-lg-2"></div>
                                   </div>
-
-                                  {/* <input
-                                    type="file" id="fileInput"
-                                    ref={fileInputRef}
-                                    placeholder="Upload file"
-                                    label="Choose a file"
-                                  />
-                                  <Button onClick={handleUpload}>Upload</Button> */}
                                   <br />
                                   <br />
                                   <Typography fontSize="10" id="plane_content">
@@ -999,9 +990,6 @@ const DoctorLogin = () => {
                                           onChange={(newValue) => {
                                             setDocSes1s(newValue);
                                           }}
-                                          // onChange={(newValue) =>
-                                          //   setValue(newValue)
-                                          // }
                                           defaultValue={dayjs(
                                             "2022-04-17T15:30"
                                           )}

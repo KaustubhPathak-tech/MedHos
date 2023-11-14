@@ -2,8 +2,6 @@ import Order from "../models/orders.js";
 import users from "../models/auth1.js";
 export const saveOrder = async (req, res) => {
   const { user, orderItems, shippingAddress, orderId } = req.body;
-  // await users.findByIdAndUpdate(user,{$pull:{cart:{$ne:[]}}});
-  // await users.findByIdAndUpdate(user,{$push:{cart:[]}});
   const newOrder = new Order({
     user,
     orderId,
@@ -29,15 +27,6 @@ export const verifyPayment = async (req, res) => {
 
   try {
     const user1 = await users.findOne({ _id: userId });
-    // const order = await Order.find({ user: userId });
-    // console.log(order[order.length - 1].status);
-    // if (order[order.length - 1].status === "Order Confirmed") {
-    //   res.status(201).send({
-    //     success: true,
-    //     message: "Order already confirmed",
-    //     data: user1.cart,
-    //   });
-    // }
     res.status(201).send({
       success: true,
       message: "Order already confirmed",
