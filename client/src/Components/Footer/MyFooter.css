@@ -11,17 +11,13 @@
 #container {
   margin: 0;
   padding: 0;
-  color: white;
-  background: linear-gradient(
-      217deg,
-      rgba(88, 228, 228, 0.8),
-      #1081eb 70.71%
-    );
+  color: rgb(50, 50, 50);
+  background: rgba(185, 236, 245, 0.934);
   border: 1px solid transparent;
   padding-top: 15px;
   width: 99vw;
 }
 
 .footer a{
-    color: white;
+  color: rgb(50, 50, 50);
 }

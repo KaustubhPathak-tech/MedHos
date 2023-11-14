@@ -44,9 +44,7 @@
     crossorigin="anonymous"></script>
 
 
-  <!-- google translate api -->
-  <!-- <script type="text/javascript"
-    src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script> -->
+
 
   <!-- google analytics settings -->
   <!-- Google tag (gtag.js) -->
@@ -58,7 +56,18 @@
 
     gtag('config', 'G-RJXKSXDKFJ');
   </script>
-
+  <style>
+    #google_element {
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      color: white;
+      background: rgba(185, 236, 245, 0.934);
+      border: 1px solid transparent;
+      padding-top: 15px;
+      width: 99vw;
+    }
+  </style>
 </head>
 
 <body>
@@ -67,19 +76,28 @@
 
   </div>
 
-  <!-- <button onclick="changeLanguage('es')">Translate to Spanish</button> -->
 
-  <!-- google translate js -->
-
-  <!-- <script type="text/javascript">
-    function googleTranslateElementInit() {
-      new google.translate.TranslateElement({ pageLanguage: 'en' }, 'google_translate_element');
+  <div id="google_element"></div>
+  <script src="http://translate.google.com/translate_a/element.js?cb=lo
+adGoogleTranslate"></script>
+  <script>
+    function loadGoogleTranslate() {
+      new google.translate.TranslateElement(
+        {
+          pageLanguage: 'en',
+          // layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+        },
+        "google_element");
     }
 
-    function changeLanguage(language) {
-      google.translate.translatePage(language);
-    }
-  </script> -->
+
+    setTimeout(() => {
+      const googleElement = document.querySelector('.skiptranslate');
+      if (googleElement) {
+        googleElement.style.display = 'none';
+      }
+    }, 5000);
+  </script>
 </body>
 
 </html>
