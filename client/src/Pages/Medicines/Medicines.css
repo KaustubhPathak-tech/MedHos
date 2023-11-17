@@ -9,10 +9,19 @@
 }
 
 #meddetail{
+  
     margin-left: 5px;
     width: 99%;
 }
 
+
+#imgCard{
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  align-items: center;
+  width: 500px;
+  height: 348px;
+}
 
 #myMedRow{
   width:99vw;
@@ -30,6 +39,10 @@
 }
 
 #medicineCard {
+  /* border: 1px solid black; */
+  border-top-left-radius: 0%;
+  border-bottom-left-radius: 0%;
+  margin-left: 0;
   text-align: left;
 }
 
@@ -43,7 +56,9 @@
 }
 
 #medImgs{
-  width: min-content;
+  margin-top: 20px;
+  height: 250px;
+  width: 250px;
 }
 
 .marginTops{
@@ -67,7 +82,35 @@
     margin-top: 12%;
   }
 
-  #meddetail1{
+  .meddetail1{
+    margin-left: 5%;
+    width: 370px;
+    align-items: center;
     margin-bottom: 30px;
   }
+
+  #card1{
+    margin-bottom: 0;
+  }
+
+  #imgCard{
+    border-radius: 5px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    align-items: center;
+    width: 500px;
+    height: 348px;
+  }
+
+  #medicineCard {
+    border-radius: 5px;
+    border-top-left-radius: 0%;
+    border-top-right-radius: 0%;
+    margin-left: 0;
+    text-align: left;
+  }
+
+
+  /* medicines page css */
+  
 }

@@ -45,6 +45,7 @@ export default function ProtectedRoute({ children }) {
   if (Date.now() < profile?.time + 3.6e6) {
     return children;
   } else {
+    localStorage.clear();
     return <Navigate to="/" />;
   }
 }

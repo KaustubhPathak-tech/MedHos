@@ -1,45 +1,51 @@
 import { Button } from "@mui/material";
 import React from "react";
-import { useSelector,useDispatch } from "react-redux";
-import { useParams ,useNavigate} from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { useParams, useNavigate } from "react-router-dom";
 import { addtoCart } from "../../actions/medicines";
 const Medicine = () => {
   const { medicineid } = useParams();
   const dispatch = useDispatch();
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const medicines = useSelector((state) => state.medicineReducer);
   const medicine = medicines?.data?.data.filter(
     (item) => item._id === medicineid
   );
   const handleAddtoCart = (e) => {
     e.preventDefault();
-    dispatch(addtoCart({medicineId:medicine[0]?._id},navigate));
-    setTimeout(() => {  window.location.reload(); }, 2000);
+    dispatch(addtoCart({ medicineId: medicine[0]?._id }, navigate));
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
   };
   return (
     <div className="marginTops">
       <div className="row" id="meddetail">
-        <div className="col-md-4" id="meddetail1">
-          <div className="card">
+        <div className="col-md-4 meddetail1" id="card1">
+          <div className="card" id="imgCard">
             <div className="card-image">
               <img src={`${medicine[0]?.imgurl}`} id="medImgs" />
             </div>
           </div>
         </div>
-        <div className="col-md-6" id="meddetail1">
-          <div className="card" style={{ minHeight: "348px" }} id="medicineCard">
+        <div className="col-md-6 meddetail1" id="card2">
+          <div
+            className="card"
+            style={{ minHeight: "348px" }}
+            id="medicineCard"
+          >
             <div className="card-content">
-              <h4>Name</h4>
               <p>{medicine[0]?.name}</p>
               <br />
-              <div id="mdes"> <h5>Description</h5>
-              <p>{medicine[0]?.description}</p></div>
-             
+              <div id="mdes">
+                {" "}
+                <p>{medicine[0]?.description}</p>
+              </div>
             </div>
             <br />
           </div>
         </div>
-        <div className="col-md-2" id="meddetail1">
+        <div className="col-md-2 meddetail1" id="">
           <div className="card">
             <div className="card-image">
               <span className="card-title">
