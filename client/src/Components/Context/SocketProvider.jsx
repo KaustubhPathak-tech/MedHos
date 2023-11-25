@@ -9,7 +9,7 @@ export const useSocket = () => {
 };
 
 export const SocketProvider = ({ children }) => {
-  const socket = useMemo(() => io("https://otivaindustries.net"), []); //  
+  const socket = useMemo(() => io("https://video-call-medhos.vercel.app"), []); //https://otivaindustries.net  http://localhost:8001
   return (
     <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>
   );

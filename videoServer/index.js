@@ -34,7 +34,6 @@ io.on("connection", (socket) => {
     io.to(socket.id).emit("room:join", { Email, Room });
     harperGetMessages(Room)
       .then((last100Messages) => {
-        // console.log('latest messages', last100Messages);
         socket.emit('last_100_messages', last100Messages);
       })
       .catch((err) => {});
@@ -49,13 +48,13 @@ io.on("connection", (socket) => {
     //messaging
     let __createdtime__ = Date.now();
     socket.to(Room).emit('receive_message', {
-      message: `${Email} has joined the chat room`,
+      message: `Someone other than you has joined the chat room`,
       username: CHAT_BOT,
       __createdtime__,
     });
 
     socket.emit('receive_message', {
-      message: `Welcome ${Email}`,
+      message: `Welcome`,
       username: CHAT_BOT,
       __createdtime__,
     });
