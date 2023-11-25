@@ -16,7 +16,7 @@ const io = new Server(server, {
 });
 
 app.get("/", (req, res) => {
-  res.send(`<h1>Socket 10 Start on Port : ${PORT}</h1>`);
+  res.send(`<h1>Socket Server / Video Calling Server of medhos.com Start on Port : ${PORT}</h1>`);
 });
 
 const etoSockets = new Map();
