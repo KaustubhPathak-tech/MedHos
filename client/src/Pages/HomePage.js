@@ -30,13 +30,13 @@ const HomePage = () => {
     
   }, [getMedicines]);
   useEffect(() => {
-    if (
-      !localStorage.getItem("Profile") ||
-      Date.now() > User?.time + 3.6e6 ||
-      User?.user?.userType === undefined
-    ) {
-      navigate("/");
-    }
+    // if (
+    //   !localStorage.getItem("Profile") ||
+    //   Date.now() > User?.time + 3.6e6 ||
+    //   User?.user?.userType === undefined
+    // ) {
+    //   navigate("/");
+    // }
   }, [navigate, User]);
   const dispatch = useDispatch();
   useEffect(() => {

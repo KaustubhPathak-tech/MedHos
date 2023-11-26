@@ -33,7 +33,12 @@
 }
 
 #googleloginbutton {
-  padding-left: 12%;
+  padding-left: 29%;
+}
+
+.twitterloginbtn{
+
+  /* border: 1px solid black; */
 }
 
 #seperatorOr {
@@ -137,6 +142,10 @@
     align-self: center;
     vertical-align: middle;
     padding-left: 15px;
+  }
+
+  #googleloginbutton {
+    padding-left: 12%;
   }
 
   #loginImg {
