@@ -1,9 +1,6 @@
 //jshint esversion: 6
 import stripe from "stripe";
 import express from "express";
-import passport from "passport";
-import { Strategy as TwitterStrategy } from 'passport-twitter';
-import session from "express-session";
 import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
@@ -27,46 +24,12 @@ app.use("/medicines", medicineRoutes);
 app.use("/admin", adminRoutes);
 app.post("/fetchCity",allCity);
 app.get("/", (req, res) => {
-  res.send("<h1>Hurray! MedHos server is running</h1>");
+  res.send("<h1>Hurray! Server is Running</h1>");
 });
 app.get("/favicon.ico", function (req, res) {
   res.send("<h1>Hurray! Server is Running</h1>");
 });
 var paymentRequest;
-//twitter login
-
-app.use(session({
-  secret: 'your-secret-key',
-  resave: true,
-  saveUninitialized: true,
-}));
-
-// Initialize passport and session
-app.use(passport.initialize());
-app.use(passport.session());
-passport.use(new TwitterStrategy({
-  consumerKey: process.env.TWITTER_CONSUMER_KEY,
-  consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
-  callbackURL: process.env.TWITTER_CALLBACK_URL,
-},
-function(token, tokenSecret, profile, done) {
-  // Use the Twitter profile information to create or update a user record
-  // and call done() to finish the authentication process.
-  return done(null, profile);
-}
-));
-
-// Add routes for authentication
-app.get('/auth/twitter', passport.authenticate('twitter'));
-app.get('/auth/twitter/callback',
-passport.authenticate('twitter', { failureRedirect: '/' }),
-function(req, res) {
-  // Successful authentication, redirect to home.
-  res.redirect('/');
-}
-);
-
-
 //stripe integration
 const stripeInstance = stripe(process.env.Stripe_secret);
 const YOUR_DOMAIN = "https://medhos.vercel.app";
@@ -128,8 +91,6 @@ app.post("/create-checkout-session", async (req, res) => {
 
 const PORT = process.env.PORT || 7000;
 const DATABASE = process.env.CONNECTION_URL;
-
-
 mongoose
   .connect(DATABASE, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() =>

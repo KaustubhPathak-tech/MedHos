@@ -2,9 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import jwt_decode from "jwt-decode";
-import { TwitterLoginButton } from "react-social-login-buttons";
 import { GoogleLogin } from "@react-oauth/google";
-import TwitterLogin from "react-twitter-login";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
@@ -160,6 +158,11 @@ const UserLogin = () => {
     }, 5000);
     dispatch(login({ email, password, userType }, navigate));
     dispatch(getAdminOrders());
+
+    // setTimeout(() => {
+    //   window.location.reload();
+    // }, 2000);
+    // message.success("Login Succesfully");
   };
   const handleRegister = (e) => {
     e.preventDefault();
@@ -176,9 +179,9 @@ const UserLogin = () => {
   //email verification
   const [otp, setOtp] = useState("");
   const [sent, setSent] = useState(false);
-  const handleSendOTP = (e) => {
+  const handleSendOTP =  (e) => {
     e.preventDefault();
-    axios.post("https://portfolioserver-beryl.vercel.app/sendOTP", { email });
+    axios.post("https://portfolioserver-beryl.vercel.app/sendOTP", {email});
     toast.success("OTP sent successfully");
     setSent(true);
   };
@@ -230,22 +233,6 @@ const UserLogin = () => {
     }
   };
 
-  //twitter login
-  const handleTwitterLogin = async () => {
-    try {
-      const response = await axios.get('http://localhost:7000/auth/twitter');
-      console.log(response);
-      window.location.href = response.data.redirectUrl;
-    } catch (error) {
-      console.error('Error logging in with Twitter:', error);
-    }
-  };
-
-  // const authHandler = (err, data) => {
-  //   console.log(err, data);
-  // };
-  // const CONSUMER_KEY = "b4mjsVZ7OxsUeDI2P5NQH0x65";
-  // const CONSUMER_SECRET = "zMESbKpCkYz4RSQXNaJXZ65ssh8IQpO15joFEPXwS4GiyM0GCY";
   var variant = "outlined";
   return (
     <div id="userloginPage">
@@ -756,7 +743,10 @@ const UserLogin = () => {
                         )}
                       </Button>
                     </form>
-                    <FormControl sx={{ m: 1 }} variant="outlined">
+                    <FormControl
+                      sx={{ m: 1 }}
+                      variant="outlined"
+                    >
                       <InputLabel htmlFor="outlined-adornment-password">
                         Password
                       </InputLabel>
@@ -800,6 +790,7 @@ const UserLogin = () => {
                     <div id="captcha">
                       <ReCAPTCHA
                         sitekey="6LdObVUoAAAAAHYn9BYhbKcy1ggsqnOS6jsesWx1"
+                        
                         onChange={onChange}
                       />
                     </div>
@@ -841,17 +832,7 @@ const UserLogin = () => {
                     logo_alignment="center"
                   />
                 </div>
-                <br />
-                <div>
-                <TwitterLoginButton onClick={handleTwitterLogin} />
-                  {/* <TwitterLogin
-                    authCallback={authHandler}
-                    className="twitterloginbtn"
-                    consumerKey={CONSUMER_KEY}
-                    consumerSecret={CONSUMER_SECRET}
-                    buttonTheme="dark"
-                  /> */}
-                </div>
+
                 <br />
                 <div id="seperatorOr">Or</div>
                 <br />

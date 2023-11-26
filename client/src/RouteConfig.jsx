@@ -81,7 +81,9 @@ const RouteConfig = ({ change }) => {
         <Route
           path="/user/dash"
           element={
-            <HomePage />
+            <ProtectedRoute>
+              <HomePage />
+            </ProtectedRoute>
           }
         />
         <Route
