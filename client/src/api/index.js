@@ -1,7 +1,7 @@
 import axios from "axios";
 const API = axios.create({
-  baseURL: "http://localhost:7000",
-}); //https://med-hos-server.vercel.app 
+  baseURL: "https://med-hos-server.vercel.app",
+}); // http://localhost:7000
 API.interceptors.request.use((req) => {
   if (localStorage.getItem("Profile")) {
     req.headers.authorization = `Bearer ${
