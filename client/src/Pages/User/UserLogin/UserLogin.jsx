@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import jwt_decode from "jwt-decode";
 import { GoogleLogin } from "@react-oauth/google";
+import FacebookLogin from "react-facebook-login";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
@@ -83,6 +84,9 @@ const actionButton = styled(Button)({
 });
 
 const UserLogin = () => {
+  const responseFacebook = (response) => {
+    console.log(response);
+  };
   const [captched, setCaptched] = useState(false);
   const onChange = async (value) => {
     // await axios
@@ -179,9 +183,9 @@ const UserLogin = () => {
   //email verification
   const [otp, setOtp] = useState("");
   const [sent, setSent] = useState(false);
-  const handleSendOTP =  (e) => {
+  const handleSendOTP = (e) => {
     e.preventDefault();
-    axios.post("https://portfolioserver-beryl.vercel.app/sendOTP", {email});
+    axios.post("https://portfolioserver-beryl.vercel.app/sendOTP", { email });
     toast.success("OTP sent successfully");
     setSent(true);
   };
@@ -743,10 +747,7 @@ const UserLogin = () => {
                         )}
                       </Button>
                     </form>
-                    <FormControl
-                      sx={{ m: 1 }}
-                      variant="outlined"
-                    >
+                    <FormControl sx={{ m: 1 }} variant="outlined">
                       <InputLabel htmlFor="outlined-adornment-password">
                         Password
                       </InputLabel>
@@ -790,7 +791,6 @@ const UserLogin = () => {
                     <div id="captcha">
                       <ReCAPTCHA
                         sitekey="6LdObVUoAAAAAHYn9BYhbKcy1ggsqnOS6jsesWx1"
-                        
                         onChange={onChange}
                       />
                     </div>
@@ -819,6 +819,17 @@ const UserLogin = () => {
                 id="userlogin"
                 style={{ textAlign: "center" }}
               >
+                <div id="facebookloginbutton">
+                  <FacebookLogin
+                    appId="247693258228289"
+                    autoLoad={true}
+                    fields="name,email,picture"
+                    render={renderProps => (
+                      <button onClick={renderProps.onClick}>This is my custom FB button</button>
+                    )}
+                    callback={responseFacebook}
+                  />
+                </div>
                 <div id="googleloginbutton">
                   <GoogleLogin
                     onSuccess={(credentialResponse) => {
