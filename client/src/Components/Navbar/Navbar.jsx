@@ -223,10 +223,11 @@ function ResponsiveAppBar({ change }) {
     redirect = "/";
   }
   const notification = JSON.parse(localStorage.getItem("Notification"));
-  var cart = JSON.parse(localStorage.getItem("cart"));
-  React.useEffect(() => {
-    cart = JSON.parse(localStorage.getItem("cart"));
-  }, []);
+  var cart = useSelector((state) => state.cartReducer);
+  console.log(cart);
+  // React.useEffect(() => {
+  //   cart = useSelector((state) => state.cartReducer);
+  // }, []);
 
   const [noticlicked, setNoticlicked] = React.useState(false);
   return (
@@ -347,7 +348,7 @@ function ResponsiveAppBar({ change }) {
             {User?.user?.userType === "user" && (
               <Stack spacing={2} direction="row">
                 <IconButton>
-                  <Badge badgeContent={cart?.length} color="primary">
+                  <Badge badgeContent={cart?.data?.length} color="primary">
                     <Link to={`/user/cart`} id="drawerLinks">
                       <ShoppingCartIcon />
                     </Link>
