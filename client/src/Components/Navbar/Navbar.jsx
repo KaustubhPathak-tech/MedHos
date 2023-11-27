@@ -121,6 +121,13 @@ function ResponsiveAppBar({ change }) {
                 </Link>
               </ListItemButton>
             </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton>
+                <Link to="/healthnews" id="drawerLinks">
+                  Health Updates
+                </Link>
+              </ListItemButton>
+            </ListItem>
           </List>
         </>
       )}
@@ -340,6 +347,9 @@ function ResponsiveAppBar({ change }) {
               </Link>
               <Link to={`/medicines`} className="navlinks drawerLinks">
                 Medicines
+              </Link>
+              <Link to={`/healthnews`} className="navlinks drawerLinks">
+                Health Updates
               </Link>
             </Box>
           )}
