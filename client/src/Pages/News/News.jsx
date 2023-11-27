@@ -6,7 +6,7 @@ const News = () => {
   const [news, setnews] = useState([]);
   const getnews = async () => {
     const res = await axios.get(
-      "https://newsapi.org/v2/top-headlines?country=us&category=health&apiKey=b129ed1287b04f1aa49c5e04f967d6c4"
+      "http://newsapi.org/v2/top-headlines?country=us&category=health&apiKey=b129ed1287b04f1aa49c5e04f967d6c4"
     );
     setnews(res?.data?.articles);
   };
