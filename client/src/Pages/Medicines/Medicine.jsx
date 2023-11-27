@@ -2,7 +2,7 @@ import { Button } from "@mui/material";
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
-import { addtoCart } from "../../actions/medicines";
+import { addtoCart } from "../../actions/cart";
 const Medicine = () => {
   const { medicineid } = useParams();
   const dispatch = useDispatch();
@@ -14,9 +14,6 @@ const Medicine = () => {
   const handleAddtoCart = (e) => {
     e.preventDefault();
     dispatch(addtoCart({ medicineId: medicine[0]?._id }, navigate));
-    setTimeout(() => {
-      window.location.reload();
-    }, 2000);
   };
   return (
     <div className="marginTops">

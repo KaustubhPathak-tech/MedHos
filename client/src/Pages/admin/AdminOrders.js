@@ -1,7 +1,8 @@
 import React, { useEffect, useReducer, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./Home.css";
-import { getAdminOrders, updateOrderStatus } from "../../actions/auth";
+import { updateOrderStatus } from "../../actions/auth";
+import { getAdminOrders } from "../../actions/order";
 import { Button } from "@mui/material";
 import { DownOutlined, SmileOutlined } from "@ant-design/icons";
 import { Dropdown, Space, Tooltip } from "antd";

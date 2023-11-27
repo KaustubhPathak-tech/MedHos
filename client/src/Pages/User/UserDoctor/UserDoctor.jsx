@@ -55,7 +55,6 @@ const UserDoctor = () => {
   const [weather, setWeather] = useState(null);
   var [city, setCity] = useState("Gorakhpur");
   const navigate = useNavigate();
-  console.log(city);
   function handleLocationClick() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(success, error);
@@ -108,16 +107,12 @@ const UserDoctor = () => {
     setOpenList1(false);
   };
 
-  const cities = JSON.parse(localStorage.getItem("Cities"));
-  getAllDoctors();
-  useEffect(() => {}, [getAllDoctors]);
+  const cities = useSelector((state) => state.cityReducer);
   const doctors = useSelector((state) => state.doctorReducer);
-  console.log(doctors);
 
   return (
     <div id="userDoctor">
       <div className="row" id="form">
-        
         <SearchContainer className="col-md-6" id="city">
           <InputSearchBase
             placeholder={`${city ? city : "Enter your City"}`}
@@ -149,7 +144,7 @@ const UserDoctor = () => {
           </SeachIconWrapper>
           {first && (
             <ListWrapper>
-              {cities
+              {cities?.data
                 .filter((city) =>
                   city.toLowerCase().includes(first.toLocaleLowerCase())
                 )

@@ -27,7 +27,7 @@ export const addtoCartController = async (req, res) => {
     await user.save();
     res.status(201).send({
       success: true,
-      message: "medicine added to Cart successfully",
+      message: "Medicine added to Cart successfully",
       data: user.cart,
     });
   } catch (error) {

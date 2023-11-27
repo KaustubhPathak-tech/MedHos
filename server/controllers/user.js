@@ -409,6 +409,18 @@ const updateOrderStatus = async (req, res) => {
     });
   }
 }
+
+const getCart= async(req,res)=>{
+  const {userId}=req.body;
+  try {
+    const user=await users.findById(userId);
+    const cart=user.cart;
+    return res.status(200).json({cart});
+  } catch (error) {
+    res.status(500).json({message:error});
+  }
+}
+
 const updateProfile = async (req, res) => {
   const {formData,userId}=req.body;
   try {
@@ -446,4 +458,5 @@ export {
   userAppointmentsController,
   updateOrderStatus,
   updateProfile,
+  getCart,
 };

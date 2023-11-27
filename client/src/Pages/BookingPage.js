@@ -16,8 +16,19 @@ import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import { showLoading, hideLoading } from "../ToolkitReducers/alertSlice";
 import { getAllDoctors } from "../actions/doctor";
+import { getUserAppointments } from "../actions/appointmentuser";
+import { Backdrop, CircularProgress } from "@mui/material";
 
 const BookingPage = () => {
+  //backdrop settings
+  const [open, setOpen] = React.useState(false);
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
   const params = useParams();
   const dispatch = useDispatch();
   useEffect(() => {
@@ -61,6 +72,10 @@ const BookingPage = () => {
 
   const handleBooking = async () => {
     try {
+      handleOpen();
+      setTimeout(() => {
+        handleClose();
+      }, 5000);
       setIsAvailable(true);
       if (!date && !time) {
         return alert("Date & Time Required");
@@ -88,6 +103,8 @@ const BookingPage = () => {
       );
       if (res.data.success) {
         toast.success(res.data.message);
+        dispatch(getUserAppointments());
+        navigate("/user/appointments");
       }
     } catch (error) {
       toast.error(error);
@@ -148,13 +165,18 @@ const BookingPage = () => {
 
   return (
     <div id="userDoctor1">
-      <div
-        style={containerStyle}
-      >
+      <div style={containerStyle}>
         <div style={effectStyle}>
           <span id="headContent">Book Apointment</span>
         </div>
       </div>
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={open}
+        onClick={handleClose}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <div id="seperator"></div>
       <div className="container m-2" id="doctorCard1">
         {doctors && (
@@ -218,7 +240,6 @@ const BookingPage = () => {
                   className="btn btn-dark mt-2"
                   onClick={() => {
                     handleBooking();
-                    navigate("/user/appointments");
                   }}
                 >
                   Book Now

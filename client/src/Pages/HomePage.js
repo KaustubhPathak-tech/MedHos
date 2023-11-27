@@ -9,7 +9,7 @@ import DoctorList from "../Components/DoctorList";
 import { getAllDoctors } from "../actions/doctor";
 import { getMedicines } from "../actions/medicines";
 import { useSelector } from "react-redux";
-import { getUserAppointments } from "../actions/auth";
+import { getUserAppointments } from "../actions/appointmentuser";
 import { NavLink, useNavigate, useParams, useLocation } from "react-router-dom";
 import { Container } from "@mui/material";
 

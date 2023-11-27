@@ -19,7 +19,7 @@ import { addMedicine } from "../../actions/medicines";
 import { message } from "antd";
 import { getMedicines } from "../../actions/medicines";
 import AdminOrders from "./AdminOrders";
-import { getAdminOrders } from "../../actions/auth";
+import { getAdminOrders } from "../../actions/order";
 const Home = () => {
   const User = useSelector((state) => state.fetch_cuurent_userReducer);
 

@@ -1,7 +1,7 @@
 import axios from "axios";
 const API = axios.create({
-  baseURL: "https://med-hos-server.vercel.app",
-}); // http://localhost:7000
+  baseURL: "http://localhost:7000",
+}); // https://med-hos-server.vercel.app
 API.interceptors.request.use((req) => {
   if (localStorage.getItem("Profile")) {
     req.headers.authorization = `Bearer ${
@@ -16,7 +16,7 @@ export const dlogIn = (authData) => API.post("/doctor/login", authData);
 export const updateUser = (authData) => API.post("/user/update", authData);
 export const glogIn = (authData) => API.post("/user/glogin", authData);
 export const saveOrder = (authData) => API.post("/user/saveOrder", authData);
-export const getOrder = (authData) => API.post("/user/getOrder", authData);
+export const getOrder = () => API.post("/user/getOrder");
 export const getAdminOrders = () => API.post("/user/getAdminOrders");
 export const updateOrderStatus = (authData) =>
   API.post("/user/updateOrderStatus", authData);
@@ -34,6 +34,7 @@ export const getUserData = () => API.post("/user/getAllDoctors");
 export const getUserAppointments = () => API.get("/user/user-appointments");
 export const addMedicine = (medicines) => API.post("/medicines/add", medicines);
 export const getMedicines = () => API.get("/medicines/getMedicines");
+export const getUserCart=()=>API.post("/user/getCart");
 export const addtoCart = (medicine) =>
   API.post("/medicines/addtoCart", medicine);
 export const remove = (medicine) => API.post("/medicines/remove", medicine);

@@ -20,12 +20,12 @@ import Stack from "@mui/material/Stack";
 
 import {
   decreaseQty,
-  getMedicines,
   increaseQty,
   remove,
   verifyPayment,
 } from "../../actions/medicines";
 import { saveOrder } from "../../actions/auth";
+import { getCart } from "../../actions/cart";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -101,7 +101,6 @@ const Text = styled(Typography)`
 const Cart = () => {
   var orderId = Math.random().toString(36).substr(2, 6);
   const [checksum, setChecksum] = useState("");
-
   const [placed, setPlaced] = useState(false);
   const [checked, setChecked] = useState(false);
   const [address, setAddress] = useState("");
@@ -112,25 +111,23 @@ const Cart = () => {
   var totalPrice = 0;
   var totalqty = 0;
   var subtotal = 0;
-  const cartItems = JSON.parse(localStorage.getItem("cart"));
-  console.log(cartItems);
-
-  const medicine = JSON.parse(localStorage.getItem("Medicines"));
-  const user = useSelector((state) => state.fetch_current_userReducer);
-  console.log(user);
-
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(verifyPayment({ userId: user?.user?._id }));
-    dispatch(getMedicines());
-  }, [dispatch, verifyPayment, checksum, user?.user?._id, getMedicines]);
+  
+  window.onload = () => {
+    dispatch(getCart());
+  };
+  var cartItems = useSelector((state) => state.cartReducer) || [];
+  const medicine = useSelector((state) => state.medicineReducer);
+  const user = useSelector((state) => state.fetch_current_userReducer);
+
+ 
 
   const handlePayment = async () => {
     const stripe = await loadStripe(
-      "pk_live_51MpOpKSDYoz6IJUAZQcoxCR50ognDEzbS6swgVU59253gVyWQXJcG4fe31g2D8N5pmt9LxvlZ6YjoFflpwyP8P0j001KZoXrDs" //pk_test_51MpOpKSDYoz6IJUA995OjkPkLkzItEBJoCYfdYsXEUZmD26AjWp8I4ssGJCePQSTQY61TwlTZdF7yio4HYI0fYy600sr0LE8SC
+      "pk_live_51MpOpKSDYoz6IJUAZQcoxCR50ognDEzbS6swgVU59253gVyWQXJcG4fe31g2D8N5pmt9LxvlZ6YjoFflpwyP8P0j001KZoXrDs" //pk_test_51MpOpKSDYoz6IJUA995OjkPkLkzItEBJoCYfdYsXEUZmD26AjWp8I4ssGJCePQSTQY61TwlTZdF7yio4HYI0fYy600sr0LE8SC 
     );
     const body = {
-      product: cartItems,
+      product: cartItems?.data,
       userId: user?.user?._id,
       orderId: orderId,
     };
@@ -139,7 +136,7 @@ const Cart = () => {
       "Content-Type": "application/json",
     };
     const response = await fetch(
-      "https://med-hos-server.vercel.app/create-checkout-session", //http://localhost:7000
+      "https://med-hos-server.vercel.app/create-checkout-session",
       {
         method: "POST",
         headers: headers,
@@ -150,8 +147,8 @@ const Cart = () => {
     const session = await response.json();
     const result = stripe.redirectToCheckout({ sessionId: session?.id });
   };
-  const cartItemsDisplay = cartItems.map((cartItem) => {
-    const med = medicine?.data.find(
+  const cartItemsDisplay = cartItems?.data?.map((cartItem) => {
+    const med = medicine?.data?.data.find(
       (item) => item._id === cartItem?.medicineId
     );
     return med ? (
@@ -188,9 +185,6 @@ const Cart = () => {
                           userId: user?.user?._id,
                         })
                       );
-                      setTimeout(() => {
-                        window.location.reload();
-                      }, 2000);
                     }}
                     id="left"
                   >
@@ -215,9 +209,6 @@ const Cart = () => {
                           userId: user?.user?._id,
                         })
                       );
-                      setTimeout(() => {
-                        window.location.reload();
-                      }, 2000);
                     }}
                     id="right"
                   >
@@ -247,9 +238,6 @@ const Cart = () => {
                             userId: user?.user?._id,
                           })
                         );
-                        setTimeout(() => {
-                          window.location.reload();
-                        }, 2000);
                       }}
                     >
                       Remove from cart
@@ -272,125 +260,123 @@ const Cart = () => {
     ) : null;
   });
 
+  
   return (
     <div className="marginTops">
-      {
-        cartItems?.length === 0 ? (
-          <>
-            <img src={emptyCrt} width="300px" />
-            <h6 style={{ textAlign: "center" }}>Your Cart is Empty</h6>
-          </>
-        ) : (
-          <>
-            <CartContent>
-              <CartItems>
-                <Stack spacing={2}>
-                  <Item>{cartItemsDisplay}</Item>
-                </Stack>
-              </CartItems>
-            </CartContent>
-            {placed ? (
-              <>
-                {checked ? (
-                  <></>
-                ) : (
-                  <>
-                    <CartContent>
-                      <CartSummary>
-                        <Box sx={{ padding: "20px" }} id="totalPrice">
-                          <LocalShippingIcon />
-                          <Typography variant="h6">
-                            Enter Delivery Address
-                          </Typography>
+      {cartItems?.data?.length === 0 ? (
+        <>
+          <img src={emptyCrt} width="300px" />
+          <h6 style={{ textAlign: "center" }}>Your Cart is Empty</h6>
+        </>
+      ) : (
+        <>
+          <CartContent>
+            <CartItems>
+              <Stack spacing={2}>
+                <Item>{cartItemsDisplay}</Item>
+              </Stack>
+            </CartItems>
+          </CartContent>
+          {placed ? (
+            <>
+              {checked ? (
+                <></>
+              ) : (
+                <>
+                  <CartContent>
+                    <CartSummary>
+                      <Box sx={{ padding: "20px" }} id="totalPrice">
+                        <LocalShippingIcon />
+                        <Typography variant="h6">
+                          Enter Delivery Address
+                        </Typography>
+                        <br />
+                        <form onSubmit={changeAddress}>
+                          <TextField
+                            label="Delivery Address"
+                            variant="outlined"
+                            fullWidth
+                            value={address}
+                            onChange={(e) => setAddress(e.target.value)}
+                            required
+                          />
                           <br />
-                          <form onSubmit={changeAddress}>
-                            <TextField
-                              label="Delivery Address"
-                              variant="outlined"
-                              fullWidth
-                              value={address}
-                              onChange={(e) => setAddress(e.target.value)}
-                              required
-                            />
-                            <br />
-                            <br />
-                            <Button
-                              type="submit"
-                              variant="contained"
-                              color="primary"
-                              onClick={() => {
-                                console.log(orderId);
-                                handlePayment();
-                                dispatch(
-                                  saveOrder({
-                                    user: user?.user?._id,
-                                    orderItems: cartItems,
-                                    shippingAddress: address,
-                                    orderId: orderId,
-                                  })
-                                );
-                              }}
-                            >
-                              Continue to Payment
-                            </Button>
-                          </form>{" "}
-                        </Box>
+                          <br />
+                          <Button
+                            type="submit"
+                            variant="contained"
+                            color="primary"
+                            onClick={() => {
+                              console.log(orderId);
+                              handlePayment();
+                              dispatch(
+                                saveOrder({
+                                  user: user?.user?._id,
+                                  orderItems: cartItems,
+                                  shippingAddress: address,
+                                  orderId: orderId,
+                                })
+                              );
+                            }}
+                          >
+                            Continue to Payment
+                          </Button>
+                        </form>{" "}
+                      </Box>
 
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          hidden={placed}
-                          onClick={() => {
-                            setPlaced(true);
-                          }}
-                        >
-                          Place Order
-                        </Button>
-                        <br />
-                        <br />
-                      </CartSummary>
-                    </CartContent>
-                  </>
-                )}
-              </>
-            ) : (
-              <>
-                <CartContent>
-                  <CartSummary>
-                    <Box sx={{ padding: "20px" }} id="totalPrice">
-                      <ShoppingCartIcon />
-                      <Typography variant="h6">Cart Summary</Typography>
-                      <table id="myFav">
-                        <tr>
-                          <td id="myTable">Total Price</td>
-                          <td id="myTable1">₹ {totalPrice}</td>
-                        </tr>
-                        <tr>
-                          <td id="myTable">Total Quantity</td>
-                          <td id="myTable1">{totalqty}</td>
-                        </tr>
-                      </table>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        hidden={placed}
+                        onClick={() => {
+                          setPlaced(true);
+                        }}
+                      >
+                        Place Order
+                      </Button>
+                      <br />
+                      <br />
+                    </CartSummary>
+                  </CartContent>
+                </>
+              )}
+            </>
+          ) : (
+            <>
+              <CartContent>
+                <CartSummary>
+                  <Box sx={{ padding: "20px" }} id="totalPrice">
+                    <ShoppingCartIcon />
+                    <Typography variant="h6">Cart Summary</Typography>
+                    <table id="myFav">
+                      <tr>
+                        <td id="myTable">Total Price</td>
+                        <td id="myTable1">₹ {totalPrice}</td>
+                      </tr>
+                      <tr>
+                        <td id="myTable">Total Quantity</td>
+                        <td id="myTable1">{totalqty}</td>
+                      </tr>
+                    </table>
+                  </Box>
 
-                    </Box>
-
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={() => {
-                        setPlaced(true);
-                      }}
-                    >
-                      Place Order
-                    </Button>
-                    <br />
-                    <br />
-                  </CartSummary>
-                </CartContent>
-              </>
-            )}
-          </>
-        )
-      }
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => {
+                      setPlaced(true);
+                    }}
+                  >
+                    Place Order
+                  </Button>
+                  <br />
+                  <br />
+                </CartSummary>
+              </CartContent>
+            </>
+          )}
+        </>
+      )}
     </div>
   );
 };

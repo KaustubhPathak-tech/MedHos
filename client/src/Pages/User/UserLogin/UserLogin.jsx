@@ -40,9 +40,9 @@ import {
   glogin,
   sendOTP,
   verifyOTP,
-  getAdminOrders,
+  
 } from "../../../actions/auth";
-
+import { getAdminOrders } from "../../../actions/order";
 function FacebookCircularProgress(props) {
   return (
     <Box sx={{ position: "relative" }}>
@@ -138,7 +138,7 @@ const UserLogin = () => {
     handleOpen();
     setTimeout(() => {
       handleClose();
-    }, 5000);
+    }, 6000);
     dispatch(glogin({ name, email, pic, password, userType }, navigate));
     console.log(User?.user?._id);
     dispatch(getAdminOrders());
@@ -158,11 +158,6 @@ const UserLogin = () => {
     }, 5000);
     dispatch(login({ email, password, userType }, navigate));
     dispatch(getAdminOrders());
-
-    // setTimeout(() => {
-    //   window.location.reload();
-    // }, 2000);
-    // message.success("Login Succesfully");
   };
   const handleRegister = (e) => {
     e.preventDefault();

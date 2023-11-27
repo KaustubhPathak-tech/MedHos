@@ -1,4 +1,6 @@
 import * as api from "../api";
+import { getCart } from "./cart";
+import { getOrder } from "./order";
 import { message } from "antd";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -9,11 +11,8 @@ export const signup = (authData, navigate) => async (dispatch) => {
   try {
     const { data } = await api.signUp(authData);
     dispatch({ type: "SIGNUP", data });
+    dispatch(getCart());
     dispatch(setCurrentUser(JSON.parse(localStorage.getItem("Profile"))));
-    localStorage.setItem(
-      "cart",
-      JSON.stringify(JSON.parse(localStorage.getItem("Profile"))?.cart)
-    );
     navigate("/user/dash");
     setTimeout(() => {}, 2000);
     message.success("Registered Successfully ", { position: "top-center" });
@@ -62,12 +61,9 @@ export const login = (authData, navigate) => async (dispatch) => {
     const { data } = await api.logIn(authData);
 
     dispatch({ type: "LOGIN", data });
+    dispatch(getCart());
+
     dispatch(setCurrentUser(JSON.parse(localStorage.getItem("Profile"))));
-    console.log(JSON.parse(localStorage.getItem("Profile"))?.cart);
-    localStorage.setItem(
-      "cart",
-      JSON.stringify(JSON.parse(localStorage.getItem("Profile"))?.cart)
-    );
     navigate("/user/dash");
     setTimeout(() => {}, 2000);
   } catch (error) {
@@ -109,11 +105,9 @@ export const glogin = (authData, navigate) => async (dispatch) => {
   try {
     const { data } = await api.glogIn(authData);
     dispatch({ type: "LOGIN", data });
+    dispatch(getCart());
+    dispatch(getOrder());
     dispatch(setCurrentUser(JSON.parse(localStorage.getItem("Profile"))));
-    localStorage.setItem(
-      "cart",
-      JSON.stringify(JSON.parse(localStorage.getItem("Profile"))?.cart)
-    );
     navigate("/user/dash");
   } catch (error) {
     toast.error(error.response.data);
@@ -122,48 +116,19 @@ export const glogin = (authData, navigate) => async (dispatch) => {
 };
 
 export const getUserData = () => async (dispatch) => {};
-export const getUserAppointments = () => async (dispatch) => {
-  try {
-    const { data } = await api.getUserAppointments();
-    dispatch({ type: "GET_USER_APPOINTS", payload: data });
-  } catch (error) {
-    toast.error(error.response.data);
-    <ToastContainer />;
-  }
-};
+
 export const saveOrder = (authData) => async (dispatch) => {
   try {
     const {data}=await api.saveOrder(authData);
-    dispatch({ type: "ADD_TO_CART", data });
-    localStorage.setItem(
-      "cart",
-      JSON.stringify(JSON.parse(localStorage.getItem("updateUser"))?.data)
-    );
+    dispatch(getCart());
   } catch (error) {
     toast.error(error.response.data);
     <ToastContainer />;
   }
 };
-export const getOrder = (authData) => async (dispatch) => {
-  try {
-    const {data}=await api.getOrder(authData);
-    console.log(data);
-    dispatch({ type: "GET_ORDER", payload: data });
-  } catch (error) {
-    toast.error(error.response.data);
-    <ToastContainer />;
-  }
-};
-export const getAdminOrders = () => async (dispatch) => {
-  try {
-    const {data}=await api.getAdminOrders();
-    localStorage.setItem("StringOrders", JSON.stringify(data));
-    dispatch({ type: "GET_ORDER", payload: data });
-  } catch (error) {
-    toast.error(error.response.data);
-    <ToastContainer />;
-  }
-};
+
+
+
 
 
 export const updateOrderStatus = (authData) => async (dispatch) => {

@@ -4,7 +4,7 @@ import Layout from "../Components/Layout";
 import moment from "moment";
 import { Table } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserAppointments } from "../actions/auth";
+import { getUserAppointments } from "../actions/appointmentuser";
 
 import "../styles/DoctorAppointments.css"
 
@@ -13,7 +13,7 @@ const Appointments = () => {
   useEffect(() => {
     dispatch(getUserAppointments());
   }, [getUserAppointments]);
-  const appointments = useSelector((state) => state.authReducer);
+  const appointments = useSelector((state) => state.aptuserReducer);
   console.log(appointments);
   const columns = [
     {

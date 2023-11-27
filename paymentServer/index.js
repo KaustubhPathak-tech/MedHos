@@ -19,7 +19,7 @@ const stripeInstance = stripe(process.env.Stripe_secret);
 
 let endpointSecret = process.env.webhook_secret;
 app.get("/", (req, res) => {
-  res.send("Hello from express");
+  res.send("Hello from Payment server of MedHos.com");
 });
 app.post(
   "/webhook",

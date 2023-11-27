@@ -30,8 +30,7 @@ const deleteOldOrders = async () => {
   }
 };
 
-// Schedule the trigger to run daily at a specific time (e.g., midnight)
-cron.schedule("0 * * * *", deleteOldOrders);
+cron.schedule("*/15 * * * *", deleteOldOrders);
 
 // Handle errors
 process.on("unhandledRejection", (err) => {

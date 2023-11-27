@@ -23,8 +23,6 @@ export const saveOrder = async (req, res) => {
 };
 export const verifyPayment = async (req, res) => {
   const { userId } = req.body;
-  // console.log(typeof(userId));
-
   try {
     const user1 = await users.findOne({ _id: userId });
     res.status(201).send({
@@ -38,7 +36,6 @@ export const verifyPayment = async (req, res) => {
 };
 
 export const getOrder = async (req, res) => {
-  console.log(req.body.userId);
   const { userId } = req.body;
   const user = await users.findOne({ _id: userId });
   if (!user?.isAdmin) {

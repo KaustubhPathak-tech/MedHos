@@ -24,7 +24,6 @@ export default function ProtectedRoute({ children }) {
           },
         }
       );
-      console.log(res);
       if (res.data.success) {
       } else {
         <Navigate to={`/${profile?.user?.userType}/login`} />;

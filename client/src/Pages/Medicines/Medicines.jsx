@@ -3,7 +3,6 @@ import { Box, Typography, Divider, styled, Grid } from "@mui/material";
 import { Button } from "antd";
 import Countdown from "react-countdown";
 import { Link } from "react-router-dom";
-import { getMedicines } from "../../actions/medicines";
 import { useDispatch, useSelector } from "react-redux";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
@@ -116,13 +115,9 @@ const Medicines = () => {
       </Box>
     );
   };
-  console.log(medicines?.data?.data);
   const handleRender = () => {
     setSwitched(!switched);
   };
-  useEffect(() => {
-    dispatch(getMedicines());
-  }, [dispatch]);
   return (
     <div id="medicinePage">
       <div className="filters">

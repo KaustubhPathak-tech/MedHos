@@ -6,13 +6,12 @@ import RouteConfig from "./RouteConfig.jsx";
 import MyFooter from "./Components/Footer/MyFooter.jsx";
 import { getMedicines } from "./actions/medicines";
 import { getAllDoctors } from "./actions/doctor";
-import { getCity } from "./api";
-import { useDispatch } from "react-redux";
+import { getCity } from "./actions/city.js";
+import { useDispatch, useSelector } from "react-redux";
+import { getCart } from "./actions/cart.js";
 
 const apiKey = "kaustubh9";
 const countryCode = "IN";
-
-
 
 const lightTheme = createTheme({
   palette: {
@@ -25,28 +24,9 @@ const darkTheme = createTheme({
   },
 });
 
-// console.log(typeof JSON.parse(localStorage.getItem("Citi"))[0].geonames);
-
 function App() {
   const dispatch = useDispatch();
-  useEffect(() => {
-    getCity().then((res) => {
-      localStorage.setItem("Citi", JSON.stringify(res?.data));
-    });
-    setTimeout(() => {
-      dispatch(getAllDoctors());
-      dispatch(getMedicines());
-    }, 3000);
-    setTimeout(() => {
-      localStorage.setItem(
-        "FinalCities",
-        JSON.stringify(JSON.parse(localStorage.getItem("Citi"))[0].geonames)
-      );
-      const data = JSON.parse(localStorage.getItem("FinalCities"));
-      const cities = data.map((city) => city.name);
-      localStorage.setItem("Cities", JSON.stringify(cities));
-    }, 10000);
-  }, [getAllDoctors, getMedicines]);
+  const user=useSelector((state)=>state.fetch_current_userReducer);
   const [checked, setChecked] = useState(true);
   const handleTheme = () => {
     try {
@@ -66,6 +46,12 @@ function App() {
   useEffect(() => {
     fetch_city();
   }, [fetch_city]);
+  useEffect(() => {
+    dispatch(getAllDoctors());
+    dispatch(getMedicines());
+    dispatch(getCity());
+    dispatch(getCart());
+  }, [getAllDoctors, getMedicines, getCity,getCart]);
   return (
     <div className="App">
       <br />

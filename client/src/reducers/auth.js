@@ -8,11 +8,7 @@ const authReducer = (state = { data: null }, action) => {
       localStorage.setItem("Profile", JSON.stringify({ ...action?.data }));
       return { ...state, data: action?.data };
 
-    case "GET_USER_APPOINTS":
-      return { ...state, data: action?.payload };
-    case "GET_ORDER":
-      localStorage.setItem("orders", JSON.stringify({ ...action?.payload }));
-      return { ...state, data: action?.payload };
+    
     default:
       return state;
   }

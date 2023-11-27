@@ -11,6 +11,7 @@ import {
   userAppointmentsController,
   updateOrderStatus,
   updateProfile,
+  getCart
 } from "../controllers/user.js";
 
 import { getAdminOrders, getOrder, saveOrder,verifyPayment } from "../controllers/order.js";
@@ -32,7 +33,7 @@ router.post("/mark-allRead-notification", mid, markAllReadNotification);
 router.post("/delete-all-notification", mid, deleteAllNotificationController);
 
 // //GET ALL DOC
-router.get("/getAllDoctors", getAllDoctorsController);
+router.get("/getAllDoctors",getAllDoctorsController);
 
 // //BOOK APPOINTMENT
 router.post("/book-appointment", mid, bookAppointmentController);
@@ -43,6 +44,7 @@ router.post("/booking-availbility", mid, bookingAvailabilityController);
 //Appointments List
 router.get("/user-appointments", mid, userAppointmentsController);
 router.post("/saveOrder", saveOrder);
+router.post("/getCart",mid,getCart);
 router.post("/getOrder",mid, getOrder);
 router.post("/getAdminOrders", getAdminOrders);
 router.post("/updateOrderStatus", updateOrderStatus);
