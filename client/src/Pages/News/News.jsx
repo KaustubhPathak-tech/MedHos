@@ -1,45 +1,57 @@
 import axios from "axios";
 import "./News.css";
 import React, { useEffect, useState } from "react";
-
 const News = () => {
   const [news, setnews] = useState([]);
   const getnews = async () => {
-    const res = await axios.get(
-      "https://newsapi.org/v2/top-headlines?country=us&category=health&apiKey=b129ed1287b04f1aa49c5e04f967d6c4"
-    );
-    setnews(res?.data?.articles);
+    const res = await axios.get("http://localhost:7000/news");
+    console.log(res);
+    setnews(res?.data?.value);
   };
-  console.log(news);
   useEffect(() => {
     getnews();
-  }, [getnews]);
+  }, []);
 
   return (
     <div className="marginTops">
-      {news &&
-        news
-          .filter((item) => item.content !== "[Removed]"&&item.content !== null&&item.urlToImage!==null)
-          .map((item) => {
-            return (
-              <div id="news_content">
-                <div id="news_img">
-                  <img
-                    src={item.urlToImage}
-                    alt="news_img"
-                    id="news_img1"
-                  />
+      {news && (
+        <>
+          <div>
+            <h4 id="news_heading">HeadLines</h4>
+          </div>
+
+          {news
+            .filter(
+              (item) =>
+                item.content !== "[Removed]" &&
+                item.content !== null &&
+                item.image
+            )
+            .map((item) => {
+              return (
+                <div id="news_content">
+                  <div id="news_img">
+                    <img
+                      src={item?.image?.thumbnail?.contentUrl}
+                      alt="news_img"
+                      id="news_img1"
+                    />
+                  </div>
+                  <div id="news_conts">
+                    {" "}
+                    <a href={`${item.url}`} id="newslink" target="_blank">
+                      {" "}
+                      <h5>{item.name}</h5>
+                    </a>
+                    <p style={{ opacity: "0.6", fontSize: "14px" }}>
+                      {item.description}
+                    </p>
+                  </div>
                 </div>
-                <div id="news_conts">
-                  {" "}
-                  <a href={`${item.url}`}> <h5>{item.title}</h5></a>
-                 
-                  <p>{item.description}</p>
-                </div>
-                
-              </div>
-            );
-          })}
+              );
+            })}
+        </>
+      )}
     </div>
   );
 };

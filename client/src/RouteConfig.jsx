@@ -34,6 +34,7 @@ import AdminOrders from "./Pages/admin/AdminOrders";
 import UserOrders from "./Pages/User/UserOrders/UserOrders";
 import UserProfile from "./Pages/User/UserProfileUpdate/UserProfile";
 import News from "./Pages/News/News";
+import PrimarySearchAppBar from "./Components/Navbar/PrimarySearchAppBar";
 const lightTheme = createTheme({
   palette: {
     mode: "light",
@@ -264,7 +265,7 @@ const RouteConfig = ({ change }) => {
           }
         />
         
-        <Route path="/test" element={<Navbartest />} />
+        <Route path="/test" element={<PrimarySearchAppBar />} />
       </Routes>
     </BrowserRouter>
   );

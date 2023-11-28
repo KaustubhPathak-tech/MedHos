@@ -11,6 +11,7 @@ import medicineRoutes from "./routes/medicines.js";
 import adminRoutes from "./routes/admin.js";
 import deleteOldAppointments from "./deleteAppointment.js";
 import { allCity } from "./controllers/city.js";
+import axios from "axios";
 const app = express();
 dotenv.config();
 
@@ -22,7 +23,7 @@ app.use("/user", userRoutes);
 app.use("/doctor", doctorRoutes);
 app.use("/medicines", medicineRoutes);
 app.use("/admin", adminRoutes);
-app.post("/fetchCity",allCity);
+app.post("/fetchCity", allCity);
 app.get("/", (req, res) => {
   res.send("<h1>Hurray! Server is Running</h1>");
 });
@@ -34,9 +35,9 @@ var paymentRequest;
 const stripeInstance = stripe(process.env.Stripe_secret);
 const YOUR_DOMAIN = "https://medhos.vercel.app";
 app.post("/create-checkout-session", async (req, res) => {
-  console.log(req.body)
+  console.log(req.body);
   try {
-    const { product, userId,orderId } = req.body;
+    const { product, userId, orderId } = req.body;
     paymentRequest = req.body;
     const ProductContainer = [];
     for (var i = 0; i < product.length; i++) {
@@ -50,10 +51,10 @@ app.post("/create-checkout-session", async (req, res) => {
         product_data: {
           name: med?.medicine?.name,
           images: [med?.medicine?.imgurl],
-          metadata:{
-            userId:userId,
-            orderId:orderId, 
-          }
+          metadata: {
+            userId: userId,
+            orderId: orderId,
+          },
         },
         unit_amount: Number(med?.medicine?.price),
       },
@@ -64,7 +65,7 @@ app.post("/create-checkout-session", async (req, res) => {
       payment_intent_data: {
         metadata: {
           userId: userId,
-          orderId:orderId,
+          orderId: orderId,
         },
         setup_future_usage: "off_session",
       },
@@ -80,12 +81,57 @@ app.post("/create-checkout-session", async (req, res) => {
       },
       metadata: {
         userId: userId,
-        orderId:orderId,
+        orderId: orderId,
       },
     });
     res.json({ id: session.id });
   } catch (error) {
     console.log(error);
+  }
+});
+
+//bing
+app.get("/search", async (req, res) => {
+  try {
+    const subscriptionKey = process.env.BING_SEARCH_V7_SUBSCRIPTION_KEY;
+    const endpoint = process.env.BING_SEARCH_V7_ENDPOINT + "/v7.0/search";
+    const query = req.query.searchKeyword || "Health";
+    const mkt = "en-IN";
+    const params = { q: query, mkt: mkt };
+    const headers = { "Ocp-Apim-Subscription-Key": subscriptionKey };
+    const response = await axios.get(endpoint, { headers, params });
+    res.json(response?.data);
+    // res.redirect(response.data.webPages.webSearchurl);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+app.get("/news", async (req, res) => {
+  try {
+    const subscriptionKey = process.env.BING_SEARCH_V7_SUBSCRIPTION_KEY;
+    const endpoint = process.env.BING_SEARCH_V7_ENDPOINT + "/v7.0/news";
+
+    // Query term(s) to search for
+    const query = req.query.q || "Health";
+    const mkt = "en-IN";
+    const category = "LifeStyle";
+    const freshness = "Week";
+    // Construct request parameters
+    const params = {
+      q: query,
+      mkt: mkt,
+      category: category,
+      freshness: freshness,
+      safeSearch: "Strict",
+    };
+    const headers = { "Ocp-Apim-Subscription-Key": subscriptionKey };
+    const response = await axios.get(endpoint, { headers, params });
+    res.json(response.data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 

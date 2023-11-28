@@ -6,9 +6,12 @@ import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
-import styled from "@emotion/styled";
 import IconButton from "@mui/material/IconButton";
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
+import { styled, alpha } from "@mui/material/styles";
+import InputBase from "@mui/material/InputBase";
+import SearchIcon from "@mui/icons-material/Search";
+import KeyboardVoiceIcon from "@mui/icons-material/KeyboardVoice";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
@@ -37,7 +40,67 @@ import Stack from "@mui/material/Stack";
 import { useDispatch, useSelector } from "react-redux";
 
 import { logout } from "../../actions/auth";
+//speech recognition
+import SpeechRecognition, {
+  useSpeechRecognition,
+} from "react-speech-recognition";
+import { useState } from "react";
+import StopIcon from "@mui/icons-material/Stop";
+import Popup from "../Popup/Popup";
+import axios from "axios";
 
+const Search = styled("div")(({ theme }) => ({
+  position: "relative",
+  border: "1px solid #e0e0e0",
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  "&:hover": {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  marginRight: theme.spacing(2),
+  marginLeft: 0,
+  minWidth: "200px",
+  width: "auto",
+  [theme.breakpoints.down("md")]: {
+    marginLeft: theme.spacing(3),
+    width: "auto",
+    display: "none",
+  },
+}));
+
+const SearchIconWrapper = styled("div")(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: "100%",
+  position: "absolute",
+  pointerEvents: "none",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+}));
+const VoiceIconWrapper = styled("div")(({ theme }) => ({
+  border: "1px solid #eb4034",
+  padding: theme.spacing(0, 2),
+  height: "50px",
+  position: "relative",
+  pointerEvents: "none",
+  display: "flex",
+  alignItems: "start",
+  justifyContent: "end",
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: "inherit",
+  "& .MuiInputBase-input": {
+    padding: theme.spacing(1, 1, 1, 0),
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create("width"),
+    width: "auto",
+    [theme.breakpoints.up("md")]: {
+      border: "1px solid transparent",
+      width: "auto",
+    },
+  },
+}));
 const StyledHeader = styled(AppBar)`
   background-color: #f0f2f1 !important;
   flex-direction: row;
@@ -61,8 +124,17 @@ const darkTheme = createTheme({
 });
 
 function ResponsiveAppBar({ change }) {
+  //backdrop settings
+
   var User = useSelector((state) => state.fetch_current_userReducer);
 
+  //speech recognition
+  const [searchKeyword, setSearchKeyword] = useState("");
+  var [listen, setListen] = React.useState(false);
+  const startListening = () =>
+    SpeechRecognition.startListening({ continuous: true });
+  var { transcript, browserSupportsSpeechRecognition, resetTranscript } =
+    useSpeechRecognition();
   //drawer settings
 
   const [state, setState] = React.useState({
@@ -121,10 +193,20 @@ function ResponsiveAppBar({ change }) {
                 </Link>
               </ListItemButton>
             </ListItem>
+
             <ListItem disablePadding>
               <ListItemButton>
-                <Link to="/healthnews" id="drawerLinks">
-                  Health Updates
+                <Link
+                  to="/healthnews"
+                  id="drawerLinks"
+                  onClick={() => {
+                    handleOpen();
+                    setTimeout(() => {
+                      handleClose();
+                    }, 5000);
+                  }}
+                >
+                  Lifestyle News
                 </Link>
               </ListItemButton>
             </ListItem>
@@ -157,6 +239,76 @@ function ResponsiveAppBar({ change }) {
                   Appointments
                 </Link>
               </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding>
+              <form style={{ display: "flex" }} onSubmit={handleBingSearch}>
+                <Search>
+                  <SearchIconWrapper>
+                    <SearchIcon />
+                  </SearchIconWrapper>
+
+                  <StyledInputBase
+                    name="searchKeyword"
+                    value={searchKeyword || transcript}
+                    onChange={(e) => {
+                      setSearchKeyword(e.target.value);
+                      if (e.target.value.length === 0) {
+                        resetTranscript();
+                      }
+                    }}
+                    onSubmit={(e) => {
+                      console.log(e.target.value);
+                    }}
+                    autoComplete="off"
+                    placeholder="Bing Powered Search…"
+                    inputProps={{ "aria-label": "search" }}
+                  />
+
+                  <span
+                    style={{ border: "1px solid transparent", padding: "0px" }}
+                  >
+                    {listen ? (
+                      <>
+                        <Button
+                          style={{
+                            marginLeft: "0px",
+                            border: "1px solid transparent",
+                            marginTop: "-2px",
+                          }}
+                          onClick={() => {
+                            SpeechRecognition.stopListening();
+                            setListen(false);
+                          }}
+                          data-toggle="tooltip"
+                          title="Stop Listening"
+                          className="voiceBtn"
+                        >
+                          <StopIcon />
+                        </Button>
+                      </>
+                    ) : (
+                      <>
+                        <Button
+                          style={{
+                            marginLeft: "0px",
+                            border: "1px solid transparent",
+                            marginTop: "-2px",
+                          }}
+                          onClick={() => {
+                            startListening();
+                            setListen(true);
+                          }}
+                          data-toggle="tooltip"
+                          title="Search by voice"
+                          className="voiceBtn"
+                        >
+                          <KeyboardVoiceIcon />
+                        </Button>
+                      </>
+                    )}
+                  </span>
+                </Search>
+              </form>
             </ListItem>
           </List>
         </>
@@ -231,12 +383,30 @@ function ResponsiveAppBar({ change }) {
   }
   const notification = JSON.parse(localStorage.getItem("Notification"));
   var cart = useSelector((state) => state.cartReducer);
-  console.log(cart);
-  // React.useEffect(() => {
-  //   cart = useSelector((state) => state.cartReducer);
-  // }, []);
-
   const [noticlicked, setNoticlicked] = React.useState(false);
+
+  const handleBingSearch = async (e) => {
+    e.preventDefault();
+    handleOpen();
+    setTimeout(() => {
+      handleClose();
+    }, 5000);
+    if (searchKeyword.length === 0 && !transcript) {
+      return;
+    }
+    const searchresponse = await axios.get("http://localhost:7000/search", {
+      params: { searchKeyword: searchKeyword || transcript },
+    });
+
+    const newTab = window.open(
+      `${searchresponse?.data?.webPages?.webSearchUrl}`,
+      "_blank"
+    );
+    if (newTab) {
+      newTab.focus();
+    }
+  };
+
   return (
     <StyledHeader position="fixed" id="navBar" sx={{ color: "black" }}>
       <Container maxWidth="xl">
@@ -348,13 +518,98 @@ function ResponsiveAppBar({ change }) {
               <Link to={`/medicines`} className="navlinks drawerLinks">
                 Medicines
               </Link>
-              <Link to={`/healthnews`} className="navlinks drawerLinks">
-                Health Updates
+              <Link
+                to={`/healthnews`}
+                className="navlinks drawerLinks"
+                onClick={() => {
+                  handleOpen();
+                  setTimeout(() => {
+                    handleClose();
+                  }, 5000);
+                }}
+              >
+                LifeStyle News
               </Link>
             </Box>
           )}
 
           <div className="toolbox">
+            <form style={{ display: "flex" }} onSubmit={handleBingSearch}>
+              <Search>
+                <SearchIconWrapper>
+                  <SearchIcon />
+                </SearchIconWrapper>
+
+                <StyledInputBase
+                  name="searchKeyword"
+                  value={searchKeyword || transcript}
+                  onChange={(e) => {
+                    setSearchKeyword(e.target.value);
+                    if (e.target.value.length === 0) {
+                      resetTranscript();
+                    }
+                  }}
+                  onSubmit={(e) => {
+                    console.log(e.target.value);
+                  }}
+                  autoComplete="off"
+                  placeholder="Bing Powered Search…"
+                  inputProps={{ "aria-label": "search" }}
+                />
+
+                <span
+                  style={{ border: "1px solid transparent", padding: "0px" }}
+                >
+                  {listen ? (
+                    <>
+                      <Button
+                        style={{
+                          marginLeft: "0px",
+                          border: "1px solid transparent",
+                          marginTop: "-2px",
+                        }}
+                        onClick={() => {
+                          SpeechRecognition.stopListening();
+                          setListen(false);
+                        }}
+                        data-toggle="tooltip"
+                        title="Stop Listening"
+                        className="voiceBtn"
+                      >
+                        <StopIcon />
+                      </Button>
+                    </>
+                  ) : (
+                    <>
+                      <Button
+                        style={{
+                          marginLeft: "0px",
+                          border: "1px solid transparent",
+                          marginTop: "-2px",
+                        }}
+                        onClick={() => {
+                          startListening();
+                          setListen(true);
+                        }}
+                        data-toggle="tooltip"
+                        title="Search by voice"
+                        className="voiceBtn"
+                      >
+                        <KeyboardVoiceIcon />
+                      </Button>
+                    </>
+                  )}
+                </span>
+              </Search>
+            </form>
+            <div>
+              <Popup
+                trigger={listen}
+                setTrigger={setListen}
+                onClose={listen}
+              ></Popup>
+            </div>
+
             {User?.user?.userType === "user" && (
               <Stack spacing={2} direction="row">
                 <IconButton>
