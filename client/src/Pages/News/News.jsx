@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 const News = () => {
   const [news, setnews] = useState([]);
   const getnews = async () => {
-    const res = await axios.get("http://localhost:7000/news");
+    const res = await axios.get("https://med-hos-server.vercel.app/news");
     console.log(res);
     setnews(res?.data?.value);
   };

@@ -394,7 +394,7 @@ function ResponsiveAppBar({ change }) {
     if (searchKeyword.length === 0 && !transcript) {
       return;
     }
-    const searchresponse = await axios.get("http://localhost:7000/search", {
+    const searchresponse = await axios.get("https://med-hos-server.vercel.app/search", {
       params: { searchKeyword: searchKeyword || transcript },
     });
 
