@@ -48,7 +48,6 @@ import { useState } from "react";
 import StopIcon from "@mui/icons-material/Stop";
 import Popup from "../Popup/Popup";
 import axios from "axios";
-
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   border: "1px solid #e0e0e0",
@@ -394,19 +393,22 @@ function ResponsiveAppBar({ change }) {
     if (searchKeyword.length === 0 && !transcript) {
       return;
     }
-    const searchresponse = await axios.post("https://med-hos-server.vercel.app/search", {
-      params: { searchKeyword: searchKeyword || transcript },
-    });
-
+    const subscriptionKey = process.env.REACT_APP_STRIPE_PUBLIC_KEY_LIVE_1;
+    const endpoint = process.env.REACT_APP_STRIPE_PUBLIC_KEY_LIVE_2 + "/v7.0/search";
+    console.log(subscriptionKey, endpoint);
+    const query = searchKeyword || transcript ||"Health";
+    const mkt = "en-IN";
+    const params = { q: query, mkt: mkt };
+    const headers = { "Ocp-Apim-Subscription-Key": subscriptionKey };
+    const response = await axios.get(endpoint, { headers, params });
     const newTab = window.open(
-      `${searchresponse?.data?.webPages?.webSearchUrl}`,
+      `${response?.data?.webPages?.webSearchUrl}`,
       "_blank"
     );
     if (newTab) {
       newTab.focus();
     }
   };
-
   return (
     <StyledHeader position="fixed" id="navBar" sx={{ color: "black" }}>
       <Container maxWidth="xl">

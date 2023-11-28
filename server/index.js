@@ -90,51 +90,6 @@ app.post("/create-checkout-session", async (req, res) => {
   }
 });
 
-//bing
-app.post("/search", async (req, res) => {
-  try {
-    const subscriptionKey = process.env.BING_SEARCH_V7_SUBSCRIPTION_KEY;
-    const endpoint = process.env.BING_SEARCH_V7_ENDPOINT + "/v7.0/search";
-    const query = req.query.searchKeyword || "Health";
-    const mkt = "en-IN";
-    const params = { q: query, mkt: mkt };
-    const headers = { "Ocp-Apim-Subscription-Key": subscriptionKey };
-    const response = await axios.get(endpoint, { headers, params });
-    res.json(response?.data);
-    // res.redirect(response.data.webPages.webSearchurl);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-});
-
-app.post("/news", async (req, res) => {
-  try {
-    const subscriptionKey = process.env.BING_SEARCH_V7_SUBSCRIPTION_KEY;
-    const endpoint = process.env.BING_SEARCH_V7_ENDPOINT + "/v7.0/news";
-
-    // Query term(s) to search for
-    const query = req.query.q || "Health";
-    const mkt = "en-IN";
-    const category = "LifeStyle";
-    const freshness = "Week";
-    // Construct request parameters
-    const params = {
-      q: query,
-      mkt: mkt,
-      category: category,
-      freshness: freshness,
-      safeSearch: "Strict",
-    };
-    const headers = { "Ocp-Apim-Subscription-Key": subscriptionKey };
-    const response = await axios.get(endpoint, { headers, params });
-    res.json(response.data);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-});
-
 const PORT = process.env.PORT || 7000;
 const DATABASE = process.env.CONNECTION_URL;
 mongoose

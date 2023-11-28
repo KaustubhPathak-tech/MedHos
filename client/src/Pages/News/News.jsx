@@ -4,9 +4,26 @@ import React, { useEffect, useState } from "react";
 const News = () => {
   const [news, setnews] = useState([]);
   const getnews = async () => {
-    const res = await axios.post("https://med-hos-server.vercel.app/news"); 
-    console.log(res);
-    setnews(res?.data?.value);
+    const subscriptionKey = process.env.REACT_APP_STRIPE_PUBLIC_KEY_LIVE_1;
+    const endpoint = process.env.REACT_APP_STRIPE_PUBLIC_KEY_LIVE_2 + "/v7.0/news";
+
+    // Query term(s) to search for
+    const query = "Health";
+    const mkt = "en-IN";
+    const category = "LifeStyle";
+    const freshness = "Week";
+    // Construct request parameters
+    const params = {
+      q: query,
+      mkt: mkt,
+      category: category,
+      freshness: freshness,
+      safeSearch: "Strict",
+    };
+    const headers = { "Ocp-Apim-Subscription-Key": subscriptionKey };
+    const response = await axios.get(endpoint, { headers, params });
+    console.log(response);
+    setnews(response?.data?.value);
   };
   useEffect(() => {
     getnews();
