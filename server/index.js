@@ -91,7 +91,7 @@ app.post("/create-checkout-session", async (req, res) => {
 });
 
 //bing
-app.get("/search", async (req, res) => {
+app.post("/search", async (req, res) => {
   try {
     const subscriptionKey = process.env.BING_SEARCH_V7_SUBSCRIPTION_KEY;
     const endpoint = process.env.BING_SEARCH_V7_ENDPOINT + "/v7.0/search";
@@ -108,7 +108,7 @@ app.get("/search", async (req, res) => {
   }
 });
 
-app.get("/news", async (req, res) => {
+app.post("/news", async (req, res) => {
   try {
     const subscriptionKey = process.env.BING_SEARCH_V7_SUBSCRIPTION_KEY;
     const endpoint = process.env.BING_SEARCH_V7_ENDPOINT + "/v7.0/news";
