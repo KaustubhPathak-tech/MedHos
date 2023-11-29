@@ -26,6 +26,25 @@
   padding-left: 15px;
 }
 
+
+#twitterbtn{
+  display: inline-flex;
+  width: 100%;
+  background: none;
+}
+
+.twitter{
+  border:none;
+  border-radius: 5px;
+  width: 60%;
+  transition: all ease 0.3s;
+  padding: 7px 10px;
+}
+.twitter:hover{
+  border:none;
+  border-radius: 5px;
+}
+
 #loginImg {
   /* media_fire to be inserted */
   width: 480px;
@@ -33,7 +52,7 @@
 }
 
 #googleloginbutton {
-  padding-left: 12%;
+  padding-left: 28%;
 }
 
 #seperatorOr {
@@ -125,6 +144,17 @@
 }
 
 @media (max-width: 450px) {
+  #googleloginbutton {
+    padding-left: 10%;
+  }
+  .twitter{
+    border:none;
+    margin-left: -10px;
+    border-radius: 5px;
+    width: 80%;
+    transition: all ease 0.3s;
+    padding: 7px 10px;
+  }
   #userlogin {
     border: 1px solid rgb(225, 225, 225);
     box-shadow: inset 0 2 3 0 rgb(225, 225, 225), 0 0 0 1px rgb(225, 225, 225);

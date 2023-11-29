@@ -84,19 +84,16 @@ const actionButton = styled(Button)({
   textTransform: "none",
 });
 
-
-
 const UserLogin = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleSmartTwitter=(e)=>{
+  const handleSmartTwitter = (e) => {
     e.preventDefault();
-    
-  }
+  };
   const onSuccess = (response) => {
     const { data } = response;
-    dispatch(smartTwiiter({},navigate));
+    dispatch(smartTwiiter({}, navigate));
     console.log(data);
     const token = response.headers.get("x-auth-token");
     response.json().then((user) => {
@@ -129,15 +126,16 @@ const UserLogin = () => {
       </div>
     </div>
   ) : (
-    <button onClick={handleSmartTwitter}>
-    <TwitterLogin
-      loginUrl="https://med-hos-server.vercel.app/auth/twitter"
-      onFailure={onFailed}
-      onSuccess={onSuccess}
-      showIcon={true}
-      requestTokenUrl="https://med-hos-server.vercel.app/auth/twitter/reverse"
-    />
-    </button>
+    <Button onClick={handleSmartTwitter} id="twitterbtn">
+      <TwitterLogin
+        loginUrl="https://med-hos-server.vercel.app/auth/twitter" //http://localhost:7000
+        onFailure={onFailed}
+        onSuccess={onSuccess}
+        showIcon={true}
+        requestTokenUrl="https://med-hos-server.vercel.app/auth/twitter/reverse"
+        className="twitter"
+      />
+    </Button>
   );
 
   const [open, setOpen] = React.useState(false);
@@ -149,7 +147,7 @@ const UserLogin = () => {
   };
 
   const [Switch, setSwitch] = useState(false);
-  
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -850,7 +848,6 @@ const UserLogin = () => {
                 id="userlogin"
                 style={{ textAlign: "center" }}
               >
-                {content}
                 <div id="googleloginbutton">
                   <GoogleLogin
                     onSuccess={(credentialResponse) => {
@@ -861,9 +858,15 @@ const UserLogin = () => {
                     }}
                     text="continue_with"
                     locale="hindi"
+                   
                     logo_alignment="center"
+                    style={{ width: "fit-content",border:"1px solid red" }}
+                    id="googleloginbtn"
                   />
+                  
                 </div>
+                <br />
+                  {content}
 
                 <br />
                 <div id="seperatorOr">Or</div>

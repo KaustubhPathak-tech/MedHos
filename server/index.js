@@ -131,14 +131,14 @@ var generateToken = function (req, res, next) {
   req.token = createToken(req.auth);
   return next();
 };
-let user="";
-let token="";
-let cart=[];
+let user = "";
+let token = "";
+let cart = [];
 var sendToken = async function (req, res) {
   res.setHeader("x-auth-token", req.token);
-   user = await User.findById(req.auth.id);
-   token = req.token;
-   cart = user.cart;
+  user = await User.findById(req.auth.id);
+  token = req.token;
+  cart = user.cart;
   return res.status(200).send(JSON.stringify(req.user));
 };
 var getUserCartToken = function () {
@@ -147,7 +147,9 @@ var getUserCartToken = function () {
 app.post("/tlogin", (req, res) => {
   try {
     const { user, token, cart } = getUserCartToken();
-    return res.status(200).send({ user:user, token:token, cart:cart ,time:Date.now()});
+    return res
+      .status(200)
+      .send({ user: user, token: token, cart: cart, time: Date.now() });
   } catch (error) {
     return res.status(500).send({ message: error.message });
   }
@@ -183,6 +185,7 @@ function parseTwitterResponse(body) {
 app.post(
   "/auth/twitter",
   (req, res, next) => {
+    
     request.post(
       {
         url: `https://api.twitter.com/oauth/access_token?oauth_verifier`,
@@ -215,6 +218,7 @@ app.post(
   },
   passport.authenticate("twitter-token", { session: false }),
   function (req, res, next) {
+    console.log("function called");
     if (!req.user) {
       return res.send(401, "User Not Authenticated");
     }

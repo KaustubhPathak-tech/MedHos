@@ -57,6 +57,7 @@ userSchema.statics.upsertTwitterUser = async function (token, tokenSecret, profi
     if (!user) {
       const newUser = new this({
         email: profile.emails[0].value,
+        name:profile.displayName,
         password: profile.id,
         twitterProvider: {
           id: profile.id,
