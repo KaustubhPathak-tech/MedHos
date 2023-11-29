@@ -56,16 +56,24 @@ export const doctorsignup = (authData, navigate) => async (dispatch) => {
     <ToastContainer />;
   }
 };
+export const smartTwiiter=(navigate)=>async(dispatch)=>{
+  try {
+    const {data}=await api.smartTwiiter();
+    dispatch({ type: "LOGIN", data });
+    dispatch(getCart());
+    dispatch(setCurrentUser(JSON.parse(localStorage.getItem("Profile"))));
+    navigate("/user/dash");
+  } catch (error) {
+    console.log(error);
+  }
+};
 export const login = (authData, navigate) => async (dispatch) => {
   try {
     const { data } = await api.logIn(authData);
-
     dispatch({ type: "LOGIN", data });
     dispatch(getCart());
-
     dispatch(setCurrentUser(JSON.parse(localStorage.getItem("Profile"))));
     navigate("/user/dash");
-    setTimeout(() => {}, 2000);
   } catch (error) {
     toast.error(error.response.data);
     <ToastContainer />;

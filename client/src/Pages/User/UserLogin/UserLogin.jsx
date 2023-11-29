@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import {TwitterLogin} from "react-twitter-auth"
+import TwitterLogin from "react-twitter-auth";
 import ReCAPTCHA from "react-google-recaptcha";
 import jwt_decode from "jwt-decode";
 import { GoogleLogin } from "@react-oauth/google";
@@ -41,9 +41,10 @@ import {
   glogin,
   sendOTP,
   verifyOTP,
-  
+  smartTwiiter,
 } from "../../../actions/auth";
 import { getAdminOrders } from "../../../actions/order";
+
 function FacebookCircularProgress(props) {
   return (
     <Box sx={{ position: "relative" }}>
@@ -83,24 +84,34 @@ const actionButton = styled(Button)({
   textTransform: "none",
 });
 
-const onSuccess = (response) => {
-  const token = response.headers.get('x-auth-token');
-  response.json().then(user => {
-    if (token) {
-      this.setState({isAuthenticated: true, user: user, token: token});
-    }
-  });
-};
 
-const onFailed = (error) => {
-  alert(error);
-};
 
 const UserLogin = () => {
-  const [tauth,setTauth]=useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleSmartTwitter=(e)=>{
+    e.preventDefault();
+    
+  }
+  const onSuccess = (response) => {
+    const { data } = response;
+    dispatch(smartTwiiter({},navigate));
+    console.log(data);
+    const token = response.headers.get("x-auth-token");
+    response.json().then((user) => {
+      if (token) {
+        console.log(token);
+      }
+    });
+  };
+
+  const onFailed = (error) => {
+    alert(error);
+  };
+  const [tauth, setTauth] = useState(false);
   const [captched, setCaptched] = useState(false);
   const onChange = async (value) => {
-    
     if (value !== null) {
       setCaptched(true);
     } else {
@@ -108,26 +119,26 @@ const UserLogin = () => {
     }
   };
 
-//twitter login
-let content = tauth ?
-    (
+  //twitter login
+  let content = tauth ? (
+    <div>
+      <p>Authenticated</p>
+      <div>{email}</div>
       <div>
-        <p>Authenticated</p>
-        <div>
-          {email}
-        </div>
-        <div>
-          <button onClick={this.logout} className="button" >
-            Log out
-          </button>
-        </div>
+        <button className="button">Log out</button>
       </div>
-    ) :
-    (
-      <TwitterLogin loginUrl="http://localhost:4000/api/v1/auth/twitter"
-                    onFailure={this.onFailed} onSuccess={this.onSuccess}
-                    requestTokenUrl="http://localhost:4000/api/v1/auth/twitter/reverse"/>
-    );
+    </div>
+  ) : (
+    <button onClick={handleSmartTwitter}>
+    <TwitterLogin
+      loginUrl="http://localhost:7000/auth/twitter"
+      onFailure={onFailed}
+      onSuccess={onSuccess}
+      showIcon={true}
+      requestTokenUrl="http://localhost:7000/auth/twitter/reverse"
+    />
+    </button>
+  );
 
   const [open, setOpen] = React.useState(false);
   const handleClose = () => {
@@ -138,7 +149,7 @@ let content = tauth ?
   };
 
   const [Switch, setSwitch] = useState(false);
-  const dispatch = useDispatch();
+  
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -152,7 +163,6 @@ let content = tauth ?
   const userType = "user";
   const User = useSelector((state) => state.fetch_current_userReducer);
 
-  const navigate = useNavigate();
   useEffect(() => {
     if (Date.now() < User?.time + 3.6e6) {
       navigate("/user/dash");
@@ -204,9 +214,9 @@ let content = tauth ?
   //email verification
   const [otp, setOtp] = useState("");
   const [sent, setSent] = useState(false);
-  const handleSendOTP =  (e) => {
+  const handleSendOTP = (e) => {
     e.preventDefault();
-    axios.post("https://portfolioserver-beryl.vercel.app/sendOTP", {email});
+    axios.post("https://portfolioserver-beryl.vercel.app/sendOTP", { email });
     toast.success("OTP sent successfully");
     setSent(true);
   };
@@ -257,8 +267,6 @@ let content = tauth ?
       toast.error(error);
     }
   };
-
- 
 
   var variant = "outlined";
   return (
@@ -770,10 +778,7 @@ let content = tauth ?
                         )}
                       </Button>
                     </form>
-                    <FormControl
-                      sx={{ m: 1 }}
-                      variant="outlined"
-                    >
+                    <FormControl sx={{ m: 1 }} variant="outlined">
                       <InputLabel htmlFor="outlined-adornment-password">
                         Password
                       </InputLabel>
@@ -817,7 +822,6 @@ let content = tauth ?
                     <div id="captcha">
                       <ReCAPTCHA
                         sitekey="6LdObVUoAAAAAHYn9BYhbKcy1ggsqnOS6jsesWx1"
-                        
                         onChange={onChange}
                       />
                     </div>
@@ -846,7 +850,6 @@ let content = tauth ?
                 id="userlogin"
                 style={{ textAlign: "center" }}
               >
-
                 {content}
                 <div id="googleloginbutton">
                   <GoogleLogin

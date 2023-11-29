@@ -1,6 +1,6 @@
 import axios from "axios";
 const API = axios.create({
-  baseURL: "https://med-hos-server.vercel.app",
+  baseURL: "http://localhost:7000", //https://med-hos-server.vercel.app
 });
 API.interceptors.request.use((req) => {
   if (localStorage.getItem("Profile")) {
@@ -12,6 +12,8 @@ API.interceptors.request.use((req) => {
 });
 
 export const logIn = (authData) => API.post("/user/login", authData);
+export const smartTwiiter = () => API.post("/tlogin");
+
 export const dlogIn = (authData) => API.post("/doctor/login", authData);
 export const updateUser = (authData) => API.post("/user/update", authData);
 export const glogIn = (authData) => API.post("/user/glogin", authData);
