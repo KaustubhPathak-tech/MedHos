@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import {TwitterLogin} from "react-twitter-auth"
 import ReCAPTCHA from "react-google-recaptcha";
 import jwt_decode from "jwt-decode";
 import { GoogleLogin } from "@react-oauth/google";
@@ -82,23 +83,52 @@ const actionButton = styled(Button)({
   textTransform: "none",
 });
 
+const onSuccess = (response) => {
+  const token = response.headers.get('x-auth-token');
+  response.json().then(user => {
+    if (token) {
+      this.setState({isAuthenticated: true, user: user, token: token});
+    }
+  });
+};
+
+const onFailed = (error) => {
+  alert(error);
+};
+
 const UserLogin = () => {
+  const [tauth,setTauth]=useState(false);
   const [captched, setCaptched] = useState(false);
   const onChange = async (value) => {
-    // await axios
-    //   .post("https://www.google.com/recaptcha/api/siteverify", {
-    //     secret: "6LdObVUoAAAAACKzMJXVTKo27HqNKnkKAeNHNafK",
-    //     response: value,
-    //   })
-    //   .then(() => {
-
-    //   });
+    
     if (value !== null) {
       setCaptched(true);
     } else {
       setCaptched(false);
     }
   };
+
+//twitter login
+let content = tauth ?
+    (
+      <div>
+        <p>Authenticated</p>
+        <div>
+          {email}
+        </div>
+        <div>
+          <button onClick={this.logout} className="button" >
+            Log out
+          </button>
+        </div>
+      </div>
+    ) :
+    (
+      <TwitterLogin loginUrl="http://localhost:4000/api/v1/auth/twitter"
+                    onFailure={this.onFailed} onSuccess={this.onSuccess}
+                    requestTokenUrl="http://localhost:4000/api/v1/auth/twitter/reverse"/>
+    );
+
   const [open, setOpen] = React.useState(false);
   const handleClose = () => {
     setOpen(false);
@@ -227,6 +257,8 @@ const UserLogin = () => {
       toast.error(error);
     }
   };
+
+ 
 
   var variant = "outlined";
   return (
@@ -814,6 +846,8 @@ const UserLogin = () => {
                 id="userlogin"
                 style={{ textAlign: "center" }}
               >
+
+                {content}
                 <div id="googleloginbutton">
                   <GoogleLogin
                     onSuccess={(credentialResponse) => {
