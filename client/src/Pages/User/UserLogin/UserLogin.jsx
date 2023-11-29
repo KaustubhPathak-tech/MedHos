@@ -131,11 +131,11 @@ const UserLogin = () => {
   ) : (
     <button onClick={handleSmartTwitter}>
     <TwitterLogin
-      loginUrl="http://localhost:7000/auth/twitter"
+      loginUrl="https://med-hos-server.vercel.app/auth/twitter"
       onFailure={onFailed}
       onSuccess={onSuccess}
       showIcon={true}
-      requestTokenUrl="http://localhost:7000/auth/twitter/reverse"
+      requestTokenUrl="https://med-hos-server.vercel.app/auth/twitter/reverse"
     />
     </button>
   );
