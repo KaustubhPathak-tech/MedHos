@@ -1,20 +1,29 @@
 import { Button } from "@mui/material";
-import React from "react";
+import React,{useEffect} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { addtoCart } from "../../actions/cart";
+import { getMedicines } from "../../actions/medicines";
 const Medicine = () => {
+    // useEffect(() => {
+    //   dispatch(getMedicines());
+    // }, []);
   const { medicineid } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const medicines = useSelector((state) => state.medicineReducer);
-  const medicine = medicines?.data?.data.filter(
+  const medicine = medicines?.data?.data?.filter(
     (item) => item._id === medicineid
   );
+
+  if (!medicine || medicine.length === 0) {
+    return <div>No data available for this medicine</div>;
+  }
   const handleAddtoCart = (e) => {
     e.preventDefault();
     dispatch(addtoCart({ medicineId: medicine[0]?._id }, navigate));
   };
+  
   return (
     <div className="marginTops">
       <div className="row" id="meddetail">
