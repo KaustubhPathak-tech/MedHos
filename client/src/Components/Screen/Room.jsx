@@ -321,11 +321,14 @@ const Room = () => {
   // const navigate=useNavigate();
 
   const handleOpenTab = () => {
-    // Replace 'https://example.com' with the desired URL
     const newTab = window.open("https://medhos.vercel.app/", "_blank");
-    if (newTab) {
-      newTab.focus(); // Bring focus to the newly opened tab (optional)
-    }
+    
+    setTimeout(() => {
+      window.close();
+      if (newTab) {
+        newTab.focus(); // Bring focus to the newly opened tab (optional)
+      }
+    }, 100);
   };
   const handleHangup = () => {
     socket.emit("hangup", { to: remoteSocket });
