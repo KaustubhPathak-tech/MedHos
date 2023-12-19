@@ -30,7 +30,7 @@ const deleteOldOrders = async () => {
   }
 };
 
-cron.schedule("*/15 * * * *", deleteOldOrders);
+cron.schedule("*/1 * * * *", deleteOldOrders);
 
 // Handle errors
 process.on("unhandledRejection", (err) => {
