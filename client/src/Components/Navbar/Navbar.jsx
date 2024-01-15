@@ -76,16 +76,7 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
   alignItems: "center",
   justifyContent: "center",
 }));
-const VoiceIconWrapper = styled("div")(({ theme }) => ({
-  border: "1px solid #eb4034",
-  padding: theme.spacing(0, 2),
-  height: "50px",
-  position: "relative",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "start",
-  justifyContent: "end",
-}));
+
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",

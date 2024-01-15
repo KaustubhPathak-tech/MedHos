@@ -858,7 +858,6 @@ const UserLogin = () => {
                     }}
                     text="continue_with"
                     locale="hindi"
-                   
                     logo_alignment="center"
                     style={{ width: "fit-content",border:"1px solid red" }}
                     id="googleloginbtn"

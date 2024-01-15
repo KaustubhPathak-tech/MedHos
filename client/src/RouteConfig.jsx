@@ -71,7 +71,6 @@ const RouteConfig = ({ change }) => {
       <ResponsiveAppBar change={handleTheme} />
       <Routes>
         <Route exact path="/" element={<LandingPage />} />
-
         <Route
           path="/user/login"
           element={

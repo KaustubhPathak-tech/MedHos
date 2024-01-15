@@ -2,16 +2,21 @@ import React, { useEffect, useReducer, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./Home.css";
 import { updateOrderStatus } from "../../actions/auth";
-import { getAdminOrders } from "../../actions/order";
+import { getAdminOrders, getOrder } from "../../actions/order";
 import { Button } from "@mui/material";
 import { DownOutlined, SmileOutlined } from "@ant-design/icons";
 import { Dropdown, Space, Tooltip } from "antd";
 
 const AdminOrders = () => {
-  const order = JSON.parse(localStorage.getItem("orders"));
+  window.onload=()=>{
+    getOrder();
+  }
+  const order = useSelector((state) => state.orderReducer);
+  console.log(order);
   const user = useSelector((state) => state.fetch_current_userReducer);
   const dispatch = useDispatch();
-  const medicine = JSON.parse(localStorage.getItem("Medicines"));
+  const medicine = useSelector((state) => state.medicineReducer);
+  console.log(medicine);
   var [selectedOrderId, setSelectedOrderId] = useState("");
 
   const handleStatusChange = async (newStatus) => {
@@ -98,7 +103,7 @@ const AdminOrders = () => {
 
   useEffect(() => {
     dispatch(getAdminOrders());
-  }, [dispatch, getAdminOrders, user]);
+  }, [getAdminOrders]);
 
   return (
     <div id="adminOrders" style={{ marginTop: "5%" }}>
@@ -116,14 +121,14 @@ const AdminOrders = () => {
               </tr>
             </thead>
             <tbody>
-              {order?.order?.map((item) => (
+              {order?.data?.order.map((item) => (
                 <tr key={item.orderId}>
                   <th scope="row"># {item.orderId}</th>
                   <td>{item.user}</td>
                   <td>
-                    {item.orderItems.map((item) => (
+                    {item?.orderItems[0]?.data.map((item) => (
                       <div key={item.medicineId}>
-                        {medicine?.data
+                        {medicine?.data?.data
                           .filter((med) => med._id === item.medicineId)
                           .map((med) => med.name)}{" "}
                         x {item.qty}
