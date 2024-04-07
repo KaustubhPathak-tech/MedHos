@@ -12,6 +12,7 @@ API.interceptors.request.use((req) => {
 });
 
 export const logIn = (authData) => API.post("/user/login", authData);
+export const signUp = (authData) => API.post("/user/signup", authData);
 export const smartTwiiter = () => API.post("/tlogin");
 
 export const dlogIn = (authData) => API.post("/doctor/login", authData);
@@ -24,7 +25,6 @@ export const updateOrderStatus = (authData) =>
   API.post("/user/updateOrderStatus", authData);
 export const verifyPayment = (paymentData) =>
   API.post("/user/verifyPayment", paymentData);
-export const signUp = (authData) => API.post("/user/signup", authData);
 export const makePayment = () => API.post("/create-checkout-session");
 export const verifyOTP = (authData) =>
   API.post("/doctor/verify/email", authData);

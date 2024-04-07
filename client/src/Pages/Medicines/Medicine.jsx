@@ -5,9 +5,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import { addtoCart } from "../../actions/cart";
 import { getMedicines } from "../../actions/medicines";
 const Medicine = () => {
-    // useEffect(() => {
-    //   dispatch(getMedicines());
-    // }, []);
   const { medicineid } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();

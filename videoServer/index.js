@@ -97,8 +97,6 @@ io.on("connection", (socket) => {
         message,
       });
     } else {
-      // Handle the case where the recipient is not found or not connected
-      // You can emit an error or handle it as per your application's logic
       console.log(`Recipient ${recipient} not found or not connected`);
     }
   });

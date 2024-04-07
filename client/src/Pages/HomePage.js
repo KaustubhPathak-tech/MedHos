@@ -26,9 +26,7 @@ const HomePage = () => {
     }
   }, [User]);
 
-  useEffect(() => {
-    
-  }, [getMedicines]);
+  useEffect(() => {}, [getMedicines]);
   useEffect(() => {
     if (
       !localStorage.getItem("Profile") ||
@@ -101,7 +99,7 @@ const HomePage = () => {
                   width="36"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  <path
+                  {/* <path
                     class="fade-beat"
                     d="m18 11a7 7 0 1 1 -7 7 7 7 0 0 1 7-7"
                     fill="#1081eb"
@@ -111,7 +109,93 @@ const HomePage = () => {
                     d="m18 34a16 16 0 1 1 16-16 16 16 0 0 1 -16 16zm0-30a14 14 0 1 0 14 14 14 14 0 0 0 -14-14z"
                     fill="white"
                   />
-                  <path d="m0 0h36v36h-36z" fill="none" />
+                  <path d="m0 0h36v36h-36z" fill="none" /> */}
+                  <circle
+                    cx="50%"
+                    cy="50%"
+                    r="0"
+                    fill-opacity="0"
+                    stroke="green"
+                    stroke-width="2px"
+                    stroke-opacity="1"
+                  >
+                    {" "}
+                    <animate
+                      attributeName="r"
+                      from="0"
+                      to="15"
+                      dur="3s"
+                      repeatCount="indefinite"
+                    />{" "}
+                    <animate
+                      attributeName="stroke-opacity"
+                      from="1"
+                      to="0"
+                      dur="3s"
+                      repeatCount="indefinite"
+                    ></animate>{" "}
+                  </circle>{" "}
+                  <circle
+                    cx="50%"
+                    cy="50%"
+                    r="0"
+                    fill-opacity="0"
+                    stroke="green"
+                    stroke-width="2px"
+                    stroke-opacity="1"
+                  >
+                    {" "}
+                    <animate
+                      attributeName="r"
+                      from="0"
+                      to="15"
+                      dur="3s"
+                      repeatCount="indefinite"
+                      begin="0.75s"
+                    />{" "}
+                    <animate
+                      attributeName="stroke-opacity"
+                      from="1"
+                      to="0"
+                      dur="3s"
+                      repeatCount="indefinite"
+                      begin="0.75s"
+                    ></animate>{" "}
+                  </circle>{" "}
+                  <circle
+                    cx="50%"
+                    cy="50%"
+                    r="0"
+                    fill-opacity="0"
+                    stroke="green"
+                    stroke-width="2px"
+                    stroke-opacity="1"
+                  >
+                    {" "}
+                    <animate
+                      attributeName="r"
+                      from="0"
+                      to="15"
+                      dur="3s"
+                      repeatCount="indefinite"
+                      begin="1.5s"
+                    />{" "}
+                    <animate
+                      attributeName="stroke-opacity"
+                      from="1"
+                      to="0"
+                      dur="3s"
+                      repeatCount="indefinite"
+                      begin="1.5s"
+                    ></animate>{" "}
+                  </circle>{" "}
+                  <circle
+                    cx="50%"
+                    cy="50%"
+                    r="5"
+                    fill="green"
+                    stroke="white"
+                  ></circle>
                 </svg>
               </>
             )}

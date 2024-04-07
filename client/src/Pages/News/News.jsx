@@ -22,7 +22,6 @@ const News = () => {
     };
     const headers = { "Ocp-Apim-Subscription-Key": subscriptionKey };
     const response = await axios.get(endpoint, { headers, params });
-    console.log(response);
     setnews(response?.data?.value);
   };
   useEffect(() => {

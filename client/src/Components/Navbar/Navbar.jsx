@@ -92,7 +92,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 const StyledHeader = styled(AppBar)`
-  background-color: #f0f2f1 !important;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(5px);
+  opacity: 0.9;
+  // background-color: #f0f2f1 !important;
   flex-direction: row;
   flex-grow: 1;
 `;
@@ -401,7 +405,7 @@ function ResponsiveAppBar({ change }) {
     }
   };
   return (
-    <StyledHeader position="fixed" id="navBar" sx={{ color: "black" }}>
+    <StyledHeader position="fixed" id="navBar" sx={{ color: "black" }}> 
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Link to={redirect} id="logo" className="drawerLinks">

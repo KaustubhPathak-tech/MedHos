@@ -31,8 +31,6 @@ const orderSchema = new mongoose.Schema({
   },
 });
 
-// Create a Mongoose model
 const Order = mongoose.model("Order", orderSchema);
 
-// Export the Order model
 export default Order;

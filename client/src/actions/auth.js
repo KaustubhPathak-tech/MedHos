@@ -5,7 +5,6 @@ import { message } from "antd";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { setCurrentUser } from "./currentUser";
-import { json } from "react-router-dom";
 
 export const signup = (authData, navigate) => async (dispatch) => {
   try {
